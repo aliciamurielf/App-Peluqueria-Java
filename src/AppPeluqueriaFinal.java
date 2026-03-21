@@ -7,12 +7,12 @@ import java.awt.*;
 
 public class AppPeluqueriaFinal extends JFrame {
 
-    // --- NUEVA PALETA DE COLORES (Verdes / Azules - Teal) ---
-    private Color bgApp = new Color(242, 250, 250);       // Fondo azul/verde muy claro (Menta hielo)
+    // --- NUEVA PALETA DE COLORES (Azulito / Spa Elegante) ---
+    private Color bgApp = new Color(240, 248, 255);       // Fondo azul hielo muy clarito (Alice Blue)
     private Color bgCards = Color.WHITE;                  // Blanco puro para tarjetas
-    private Color colorPrimario = new Color(0, 150, 136); // Verde Azulado (Teal / Turquesa oscuro)
-    private Color textDark = new Color(33, 40, 40);       // Gris oscuro azulado para textos
-    private Color textLight = new Color(120, 130, 130);   // Gris suave para textos secundarios
+    private Color colorPrimario = new Color(84, 160, 255); // Azul Cielo / Azul Pastel vibrante
+    private Color textDark = new Color(40, 50, 70);       // Azul marino muy oscuro para textos
+    private Color textLight = new Color(130, 140, 160);   // Gris azulado suave para textos secundarios
 
     // --- GESTORES DE PANTALLAS ---
     private JPanel panelRaiz;
@@ -62,7 +62,7 @@ public class AppPeluqueriaFinal extends JFrame {
     }
 
     // =========================================================
-    // 1. PANTALLA DE LOGIN (Corregida para que se pueda escribir)
+    // 1. PANTALLA DE LOGIN
     // =========================================================
     private JPanel crearPantallaLogin() {
         JPanel panel = new JPanel(new BorderLayout());
@@ -80,13 +80,14 @@ public class AppPeluqueriaFinal extends JFrame {
         tituloLogo.setVerticalTextPosition(JLabel.BOTTOM);
         
         try {
+            // Comprobamos la ruta para que VS Code encuentre el .jpg sin problemas
             String rutaLogo = new java.io.File("images/logo.jpg").exists() ? "images/logo.jpg" : "src/images/logo.jpg";
             
             ImageIcon icon = new ImageIcon(rutaLogo); 
             Image scaledImage = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             tituloLogo.setIcon(new ImageIcon(scaledImage));
         } catch (Exception e) {
-            System.out.println("No se ha podido cargar el logo.");
+            System.out.println("Nota: No se ha podido cargar logo.jpg");
         }
         
         header.add(tituloLogo);
@@ -102,7 +103,6 @@ public class AppPeluqueriaFinal extends JFrame {
         lblInstrucciones.setForeground(colorPrimario);
         lblInstrucciones.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // SOLUCIÓN AL BUG: Etiquetas separadas del campo de texto
         JLabel lblUsuario = new JLabel("Usuario:");
         lblUsuario.setFont(new Font("SansSerif", Font.BOLD, 14));
         lblUsuario.setForeground(textDark);
@@ -181,12 +181,13 @@ public class AppPeluqueriaFinal extends JFrame {
 
         // TARJETA DE PUBLICIDAD
         JPanel tarjetaPromo = new JPanel(new BorderLayout());
-        tarjetaPromo.setBackground(new Color(230, 245, 245)); // Verde muy clarito para el fondo de la oferta
+        tarjetaPromo.setBackground(new Color(230, 240, 255)); // Azul hielo suave para el fondo de la oferta
         tarjetaPromo.setBorder(BorderFactory.createLineBorder(colorPrimario, 2));
 
         JLabel lblPromoImage = new JLabel();
         lblPromoImage.setHorizontalAlignment(SwingConstants.CENTER);
         try {
+            // Comprobamos la ruta del .jpg
             String rutaPromo = new java.io.File("images/promo.jpg").exists() ? "images/promo.jpg" : "src/images/promo.jpg";
             
             ImageIcon iconPromo = new ImageIcon(rutaPromo); 
@@ -354,11 +355,11 @@ public class AppPeluqueriaFinal extends JFrame {
             if (seleccionado != null) {
                 String notas = "";
                 if (seleccionado.contains("Carmen")) {
-                    notas = "  Última visita: Hace 3 semanas\n Fórmula Tinte: Raíz Castaño Claro (5.0) 20 vol. + Medios 5.3 a 10 vol.\n Preferencias: Café con sacarina.";
+                    notas = "📅 Última visita: Hace 3 semanas\n🎨 Fórmula Tinte: Raíz Castaño Claro (5.0) 20 vol. + Medios 5.3 a 10 vol.\n☕ Preferencias: Café con sacarina.";
                 } else if (seleccionado.contains("Ana")) {
-                    notas = "  Última visita: Hace 2 meses\n Fórmula Tinte: Balayage deco 30 vol. Matiz ceniza (8.1).\n Alergias: Cuero cabelludo sensible.";
+                    notas = "📅 Última visita: Hace 2 meses\n🎨 Fórmula Tinte: Balayage deco 30 vol. Matiz ceniza (8.1).\n⚠️ Alergias: Cuero cabelludo sensible.";
                 } else {
-                    notas = "  Última visita: Primera cita\n Fórmula Tinte: Sin registro previo.\n Notas: Cliente nuevo, abrir ficha al llegar.";
+                    notas = "📅 Última visita: Primera cita\n🎨 Fórmula Tinte: Sin registro previo.\n📝 Notas: Cliente nuevo, abrir ficha al llegar.";
                 }
                 JOptionPane.showMessageDialog(panel, notas, "Ficha de " + seleccionado, JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -429,7 +430,7 @@ public class AppPeluqueriaFinal extends JFrame {
         
         JLabel subtitulo = new JLabel(subtituloStr);
         subtitulo.setFont(new Font("SansSerif", Font.ITALIC, 16));
-        subtitulo.setForeground(new Color(220, 245, 245)); 
+        subtitulo.setForeground(new Color(230, 240, 255)); 
         header.add(titulo); header.add(subtitulo);
         return header;
     }
