@@ -80,11 +80,13 @@ public class AppPeluqueriaFinal extends JFrame {
         tituloLogo.setVerticalTextPosition(JLabel.BOTTOM);
         
         try {
-            ImageIcon icon = new ImageIcon("images/logo.png"); 
+            String rutaLogo = new java.io.File("images/logo.jpg").exists() ? "images/logo.jpg" : "src/images/logo.jpg";
+            
+            ImageIcon icon = new ImageIcon(rutaLogo); 
             Image scaledImage = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             tituloLogo.setIcon(new ImageIcon(scaledImage));
         } catch (Exception e) {
-            System.out.println("Nota: Crea una carpeta 'images' y mete 'logo.png' para que se vea el logo.");
+            System.out.println("No se ha podido cargar el logo.");
         }
         
         header.add(tituloLogo);
@@ -185,7 +187,9 @@ public class AppPeluqueriaFinal extends JFrame {
         JLabel lblPromoImage = new JLabel();
         lblPromoImage.setHorizontalAlignment(SwingConstants.CENTER);
         try {
-            ImageIcon iconPromo = new ImageIcon("images/promo.png"); 
+            String rutaPromo = new java.io.File("images/promo.jpg").exists() ? "images/promo.jpg" : "src/images/promo.jpg";
+            
+            ImageIcon iconPromo = new ImageIcon(rutaPromo); 
             Image scaledPromo = iconPromo.getImage().getScaledInstance(350, 150, Image.SCALE_SMOOTH);
             lblPromoImage.setIcon(new ImageIcon(scaledPromo));
         } catch (Exception e) {
