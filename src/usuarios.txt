@@ -1,4 +1,0 @@
-admin;1234;admin
-laura;abcd;cliente
-pepe;5678;cliente
-644863495;12345678;cliente

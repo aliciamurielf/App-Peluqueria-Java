@@ -157,7 +157,7 @@ public class PanelLogin extends JPanel {
 
                 if (rol != null) {
                     if (rol.equalsIgnoreCase("admin")) {
-                        ventanaPrincipal.cambiarVista(new PanelAdmin(ventanaPrincipal));
+                        ventanaPrincipal.cambiarVista(new PanelAdminPrincipal(ventanaPrincipal));
                     } else {
                         JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
                     }

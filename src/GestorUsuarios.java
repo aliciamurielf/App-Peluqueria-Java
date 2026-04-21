@@ -48,4 +48,19 @@ public class GestorUsuarios {
             return false;
         }
     }
+
+    public boolean existeUsuario(String telefono) {
+        try (java.util.Scanner sc = new java.util.Scanner(new java.io.File("usuarios.txt"))) {
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+                if (linea.trim().isEmpty()) continue;
+                String[] datos = linea.split(";");
+                // Comprobamos si el teléfono coincide con el guardado en el archivo
+                if (datos[0].equals(telefono)) {
+                    return true; // ¡El usuario existe!
+                }
+            }
+        } catch (Exception e) {}
+        return false; // No se encontró el usuario
+    }
 }

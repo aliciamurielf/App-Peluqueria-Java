@@ -127,15 +127,47 @@ public class PanelRecuperar extends JPanel {
         // 3. EVENTOS DE LOS BOTONES
         // ---------------------------------------------------------
         
-        btnRecuperar.addActionListener(new ActionListener() { //[cite: 3]
+        btnRecuperar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(txtTelefono.getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(PanelRecuperar.this, "Por favor, introduce un teléfono válido.", "Aviso", JOptionPane.WARNING_MESSAGE); //[cite: 3]
+                String tel = txtTelefono.getText().trim();
+                
+                if(tel.isEmpty()) {
+                    JOptionPane.showMessageDialog(PanelRecuperar.this, "Por favor, introduce tu número de teléfono.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                GestorUsuarios gestor = new GestorUsuarios();
+                
+                if (gestor.existeUsuario(tel)) {
+                    // FLUJO DE ÉXITO (Cartel Verde en Figma)
+                    // Obviamente, como no tenemos servidor, simulamos el SMS
+                    Object[] opcionesExito = {"Iniciar sesión"};
+                    JOptionPane.showOptionDialog(PanelRecuperar.this,
+                            "¡Listo! Te hemos enviado un enlace\npara restablecer tu contraseña por SMS.",
+                            "SMS enviado",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE, // Icono de información
+                            null, opcionesExito, opcionesExito[0]);
+                    
+                    // Al darle a aceptar, le mandamos al Login
+                    ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
+                    
                 } else {
-                    JOptionPane.showMessageDialog(PanelRecuperar.this, "Enlace de recuperación enviado al " + txtTelefono.getText(), "Éxito", JOptionPane.INFORMATION_MESSAGE); //[cite: 3]
-                    // Automáticamente devolvemos al usuario al login tras el éxito
-                    ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)); //[cite: 4]
+                    // FLUJO DE ERROR (Cartel Amarillo en Figma)
+                    Object[] opcionesError = {"Reintentar", "Crear cuenta"};
+                    int seleccion = JOptionPane.showOptionDialog(PanelRecuperar.this,
+                            "El número de teléfono introducido no\nestá vinculado a ninguna cuenta de cliente.",
+                            "Número de teléfono no vinculado",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE, // Icono de advertencia
+                            null, opcionesError, opcionesError[0]);
+                    
+                    if (seleccion == 1) { 
+                        // Si elige la opción 1 ("Crear cuenta"), le mandamos al registro
+                        ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
+                    }
+                    // Si elige 0 ("Reintentar") o cierra la ventana, se queda en la misma pantalla para escribir de nuevo
                 }
             }
         });
