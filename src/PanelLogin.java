@@ -7,11 +7,13 @@ public class PanelLogin extends JPanel {
 
     private VentanaPrincipal ventanaPrincipal;
 
+    private GestorUsuarios gestorUsuarios = new GestorUsuarios();
+    
     public PanelLogin(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Fondo verde menta
+        setBackground(new Color(168, 222, 206)); // Fondo verde 
 
         // ---------------------------------------------------------
         // 1. CABECERA AZUL OSCURO (Con imágenes)
@@ -146,33 +148,37 @@ public class PanelLogin extends JPanel {
         // ---------------------------------------------------------
         // EVENTO DEL BOTÓN 
         // ---------------------------------------------------------
-        btnEntrar.addActionListener(new ActionListener() {
+        // Dentro de PanelLogin.java, en el evento del botón entrar:
+
+btnEntrar.addActionListener(e -> {
+    String user = txtUsuario.getText();
+    String pass = new String(txtContrasena.getPassword());
+    
+    // Aquí llamas a tu método de validar (ej: gestor.validarUsuario(user, pass))
+    String rol = gestorUsuarios.obtenerRol(user, pass); 
+
+    if (rol != null) {
+        if (rol.equalsIgnoreCase("admin")) {
+            ventanaPrincipal.cambiarVista(new PanelAdminPrincipal(ventanaPrincipal));
+        } 
+        else if (rol.equalsIgnoreCase("cliente")) {
+            JOptionPane.showMessageDialog(this, "¡Bienvenido Cliente!");
+            
+            // --- AQUÍ PONES LAS LÍNEAS NUEVAS ---
+            ventanaPrincipal.setUsuarioLogueado(user); // Guardamos quién entró
+            ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal)); // Saltamos al menú
+        }
+    } else {
+        // Aquí es donde saltaría tu diálogo de "Credenciales incorrectas"
+        new DialogoErrorLogin(ventanaPrincipal).setVisible(true);
+    }
+});
+
+        btnRecuperar.addActionListener(new ActionListener() { 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String user = txtUsuario.getText();
-                String pass = new String(txtContrasena.getPassword());
-
-                GestorUsuarios gestor = new GestorUsuarios();
-                String rol = gestor.validarUsuario(user, pass);
-
-                if (rol != null) {
-                    if (rol.equalsIgnoreCase("admin")) {
-                        ventanaPrincipal.cambiarVista(new PanelAdminPrincipal(ventanaPrincipal));
-                    } else {
-                        JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
-                    }
-                } else {
-                    DialogoErrorLogin dialogoError = new DialogoErrorLogin(ventanaPrincipal);
-                    dialogoError.setVisible(true);
-                }
-            }
-        });
-
-        btnRecuperar.addActionListener(new ActionListener() { //[cite: 3]
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Usamos el método de la ventana principal para cargar la nueva vista[cite: 4]
-                ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal)); //[cite: 4]
+                // Usamos el método de la ventana principal para cargar la nueva vista
+                ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal)); 
             }
         });
     }

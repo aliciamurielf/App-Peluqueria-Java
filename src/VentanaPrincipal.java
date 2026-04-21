@@ -3,13 +3,23 @@ import java.awt.*;
 
 public class VentanaPrincipal extends JFrame {
 
+    private String usuarioLogueado;
+
+    public void setUsuarioLogueado(String nombre) {
+        this.usuarioLogueado = nombre;
+    }
+
+    public String getUsuarioLogueado() {
+        return this.usuarioLogueado;
+    }
+
     public VentanaPrincipal() {
-        super("Laura Estilistas - App"); // Título de la ventana [cite: 131]
+        super("Laura Estilistas - App"); // Título de la ventana
         
-        // Ajustamos el tamaño simulando una pantalla de móvil [cite: 132]
+        // Ajustamos el tamaño simulando una pantalla de móvil 
         setSize(350, 700); 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false); // Para no deformar el diseño [cite: 678-679]
+        setResizable(false); // Para no deformar el diseño
         setLocationRelativeTo(null); // Centrar en la pantalla
 
         // Iniciamos cargando el panel de Login
@@ -20,7 +30,7 @@ public class VentanaPrincipal extends JFrame {
     // Método que utilizaremos para cambiar de vistas (Manejo de Vistas) 
     public void cambiarVista(JPanel nuevoPanel) {
         setContentPane(nuevoPanel); 
-        revalidate(); // Volver a pintar la ventana [cite: 588]
+        revalidate(); // Volver a pintar la ventana 
     }
 
     public static void main(String[] args) {

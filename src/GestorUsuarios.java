@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 
 public class GestorUsuarios {
     
+    private final String RUTA = "usuarios.txt";
+    
     // Aquí pegas el método que tienes
     public String validarUsuario(String user, String pass) {
         try (Scanner sc = new Scanner(new File("usuarios.txt"))) {
@@ -62,5 +64,21 @@ public class GestorUsuarios {
             }
         } catch (Exception e) {}
         return false; // No se encontró el usuario
+    }
+
+    public String obtenerRol(String usuario, String contrasena) {
+        try (Scanner sc = new Scanner(new File(RUTA))) {
+            while (sc.hasNextLine()) {
+                String linea = sc.nextLine();
+                String[] partes = linea.split(";");
+                // partes[0]=user, partes[1]=pass, partes[2]=rol
+                if (partes.length >= 3 && partes[0].equals(usuario) && partes[1].equals(contrasena)) {
+                    return partes[2]; // Devuelve "admin" o "cliente"
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: No se encuentra usuarios.txt");
+        }
+        return null; // Si no lo encuentra o los datos son incorrectos
     }
 }
