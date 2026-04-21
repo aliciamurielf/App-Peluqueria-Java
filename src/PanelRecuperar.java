@@ -3,18 +3,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanelLogin extends JPanel {
+public class PanelRecuperar extends JPanel {
 
     private VentanaPrincipal ventanaPrincipal;
 
-    public PanelLogin(VentanaPrincipal ventanaPrincipal) {
+    public PanelRecuperar(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout()); //[cite: 2]
         setBackground(new Color(168, 222, 206)); // Fondo verde menta
 
         // ---------------------------------------------------------
-        // 1. CABECERA AZUL OSCURO (Con imágenes)
+        // 1. CABECERA AZUL OSCURO (Idéntica al Login por consistencia)
         // ---------------------------------------------------------
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
         pnlCabecera.setBackground(new Color(10, 0, 60)); // Azul oscuro
@@ -80,99 +80,71 @@ public class PanelLogin extends JPanel {
         // ---------------------------------------------------------
         // 2. CONTENEDOR CENTRAL Y TARJETA BLANCA
         // ---------------------------------------------------------
-        JPanel pnlCentro = new JPanel(new GridBagLayout());
+        JPanel pnlCentro = new JPanel(new GridBagLayout()); //[cite: 2]
         pnlCentro.setOpaque(false); 
 
         JPanel tarjetaBlanca = new JPanel(new GridBagLayout());
         tarjetaBlanca.setBackground(Color.WHITE);
-        tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20));
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints(); //[cite: 2]
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        // Componentes
-        JLabel lblTitulo = new JLabel("Bienvenid@", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
-        lblTitulo.setForeground(new Color(10, 0, 60)); // Azul oscuro
+        // --- COMPONENTES DE LA TARJETA ---
+        JLabel lblTitulo = new JLabel("Recuperar contraseña", SwingConstants.CENTER);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
+        lblTitulo.setForeground(new Color(10, 0, 60)); 
         
-        JLabel lblSubtitulo = new JLabel("Inicia sesión para continuar", SwingConstants.CENTER);
-        lblSubtitulo.setForeground(Color.GRAY);
+        // Uso de HTML para el salto de línea en el texto explicativo
+        JLabel lblExplicacion = new JLabel("<html><div style='text-align: center; color: gray;'>Ingresa el número de teléfono<br>asociado a tu cuenta y te<br>enviaremos un enlace para<br>restablecer tu contraseña</div></html>", SwingConstants.CENTER);
+        lblExplicacion.setFont(new Font("Arial", Font.PLAIN, 12));
         
-        JLabel lblUsuario = new JLabel("Usuario");
-        lblUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
-        JTextField txtUsuario = new JTextField(15);
+        JTextField txtTelefono = new JTextField(15); //[cite: 2]
+        // *Nota: Java Swing no tiene "placeholders" nativos de forma sencilla, 
+        // así que lo dejamos vacío o le ponemos un ToolTipText.
+        txtTelefono.setToolTipText("Introduce tu número de teléfono");
         
-        JLabel lblContrasena = new JLabel("Contraseña");
-        lblContrasena.setFont(new Font("Arial", Font.PLAIN, 12));
-        JPasswordField txtContrasena = new JPasswordField(15);
-        
-        JCheckBox chkGuardar = new JCheckBox("Guardar contraseña");
-        chkGuardar.setBackground(Color.WHITE);
-        chkGuardar.setFont(new Font("Arial", Font.PLAIN, 11));
-        
-        JButton btnEntrar = new JButton("ENTRAR");
-        btnEntrar.setBackground(new Color(10, 0, 60)); 
-        btnEntrar.setForeground(Color.WHITE);
-        
-        JButton btnRecuperar = new JButton("He olvidado mi contraseña");
-        btnRecuperar.setBackground(new Color(30, 20, 80)); // Azul ligeramente distinto como en tu diseño
+        JButton btnRecuperar = new JButton("Recuperar contraseña"); //[cite: 2]
+        btnRecuperar.setBackground(new Color(10, 0, 60)); 
         btnRecuperar.setForeground(Color.WHITE);
         
-        JLabel lblRegistro = new JLabel("¿No tienes cuenta? Regístrate aquí", SwingConstants.CENTER);
-        lblRegistro.setFont(new Font("Arial", Font.PLAIN, 11));
-        lblRegistro.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambia el ratón a la manita
-        lblRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
-            }
-        });
+        JButton btnVolver = new JButton("Volver a iniciar sesión");
+        btnVolver.setBackground(new Color(30, 20, 80)); 
+        btnVolver.setForeground(Color.WHITE);
 
-        // Añadir a la tarjeta
+        // --- AÑADIR A LA TARJETA ---
         gbc.gridy = 0; tarjetaBlanca.add(lblTitulo, gbc);
-        gbc.gridy = 1; tarjetaBlanca.add(lblSubtitulo, gbc);
-        gbc.gridy = 2; gbc.insets = new Insets(15, 0, 2, 0); tarjetaBlanca.add(lblUsuario, gbc);
-        gbc.gridy = 3; gbc.insets = new Insets(0, 0, 10, 0); tarjetaBlanca.add(txtUsuario, gbc);
-        gbc.gridy = 4; gbc.insets = new Insets(5, 0, 2, 0);  tarjetaBlanca.add(lblContrasena, gbc);
-        gbc.gridy = 5; gbc.insets = new Insets(0, 0, 5, 0);  tarjetaBlanca.add(txtContrasena, gbc);
-        gbc.gridy = 6; tarjetaBlanca.add(chkGuardar, gbc);
-        gbc.gridy = 7; gbc.insets = new Insets(15, 0, 10, 0); tarjetaBlanca.add(btnEntrar, gbc);
-        gbc.gridy = 8; gbc.insets = new Insets(0, 0, 15, 0); tarjetaBlanca.add(btnRecuperar, gbc);
-        gbc.gridy = 9; tarjetaBlanca.add(lblRegistro, gbc);
+        gbc.gridy = 1; gbc.insets = new Insets(15, 0, 20, 0); tarjetaBlanca.add(lblExplicacion, gbc);
+        gbc.gridy = 2; gbc.insets = new Insets(0, 0, 25, 0); tarjetaBlanca.add(txtTelefono, gbc);
+        gbc.gridy = 3; gbc.insets = new Insets(0, 0, 10, 0); tarjetaBlanca.add(btnRecuperar, gbc);
+        gbc.gridy = 4; gbc.insets = new Insets(0, 0, 0, 0); tarjetaBlanca.add(btnVolver, gbc);
 
         pnlCentro.add(tarjetaBlanca);
-        add(pnlCentro, BorderLayout.CENTER);
+        add(pnlCentro, BorderLayout.CENTER); //[cite: 2]
 
         // ---------------------------------------------------------
-        // EVENTO DEL BOTÓN 
+        // 3. EVENTOS DE LOS BOTONES
         // ---------------------------------------------------------
-        btnEntrar.addActionListener(new ActionListener() {
+        
+        btnRecuperar.addActionListener(new ActionListener() { //[cite: 3]
             @Override
             public void actionPerformed(ActionEvent e) {
-                String user = txtUsuario.getText();
-                String pass = new String(txtContrasena.getPassword());
-
-                GestorUsuarios gestor = new GestorUsuarios();
-                String rol = gestor.validarUsuario(user, pass);
-
-                if (rol != null) {
-                    if (rol.equalsIgnoreCase("admin")) {
-                        ventanaPrincipal.cambiarVista(new PanelAdmin(ventanaPrincipal));
-                    } else {
-                        JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
-                    }
+                if(txtTelefono.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(PanelRecuperar.this, "Por favor, introduce un teléfono válido.", "Aviso", JOptionPane.WARNING_MESSAGE); //[cite: 3]
                 } else {
-                    DialogoErrorLogin dialogoError = new DialogoErrorLogin(ventanaPrincipal);
-                    dialogoError.setVisible(true);
+                    JOptionPane.showMessageDialog(PanelRecuperar.this, "Enlace de recuperación enviado al " + txtTelefono.getText(), "Éxito", JOptionPane.INFORMATION_MESSAGE); //[cite: 3]
+                    // Automáticamente devolvemos al usuario al login tras el éxito
+                    ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)); //[cite: 4]
                 }
             }
         });
 
-        btnRecuperar.addActionListener(new ActionListener() { //[cite: 3]
+        btnVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Usamos el método de la ventana principal para cargar la nueva vista[cite: 4]
-                ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal)); //[cite: 4]
+                // Manejo de vistas: Volvemos al panel de Login[cite: 4]
+                ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)); //[cite: 4]
             }
         });
     }

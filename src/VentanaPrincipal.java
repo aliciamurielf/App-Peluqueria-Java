@@ -24,10 +24,22 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public static void main(String[] args) {
+        // ACTIVAR NIMBUS LOOK AND FEEL PARA UN DISEÑO MÁS MODERNO
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // Si falla, usará el de por defecto
+        }
+
         // Ejecutar la interfaz
         SwingUtilities.invokeLater(() -> {
             VentanaPrincipal ventana = new VentanaPrincipal();
-            ventana.setVisible(true); 
+            ventana.setVisible(true);
         });
     }
 }
