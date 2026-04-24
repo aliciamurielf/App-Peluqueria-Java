@@ -1,5 +1,7 @@
 09:00;María López
 10:00;Ana García
-10:30;alicia
 Martes 21 a las 09:00;alicia
-10:30;alicia
+10:30;Nombre y Apellido
+Miércoles 22 a las 16:00;Pepe
+10:30;Pepe
+Mañana - 10:00;alicia

@@ -65,13 +65,13 @@ public class PanelAdminAgenda extends JPanel {
 
         // Acción de AÑADIR
         btnAnadir.addActionListener(e -> {
-            String hora = JOptionPane.showInputDialog(this, "Introduce la hora (Ej: 17:00):", "Nueva Cita", JOptionPane.QUESTION_MESSAGE);
-            if (hora != null && !hora.trim().isEmpty()) {
-                String nombre = JOptionPane.showInputDialog(this, "Nombre del cliente:", "Nueva Cita", JOptionPane.QUESTION_MESSAGE);
-                if (nombre != null && !nombre.trim().isEmpty()) {
-                    gestor.guardarCita(hora, nombre); // Guarda en citas.txt
-                    actualizarListaDesdeArchivo();    // Refresca la interfaz
-                }
+            Window parentWindow = SwingUtilities.getWindowAncestor(this);
+            DialogoAnadirCita dialogo = new DialogoAnadirCita(parentWindow);
+            dialogo.setVisible(true); // Se detiene aquí hasta que se cierra al ser Modal
+            
+            if (dialogo.isConfirmado()) {
+                gestor.guardarCita(dialogo.getHoraCita(), dialogo.getNombreCliente());
+                actualizarListaDesdeArchivo();
             }
         });
 

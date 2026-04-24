@@ -110,6 +110,18 @@ public class PanelAdminPrincipal extends JPanel {
                 ex.printStackTrace();
             }
         });
+        
+        // Evento CLIENTES (Enlazamos aquí la Tarea 3)
+        btnClientes.addActionListener(e -> {
+            System.out.println("Cargando Panel de Clientes...");
+            cambiarVistaInterna(new PanelAdminClientes(this));
+        });
+
+        // Evento INVENTARIO (Enlazamos aquí la Tarea 5)
+        btnInventario.addActionListener(e -> {
+            System.out.println("Cargando Panel de Inventario...");
+            cambiarVistaInterna(new PanelAdminInventario(ventanaPrincipal));
+        });
 
         // Evento SALIR (El que sí te funciona)
         btnSalir.addActionListener(e -> {
