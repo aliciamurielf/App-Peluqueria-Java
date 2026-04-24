@@ -14,17 +14,17 @@ public class PanelAdminInicio extends JPanel {
         tarjetaBlanca.setPreferredSize(new Dimension(300, 400));
 
         // Título de la tarjeta
-        JLabel lblTitulo = new JLabel("INICIO", SwingConstants.CENTER);
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("admin.inicio"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(new Color(10, 0, 60));
         tarjetaBlanca.add(lblTitulo, BorderLayout.NORTH);
 
         // Centro: Lista de citas
         JPanel pnlCitas = new JPanel();
-        pnlCitas.setLayout(new BoxLayout(pnlCitas, BoxLayout.Y_AXIS));
+        pnlCitas.setLayout(new GridLayout(0, 1, 0, 5));
         pnlCitas.setBackground(Color.WHITE);
         
-        JLabel lblSubtitulo = new JLabel("Citas pendientes hoy:");
+        JLabel lblSubtitulo = new JLabel(GestorIdiomas.getTexto("admin.citas_hoy"));
         lblSubtitulo.setFont(new Font("Arial", Font.BOLD, 12));
         pnlCitas.add(lblSubtitulo);
         pnlCitas.add(Box.createVerticalStrut(10)); // Espaciador
@@ -41,7 +41,7 @@ public class PanelAdminInicio extends JPanel {
         tarjetaBlanca.add(pnlCitas, BorderLayout.CENTER);
 
         // Botón Modificar abajo
-        JButton btnModificar = new JButton("Modificar");
+        JButton btnModificar = new JButton(GestorIdiomas.getTexto("admin.modificar"));
         btnModificar.setBackground(new Color(10, 0, 60));
         btnModificar.setForeground(Color.WHITE);
         tarjetaBlanca.add(btnModificar, BorderLayout.SOUTH);

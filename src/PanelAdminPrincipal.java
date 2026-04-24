@@ -61,11 +61,11 @@ public class PanelAdminPrincipal extends JPanel {
         panel.setPreferredSize(new Dimension(350, 50));
 
         // 1. Creamos los objetos de los botones
-        JButton btnInicio = new JButton();
-        JButton btnAgenda = new JButton();
-        JButton btnClientes = new JButton();
-        JButton btnInventario = new JButton();
-        JButton btnSalir = new JButton();
+        JButton btnInicio = new JButton(GestorIdiomas.getTexto("nav.inicio"));
+        JButton btnAgenda = new JButton(GestorIdiomas.getTexto("nav.agenda"));
+        JButton btnClientes = new JButton(GestorIdiomas.getTexto("nav.clientes"));
+        JButton btnInventario = new JButton(GestorIdiomas.getTexto("nav.inventario"));
+        JButton btnSalir = new JButton(GestorIdiomas.getTexto("nav.salir"));
 
         // 2. Los metemos en un array para aplicarles el diseño (iconos)
         JButton[] botones = {btnInicio, btnAgenda, btnClientes, btnInventario, btnSalir};
@@ -125,7 +125,7 @@ public class PanelAdminPrincipal extends JPanel {
 
         // Evento SALIR (El que sí te funciona)
         btnSalir.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres cerrar sesión?", "Salir", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres cerrar sesión?", GestorIdiomas.getTexto("nav.salir"), JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             }
