@@ -24,26 +24,37 @@ public class PanelLogin extends JPanel {
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
 
-        // -- COLUMNA IZQUIERDA (Icono de idioma) --
-        gbcCabecera.gridx = 0;
+        // -- COLUMNA IZQUIERDA (Icono de idioma MODO BOTÓN para que responda a clicks) --
+        gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 2; // Ocupa las dos filas de altura
         gbcCabecera.weightx = 0.33; // Ocupa un tercio del espacio horizontal
         gbcCabecera.anchor = GridBagConstraints.NORTHWEST; // Pegado arriba a la izquierda
         gbcCabecera.insets = new Insets(15, 15, 0, 0); // Margen
+        
+        JButton btnIconoIdioma = new JButton("🌐"); // Emoji por si no hay imagen
+        btnIconoIdioma.setForeground(Color.WHITE);
+        btnIconoIdioma.setBorderPainted(false);
+        btnIconoIdioma.setContentAreaFilled(false);
+        btnIconoIdioma.setFocusPainted(false);
+        btnIconoIdioma.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel lblIconoIdioma = new JLabel("🌐"); // Emoji por si no hay imagen
-        lblIconoIdioma.setForeground(Color.WHITE);
         try {
-            ImageIcon iconIdioma = new ImageIcon("images/icono_idioma.png");
+            ImageIcon iconIdioma = new ImageIcon("src/images/icono_idioma.png");
             if (iconIdioma.getIconWidth() > 0) {
                 Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-                lblIconoIdioma.setIcon(new ImageIcon(imgIdioma));
-                lblIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
+                btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
+                btnIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
             }
-        } catch (Exception e) {
-        }
-        pnlCabecera.add(lblIconoIdioma, gbcCabecera);
+        } catch (Exception e) {}
+
+        // Evento que acciona I18n
+        btnIconoIdioma.addActionListener(e -> {
+            GestorIdiomas.cambiarIdiomaBase();
+            ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
+        });
+
+        pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
         // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1;
@@ -95,52 +106,51 @@ public class PanelLogin extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        // Componentes
-        JLabel lblTitulo = new JLabel("Bienvenid@", SwingConstants.CENTER);
+        //        // Títulos y textos intercionalizados
+        JLabel lblTitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("login.titulo") + "</center></html>", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
-        lblTitulo.setForeground(new Color(10, 0, 60)); // Azul oscuro
-
-        JLabel lblSubtitulo = new JLabel("Inicia sesión para continuar", SwingConstants.CENTER);
+        lblTitulo.setForeground(Color.BLACK);
+        
+        JLabel lblSubtitulo = new JLabel(GestorIdiomas.getTexto("login.subtitulo"), SwingConstants.CENTER);
+        lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 12));
         lblSubtitulo.setForeground(Color.GRAY);
 
-        JLabel lblUsuario = new JLabel("Usuario");
-        lblUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
+        // Componentes (Usuario / Contraseña)
+        JLabel lblUsuario = new JLabel(GestorIdiomas.getTexto("login.usuario"));
+        lblUsuario.setFont(new Font("Arial", Font.BOLD, 12));
         JTextField txtUsuario = new JTextField(15);
 
-        JLabel lblContrasena = new JLabel("Contraseña");
-        lblContrasena.setFont(new Font("Arial", Font.PLAIN, 12));
+        JLabel lblContrasena = new JLabel(GestorIdiomas.getTexto("login.contrasena"));
+        lblContrasena.setFont(new Font("Arial", Font.BOLD, 12));
         JPasswordField txtContrasena = new JPasswordField(15);
 
-        JCheckBox chkGuardar = new JCheckBox("Guardar contraseña");
+        JCheckBox chkGuardar = new JCheckBox(GestorIdiomas.getTexto("login.recordar"));
         chkGuardar.setBackground(Color.WHITE);
-        chkGuardar.setFont(new Font("Arial", Font.PLAIN, 11));
+        chkGuardar.setFont(new Font("Arial", Font.PLAIN, 10));
 
-        JButton btnEntrar = new JButton("ENTRAR");
-        btnEntrar.setBackground(new Color(10, 0, 60));
+        JButton btnEntrar = new JButton(GestorIdiomas.getTexto("login.entrar"));
+        btnEntrar.setBackground(new Color(10, 0, 60)); // Azul oscuro tipo Figma
         btnEntrar.setForeground(Color.WHITE);
+        btnEntrar.setFocusPainted(false);
 
-        JButton btnRecuperar = new JButton("He olvidado mi contraseña");
-        btnRecuperar.setBackground(new Color(30, 20, 80)); // Azul ligeramente distinto como en tu diseño
-        btnRecuperar.setForeground(Color.WHITE);
+        // Botones fantasma
+        JButton btnRecuperar = new JButton(GestorIdiomas.getTexto("login.recuperar"));
+        btnRecuperar.setFont(new Font("Arial", Font.PLAIN, 10));
+        btnRecuperar.setForeground(Color.GRAY);
+        btnRecuperar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRecuperar.setBorderPainted(false);
+        btnRecuperar.setContentAreaFilled(false);
+        btnRecuperar.setFocusPainted(false);
 
-        // En lugar de JLabel usamos un JButton
-        JButton btnRegistro = new JButton("¿No tienes cuenta? Regístrate aquí");
-        btnRegistro.setFont(new Font("Arial", Font.PLAIN, 11));
-        btnRegistro.setForeground(Color.BLACK); // O el color que prefieras
-        btnRegistro.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Esto sí lo habéis dado (AppPeluqueriaFinal.java)
-
-        // Lo "camuflamos" para que parezca puramente texto
+        JButton btnRegistro = new JButton(GestorIdiomas.getTexto("login.registro"));
+        btnRegistro.setFont(new Font("Arial", Font.PLAIN, 10));
+        btnRegistro.setForeground(Color.GRAY);
+        btnRegistro.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnRegistro.setBorderPainted(false);
         btnRegistro.setContentAreaFilled(false);
         btnRegistro.setFocusPainted(false);
 
-        // Y usamos el ActionListener estándar que SÍ habéis dado
-        btnRegistro.addActionListener(e -> {
-            ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
-        });
-
-        // TAREA 6: Botón para el Registro de Administrador
-        JButton btnRegistroAdmin = new JButton("Solicitar cuenta Admin");
+        JButton btnRegistroAdmin = new JButton(GestorIdiomas.getTexto("login.admin"));
         btnRegistroAdmin.setFont(new Font("Arial", Font.PLAIN, 10));
         btnRegistroAdmin.setForeground(Color.GRAY);
         btnRegistroAdmin.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -150,6 +160,11 @@ public class PanelLogin extends JPanel {
         
         btnRegistroAdmin.addActionListener(e -> {
             ventanaPrincipal.cambiarVista(new PanelSolicitudAdmin(ventanaPrincipal));
+        });
+
+        // Y usamos el ActionListener estándar que SÍ habéis dado
+        btnRegistro.addActionListener(e -> {
+            ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
         });
 
         // Añadir a la tarjeta

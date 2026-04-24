@@ -79,13 +79,13 @@ public class PanelClienteMenu extends JPanel {
         gbc.insets = new java.awt.Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
 
-        JButton btnPedir = new JButton("PEDIR CITA");
+        JButton btnPedir = new JButton(GestorIdiomas.getTexto("cliente.pedir"));
         btnPedir.setBackground(new Color(10, 0, 60)); // Azul oscuro
         btnPedir.setForeground(Color.WHITE);
         btnPedir.setFont(new Font("Arial", Font.BOLD, 20));
         btnPedir.setPreferredSize(new Dimension(200, 150));
 
-        JButton btnAnular = new JButton("ANULAR CITA");
+        JButton btnAnular = new JButton(GestorIdiomas.getTexto("cliente.anular"));
         btnAnular.setBackground(new Color(255, 230, 150)); // Amarillo suave
         btnAnular.setForeground(Color.BLACK);
         btnAnular.setFont(new Font("Arial", Font.BOLD, 18));
@@ -113,7 +113,7 @@ public class PanelClienteMenu extends JPanel {
     private JPanel crearPieCerrarSesion() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panel.setBackground(Color.WHITE);
-        JButton btnSalir = new JButton("CERRAR SESIÓN");
+        JButton btnSalir = new JButton(GestorIdiomas.getTexto("cliente.cerrar"));
         btnSalir.setBorderPainted(false);
         btnSalir.setContentAreaFilled(false);
         btnSalir.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
