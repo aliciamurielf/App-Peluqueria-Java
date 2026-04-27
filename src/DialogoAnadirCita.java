@@ -32,7 +32,7 @@ public class DialogoAnadirCita extends JDialog {
         txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
         txtNombre.setHorizontalAlignment(JTextField.LEFT);
 
-        // Combo Servicio (Internacionalizado)
+        
         String[] servicios = { GestorIdiomas.getTexto("cita.servicio"), 
                                GestorIdiomas.getTexto("cita.corte"), 
                                GestorIdiomas.getTexto("cita.tinte"), 
@@ -40,7 +40,7 @@ public class DialogoAnadirCita extends JDialog {
         comboServicio = new JComboBox<>(servicios);
         comboServicio.setBackground(new Color(230, 230, 230));
 
-        // Botón Fecha (Meses internacionalizados)
+        
         btnFecha = new JButton("\uD83D\uDCC5 " + GestorIdiomas.getTexto("cita.fecha"));
         btnFecha.setBackground(Color.WHITE);
         btnFecha.setFocusPainted(false);
@@ -67,11 +67,10 @@ public class DialogoAnadirCita extends JDialog {
             int result = JOptionPane.showConfirmDialog(this, pnlFechaConf, GestorIdiomas.getTexto("cita.seleccionar_dia_mes"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
-                btnFecha.setText("📅 " + comboDias.getSelectedItem() + " " + GestorIdiomas.getTexto("cita.de") + " " + comboMeses.getSelectedItem());
+                btnFecha.setText(comboDias.getSelectedItem() + " " + GestorIdiomas.getTexto("cita.de") + " " + comboMeses.getSelectedItem());
             }
         });
-
-        // Botón Hora
+ 
         btnHora = new JButton("\u23F0 " + GestorIdiomas.getTexto("cita.hora"));
         btnHora.setBackground(Color.WHITE);
         btnHora.setFocusPainted(false);
@@ -84,7 +83,6 @@ public class DialogoAnadirCita extends JDialog {
                 btnHora.setText("\u23F0 " + seleccion);
         });
 
-        // Botones Inferiores (OK / Cancelar) (Internacionalizados)
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         pnlBotones.setBackground(Color.WHITE);
 
@@ -107,11 +105,11 @@ public class DialogoAnadirCita extends JDialog {
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("cita.error_servicio"));
                 return;
             }
-            // Asignamos las variables finales
+            
             this.nombreCliente = txtNombre.getText().trim();
 
-            String fechaExtr = btnFecha.getText().replace("📅 ", "");
-            String horaExtr = btnHora.getText().replace("⏰ ", "");
+            String fechaExtr = btnFecha.getText();
+            String horaExtr = btnHora.getText();
             this.horaCita = (fechaExtr.equals(GestorIdiomas.getTexto("cita.fecha")) ? GestorIdiomas.getTexto("cita.hoy") : fechaExtr) + " - "
                     + (horaExtr.equals(GestorIdiomas.getTexto("cita.hora")) ? "00:00" : horaExtr);
 
@@ -127,7 +125,7 @@ public class DialogoAnadirCita extends JDialog {
         pnlBotones.add(btnOk);
         pnlBotones.add(btnCancelar);
 
-        // Añadimos todo al panel
+        
         gbc.gridy = 0;
         gbc.insets = new Insets(20, 15, 10, 15);
         panelPrincipal.add(txtNombre, gbc);

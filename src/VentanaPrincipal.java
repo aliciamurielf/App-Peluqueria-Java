@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -14,23 +13,20 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public VentanaPrincipal() {
-        super("Laura Estilistas - App"); // Título de la ventana
+        super("Laura Estilistas - App"); 
 
-        // Ajustamos el tamaño simulando una pantalla de móvil
         setSize(350, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false); // Para no deformar el diseño
-        setLocationRelativeTo(null); // Centrar en la pantalla
+        setResizable(false); 
+        setLocationRelativeTo(null); 
 
-        // Iniciamos cargando el panel de Login
         PanelLogin panelLogin = new PanelLogin(this);
         setContentPane(panelLogin);
     }
 
-    // Método que utilizaremos para cambiar de vistas (Manejo de Vistas)
     public void cambiarVista(JPanel nuevoPanel) {
         setContentPane(nuevoPanel);
-        revalidate(); // Volver a pintar la ventana
+        revalidate(); 
     }
 
     public static void main(String[] args) {
@@ -42,10 +38,9 @@ public class VentanaPrincipal extends JFrame {
                 }
             }
         } catch (Exception e) {
-            // Si falla, usará el de por defecto
+            
         }
-
-        // Ejecutar la interfaz
+        
         SwingUtilities.invokeLater(() -> {
             VentanaPrincipal ventana = new VentanaPrincipal();
             ventana.setVisible(true);

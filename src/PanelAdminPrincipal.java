@@ -4,49 +4,35 @@ import java.awt.*;
 public class PanelAdminPrincipal extends JPanel {
 
     private VentanaPrincipal ventanaPrincipal;
-    private JPanel pnlContenidoCentral; // Aquí inyectaremos las distintas pantallas
+    private JPanel pnlContenidoCentral; 
 
     public PanelAdminPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Fondo verde menta
-
-        // ---------------------------------------------------------
-        // 1. CABECERA (Fija arriba)
-        // ---------------------------------------------------------
+        setBackground(new Color(168, 222, 206)); 
+  
         JPanel pnlCabecera = crearCabecera();
         add(pnlCabecera, BorderLayout.NORTH);
-
-        // ---------------------------------------------------------
-        // 2. CONTENEDOR CENTRAL (Dinámico)
-        // ---------------------------------------------------------
         pnlContenidoCentral = new JPanel(new BorderLayout());
         pnlContenidoCentral.setOpaque(false);
         add(pnlContenidoCentral, BorderLayout.CENTER);
 
-        // ---------------------------------------------------------
-        // 3. BARRA DE NAVEGACIÓN (Fija abajo)
-        // ---------------------------------------------------------
         JPanel pnlNavegacion = crearBarraNavegacion();
         add(pnlNavegacion, BorderLayout.SOUTH);
-
-        // Por defecto, al entrar, cargamos la vista de "Inicio"
         cambiarVistaInterna(new PanelAdminInicio());
     }
 
-    // --- MÉTODO PARA CAMBIAR SOLO EL CENTRO ---
     public void cambiarVistaInterna(JPanel nuevaVista) {
-        pnlContenidoCentral.removeAll(); // Quitamos lo que haya
-        pnlContenidoCentral.add(nuevaVista, BorderLayout.CENTER); // Añadimos la nueva
-        pnlContenidoCentral.revalidate(); // Refrescamos
+        pnlContenidoCentral.removeAll(); 
+        pnlContenidoCentral.add(nuevaVista, BorderLayout.CENTER); 
+        pnlContenidoCentral.revalidate(); 
         pnlContenidoCentral.repaint();
     }
 
-    // --- MÉTODOS AUXILIARES DE DISEÑO ---
     private JPanel crearCabecera() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(10, 0, 60)); 
-        panel.setPreferredSize(new Dimension(350, 100)); // Un poco más fina que en el login
+        panel.setPreferredSize(new Dimension(350, 100)); 
         
         JLabel lblTitulo = new JLabel("Laura Estilistas");
         lblTitulo.setForeground(Color.WHITE);
@@ -60,14 +46,14 @@ public class PanelAdminPrincipal extends JPanel {
         panel.setBackground(Color.WHITE);
         panel.setPreferredSize(new Dimension(350, 50));
 
-        // 1. Creamos los objetos de los botones
+        
         JButton btnInicio = new JButton(GestorIdiomas.getTexto("nav.inicio"));
         JButton btnAgenda = new JButton(GestorIdiomas.getTexto("nav.agenda"));
         JButton btnClientes = new JButton(GestorIdiomas.getTexto("nav.clientes"));
         JButton btnInventario = new JButton(GestorIdiomas.getTexto("nav.inventario"));
         JButton btnSalir = new JButton(GestorIdiomas.getTexto("nav.salir"));
 
-        // 2. Los metemos en un array para aplicarles el diseño (iconos)
+        
         JButton[] botones = {btnInicio, btnAgenda, btnClientes, btnInventario, btnSalir};
         String[] nombresArchivos = {"nav_inicio.png", "nav_agenda.png", "nav_clientes.png", "nav_inventario.png", "nav_salir.png"};
 
@@ -76,7 +62,7 @@ public class PanelAdminPrincipal extends JPanel {
             botones[i].setFocusPainted(false);
             botones[i].setBorderPainted(false);
             
-            // Intento de carga de imagen (Híbrido para VS Code)
+            
             java.io.File archivo = new java.io.File("src/images/" + nombresArchivos[i]);
             if (archivo.exists()) {
                 ImageIcon icon = new ImageIcon(archivo.getAbsolutePath());
@@ -88,17 +74,11 @@ public class PanelAdminPrincipal extends JPanel {
             panel.add(botones[i]);
         }
 
-        // ---------------------------------------------------------
-        // 3. EVENTOS DE NAVEGACIÓN (Asignación directa por variable)
-        // ---------------------------------------------------------
-        
-        // Evento INICIO
         btnInicio.addActionListener(e -> {
             System.out.println("Cargando Inicio...");
             cambiarVistaInterna(new PanelAdminInicio());
         });
-
-        // Evento AGENDA (El que nos falla)
+        
         btnAgenda.addActionListener(e -> {
             System.out.println("Intentando abrir PanelAdminAgenda...");
             try {
@@ -111,26 +91,22 @@ public class PanelAdminPrincipal extends JPanel {
             }
         });
         
-        // Evento CLIENTES (Enlazamos aquí la Tarea 3)
         btnClientes.addActionListener(e -> {
             System.out.println("Cargando Panel de Clientes...");
             cambiarVistaInterna(new PanelAdminClientes(this));
         });
 
-        // Evento INVENTARIO (Enlazamos aquí la Tarea 5)
         btnInventario.addActionListener(e -> {
             System.out.println("Cargando Panel de Inventario...");
             cambiarVistaInterna(new PanelAdminInventario(ventanaPrincipal));
         });
 
-        // Evento SALIR (El que sí te funciona)
         btnSalir.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this, GestorIdiomas.getTexto("nav.confirmar_salir"), GestorIdiomas.getTexto("nav.salir"), JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             }
         });
-
         return panel;
     }
 }

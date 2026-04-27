@@ -23,9 +23,8 @@ public class GestorUsuarios {
         return null; 
     }
 
-    // Registrar usuarios
     public boolean registrarUsuario(String telefono, String pass) {
-        // Primero comprobamos que el teléfono no exista ya
+        
         try (Scanner sc = new Scanner(new File("usuarios.txt"))) {
             while (sc.hasNextLine()) {
                 String linea = sc.nextLine();
@@ -35,7 +34,7 @@ public class GestorUsuarios {
                     return false;
                 }
             }
-        } catch (Exception e) {} // Si el fichero no existe, se crea
+        } catch (Exception e) {} 
 
         try (java.io.FileWriter fw = new java.io.FileWriter("usuarios.txt", true);
              java.io.PrintWriter out = new java.io.PrintWriter(fw)) {

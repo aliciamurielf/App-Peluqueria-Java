@@ -9,26 +9,21 @@ public class PanelRegistro extends JPanel {
     public PanelRegistro(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Fondo verde menta
+        setBackground(new Color(168, 222, 206)); 
 
-        // ---------------------------------------------------------
-        // 1. CABECERA AZUL (Copiar la misma que usamos en Login)
-        // ---------------------------------------------------------
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
-        pnlCabecera.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        pnlCabecera.setBackground(new Color(10, 0, 60)); 
         pnlCabecera.setPreferredSize(new Dimension(350, 140));
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
-
-        // -- COLUMNA IZQUIERDA (Icono de idioma MODO BOTÓN) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
-        gbcCabecera.gridheight = 2; // Ocupa las dos filas de altura
-        gbcCabecera.weightx = 0.33; // Ocupa un tercio del espacio horizontal
-        gbcCabecera.anchor = GridBagConstraints.NORTHWEST; // Pegado arriba a la izquierda
-        gbcCabecera.insets = new Insets(15, 15, 0, 0); // Margen
+        gbcCabecera.gridheight = 2; 
+        gbcCabecera.weightx = 0.33; 
+        gbcCabecera.anchor = GridBagConstraints.NORTHWEST; 
+        gbcCabecera.insets = new Insets(15, 15, 0, 0); 
         
-        JButton btnIconoIdioma = new JButton("🌐"); // Emoji por si no hay imagen
+        JButton btnIconoIdioma = new JButton(); 
         btnIconoIdioma.setForeground(Color.WHITE);
         btnIconoIdioma.setBorderPainted(false);
         btnIconoIdioma.setContentAreaFilled(false);
@@ -40,11 +35,10 @@ public class PanelRegistro extends JPanel {
             if (iconIdioma.getIconWidth() > 0) {
                 Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
                 btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
-                btnIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
+                btnIconoIdioma.setText(""); 
             }
         } catch (Exception e) {}
-
-        // Evento que acciona I18n
+ 
         btnIconoIdioma.addActionListener(e -> {
             GestorIdiomas.cambiarIdiomaBase();
             ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
@@ -52,15 +46,14 @@ public class PanelRegistro extends JPanel {
 
         pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
-        // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 1; 
-        gbcCabecera.weightx = 0.33; // Ocupa el tercio central
+        gbcCabecera.weightx = 0.33; 
         gbcCabecera.anchor = GridBagConstraints.CENTER;
         gbcCabecera.insets = new Insets(15, 0, 5, 0);
         
-        JLabel lblLogo = new JLabel("✂️"); // Emoji por si no hay logo
+        JLabel lblLogo = new JLabel(); 
         lblLogo.setForeground(Color.WHITE);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
@@ -72,24 +65,21 @@ public class PanelRegistro extends JPanel {
         } catch (Exception e) {}
         pnlCabecera.add(lblLogo, gbcCabecera);
 
-        gbcCabecera.gridy = 1; // Fila de abajo para el título
+        gbcCabecera.gridy = 1; 
         gbcCabecera.insets = new Insets(0, 0, 15, 0);
         JLabel lblLogoTexto = new JLabel("Laura Estilistas");
         lblLogoTexto.setForeground(Color.WHITE);
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
         pnlCabecera.add(lblLogoTexto, gbcCabecera);
 
-        // -- COLUMNA DERECHA (Fantasma para equilibrar el centro) --
+        
         gbcCabecera.gridx = 2; 
         gbcCabecera.gridy = 0;
-        gbcCabecera.weightx = 0.33; // El último tercio vacío
+        gbcCabecera.weightx = 0.33; 
         pnlCabecera.add(new JLabel(" "), gbcCabecera);
 
         add(pnlCabecera, BorderLayout.NORTH);
-
-        // ---------------------------------------------------------
-        // 2. TARJETA BLANCA DE REGISTRO
-        // ---------------------------------------------------------
+        
         JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false); 
 
@@ -100,13 +90,11 @@ public class PanelRegistro extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0; gbc.weightx = 1.0;
-
-        // --- COMPONENTES (Internacionalizados) ---
+ 
         JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("registro.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setForeground(new Color(10, 0, 60));
-        
-        // Estilo común para etiquetas
+
         Font fontLabels = new Font("Arial", Font.BOLD, 11);
         Color colorAzulOscuro = new Color(10, 0, 60);
 
@@ -129,7 +117,6 @@ public class PanelRegistro extends JPanel {
         JButton btnRegistrar = new JButton(GestorIdiomas.getTexto("registro.boton"));
         btnRegistrar.setBackground(new Color(10, 0, 60)); btnRegistrar.setForeground(Color.WHITE);
 
-        // --- AÑADIR AL GRID ---
         gbc.gridy = 0; gbc.insets = new Insets(0, 0, 15, 0); tarjetaBlanca.add(lblTitulo, gbc);
         
         gbc.gridy = 1; gbc.insets = new Insets(0, 0, 2, 0); tarjetaBlanca.add(lblNombre, gbc);
@@ -153,19 +140,15 @@ public class PanelRegistro extends JPanel {
         pnlCentro.add(tarjetaBlanca);
         add(pnlCentro, BorderLayout.CENTER);
 
-        // Botón inferior flotante
         JButton btnVolver = new JButton(GestorIdiomas.getTexto("registro.volver"));
         btnVolver.setBackground(Color.WHITE); btnVolver.setForeground(new Color(10, 0, 60));
         JPanel pnlSur = new JPanel(); pnlSur.setOpaque(false); pnlSur.add(btnVolver);
         add(pnlSur, BorderLayout.SOUTH);
 
-        // ---------------------------------------------------------
-        // 3. EVENTOS Y VALIDACIONES
-        // ---------------------------------------------------------
         btnVolver.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
 
         btnRegistrar.addActionListener(e -> {
-            // Restaurar bordes por si había error anterior
+            
             txtTelefono.setBorder(UIManager.getBorder("TextField.border"));
             txtPass.setBorder(UIManager.getBorder("TextField.border"));
             txtConfPass.setBorder(UIManager.getBorder("TextField.border"));
@@ -174,43 +157,38 @@ public class PanelRegistro extends JPanel {
             String p1 = new String(txtPass.getPassword());
             String p2 = new String(txtConfPass.getPassword());
 
-            // Validación 1: Campos vacíos
             if(txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() || tel.isEmpty() || p1.isEmpty()) {
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_campos"), GestorIdiomas.getTexto("registro.error_campos_titulo"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Validación 2: Teléfono (asumimos que debe tener 9 dígitos como en España)
             if(!tel.matches("\\d{9}")) {
                 txtTelefono.setBorder(new LineBorder(Color.RED, 1));
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_telefono"), GestorIdiomas.getTexto("registro.error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Validación 3: Contraseña corta
             if(p1.length() < 8) {
                 txtPass.setBorder(new LineBorder(Color.RED, 1));
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_corta"), GestorIdiomas.getTexto("registro.error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Validación 4: Coincidencia
             if(!p1.equals(p2)) {
                 txtConfPass.setBorder(new LineBorder(Color.RED, 1));
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_coincide"), GestorIdiomas.getTexto("registro.error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // --- SI TODO ESTÁ BIEN, REGISTRAMOS ---
             GestorUsuarios gestor = new GestorUsuarios();
             boolean exito = gestor.registrarUsuario(tel, p1);
 
             if(exito) {
-                // Mensaje verde de éxito
+                
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.exito"), GestorIdiomas.getTexto("registro.exito_titulo"), JOptionPane.INFORMATION_MESSAGE);
                 ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             } else {
-                // Mensaje amarillo de usuario existente
+                
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.existe"), GestorIdiomas.getTexto("registro.existe_titulo"), JOptionPane.WARNING_MESSAGE);
             }
         });

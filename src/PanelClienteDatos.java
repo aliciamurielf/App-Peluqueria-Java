@@ -13,20 +13,19 @@ public class PanelClienteDatos extends JPanel {
         setBackground(new Color(168, 222, 206));
 
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
-        pnlCabecera.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        pnlCabecera.setBackground(new Color(10, 0, 60)); 
         pnlCabecera.setPreferredSize(new Dimension(350, 140));
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
 
-        // -- COLUMNA IZQUIERDA (Icono de idioma) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
-        gbcCabecera.gridheight = 2; // Ocupa las dos filas de altura
-        gbcCabecera.weightx = 0.33; // Ocupa un tercio del espacio horizontal
-        gbcCabecera.anchor = GridBagConstraints.NORTHWEST; // Pegado arriba a la izquierda
-        gbcCabecera.insets = new Insets(15, 15, 0, 0); // Margen
+        gbcCabecera.gridheight = 2; 
+        gbcCabecera.weightx = 0.33; 
+        gbcCabecera.anchor = GridBagConstraints.NORTHWEST; 
+        gbcCabecera.insets = new Insets(15, 15, 0, 0); 
         
-        JButton btnIconoIdioma = new JButton("🌐");
+        JButton btnIconoIdioma = new JButton();
         btnIconoIdioma.setForeground(Color.WHITE);
         btnIconoIdioma.setBorderPainted(false);
         btnIconoIdioma.setContentAreaFilled(false);
@@ -46,7 +45,7 @@ public class PanelClienteDatos extends JPanel {
         });
         pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
-        // -- COLUMNA CENTRAL (Logo y Texto) --
+        
         gbcCabecera.gridx = 1; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 1; 
@@ -54,7 +53,7 @@ public class PanelClienteDatos extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.CENTER;
         gbcCabecera.insets = new Insets(15, 0, 5, 0);
         
-        JLabel lblLogo = new JLabel("✂️");
+        JLabel lblLogo = new JLabel();
         lblLogo.setForeground(Color.WHITE);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
@@ -73,7 +72,7 @@ public class PanelClienteDatos extends JPanel {
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
         pnlCabecera.add(lblLogoTexto, gbcCabecera);
 
-        // -- COLUMNA DERECHA (Fantasma) --
+        
         gbcCabecera.gridx = 2; 
         gbcCabecera.gridy = 0;
         gbcCabecera.weightx = 0.33;
@@ -81,8 +80,6 @@ public class PanelClienteDatos extends JPanel {
 
         add(pnlCabecera, BorderLayout.NORTH);
 
-
-        // --- Tarjeta de Formulario ---
         JPanel pnlForm = new JPanel(new GridLayout(5, 1, 10, 10));
         pnlForm.setBackground(Color.WHITE);
         pnlForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -95,7 +92,7 @@ public class PanelClienteDatos extends JPanel {
 
         JPanel pnlAcciones = new JPanel(new GridLayout(1, 2, 10, 0));
         JButton btnOk = new JButton(GestorIdiomas.getTexto("cita.ok"));
-        btnOk.setBackground(new Color(0, 128, 0)); // Verde
+        btnOk.setBackground(new Color(0, 128, 0)); 
         btnOk.setForeground(Color.WHITE);
         
         JButton btnCancelar = new JButton(GestorIdiomas.getTexto("cita.cancelar"));
@@ -114,18 +111,16 @@ public class PanelClienteDatos extends JPanel {
         contenedorCentral.setOpaque(false);
         contenedorCentral.add(pnlForm);
         add(contenedorCentral, BorderLayout.CENTER);
-
-        // --- BOTÓN HORA ---
+ 
         btnHora.addActionListener(e -> {
             String[] opciones = {"10:00", "12:30", "17:00", "18:00"};
             String seleccion = (String) JOptionPane.showInputDialog(this, GestorIdiomas.getTexto("cita.hora_seleccionar"), GestorIdiomas.getTexto("cita.hora"), JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]);
             if (seleccion != null) {
                 horaSeleccionada = seleccion;
-                btnHora.setText("⏰ " + horaSeleccionada);
+                btnHora.setText(horaSeleccionada);
             }
         });
 
-        // --- BOTÓN FECHA (Meses internacionalizados) ---
         btnFecha.addActionListener(e -> {
             String[] dias = new String[31]; 
             for(int i=0; i<31; i++) dias[i] = String.valueOf(i+1);
@@ -148,7 +143,7 @@ public class PanelClienteDatos extends JPanel {
             int result = JOptionPane.showConfirmDialog(this, pnlFechaConf, GestorIdiomas.getTexto("cita.seleccionar_dia_mes"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 fechaSeleccionada = comboDias.getSelectedItem() + " " + GestorIdiomas.getTexto("cita.de") + " " + comboMeses.getSelectedItem();
-                btnFecha.setText("📅 " + fechaSeleccionada);
+                btnFecha.setText(fechaSeleccionada);
             }
         });
 
@@ -161,7 +156,7 @@ public class PanelClienteDatos extends JPanel {
             GestorCitas gestor = new GestorCitas();
             String datosCita = fechaSeleccionada + " a las " + horaSeleccionada;
             
-            // Guardamos en el archivo citas.txt
+            
             gestor.guardarCita(datosCita, txtNombre.getText());
             
             String mensaje = GestorIdiomas.getTexto("cita.reservada").replace("{0}", datosCita);
@@ -172,5 +167,5 @@ public class PanelClienteDatos extends JPanel {
         btnCancelar.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal)));
     }
 
-    private JPanel crearCabecera() { /* Igual que el anterior */ return new JPanel(); }
+    private JPanel crearCabecera() {  return new JPanel(); }
 }

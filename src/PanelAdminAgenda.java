@@ -12,19 +12,16 @@ public class PanelAdminAgenda extends JPanel {
         setOpaque(false);
         setLayout(new GridBagLayout());
 
-        // --- TARJETA BLANCA ---
         JPanel tarjetaBlanca = new JPanel(new BorderLayout(0, 15));
         tarjetaBlanca.setBackground(Color.WHITE);
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         tarjetaBlanca.setPreferredSize(new Dimension(310, 450));
 
-        // --- TÍTULO (Internacionalizado) ---
         JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("agenda.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(new Color(10, 0, 60));
         tarjetaBlanca.add(lblTitulo, BorderLayout.NORTH);
 
-        // --- ZONA CENTRAL (Lista dinámica) ---
         JPanel pnlCentro = new JPanel(new BorderLayout(0, 10));
         pnlCentro.setBackground(Color.WHITE);
         
@@ -32,9 +29,8 @@ public class PanelAdminAgenda extends JPanel {
         lblSubtitulo.setFont(new Font("Arial", Font.BOLD, 12));
         pnlCentro.add(lblSubtitulo, BorderLayout.NORTH);
 
-        // CONFIGURACIÓN DE LA LISTA DINÁMICA
         modeloLista = new DefaultListModel<>();
-        actualizarListaDesdeArchivo(); // Cargamos los datos del .txt al arrancar
+        actualizarListaDesdeArchivo(); 
         
         listaReservas = new JList<>(modeloLista);
         listaReservas.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -46,7 +42,6 @@ public class PanelAdminAgenda extends JPanel {
         pnlCentro.add(scrollPane, BorderLayout.CENTER);
         tarjetaBlanca.add(pnlCentro, BorderLayout.CENTER);
 
-        // --- BOTONES INFERIORES (Internacionalizados) ---
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0)); 
         pnlBotones.setBackground(Color.WHITE);
         
@@ -61,9 +56,6 @@ public class PanelAdminAgenda extends JPanel {
         btnAnular.setBorder(BorderFactory.createLineBorder(Color.RED));
         btnAnular.setFocusPainted(false);
 
-        // --- LÓGICA DE FUNCIONAMIENTO ---
-
-        // Acción de AÑADIR
         btnAnadir.addActionListener(e -> {
             Window parentWindow = SwingUtilities.getWindowAncestor(this);
             DialogoAnadirCita dialogo = new DialogoAnadirCita(parentWindow);
@@ -75,7 +67,6 @@ public class PanelAdminAgenda extends JPanel {
             }
         });
 
-        // Acción de ANULAR
         btnAnular.addActionListener(e -> {
             String seleccionado = listaReservas.getSelectedValue();
             if (seleccionado != null) {

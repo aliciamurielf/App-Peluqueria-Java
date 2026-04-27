@@ -12,24 +12,16 @@ public class DialogoErrorLogin extends JDialog {
         JPanel pnlPrincipal = new JPanel(new BorderLayout());
         pnlPrincipal.setBackground(Color.WHITE);
         pnlPrincipal.setBorder(BorderFactory.createLineBorder(new Color(224, 204, 58), 5, true));
-
-        // ---------------------------------------------------------
-        // 1. CABECERA AMARILLA
-        // ---------------------------------------------------------
+        
         JPanel pnlCabecera = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pnlCabecera.setBackground(new Color(224, 204, 58)); 
         
-        JLabel lblIcono = new JLabel(" ⚠️ "); 
         JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("error_login.titulo"));
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
         
-        pnlCabecera.add(lblIcono);
         pnlCabecera.add(lblTitulo);
-        pnlPrincipal.add(pnlCabecera, BorderLayout.NORTH);
-
-        // ---------------------------------------------------------
-        // 2. CUERPO DE TEXTO Y BOTONES (Internacionalizado)
-        // ---------------------------------------------------------
+        pnlPrincipal.add(pnlCabecera, BorderLayout.NORTH);     
+        
         JPanel pnlCuerpo = new JPanel(new GridBagLayout());
         pnlCuerpo.setBackground(Color.WHITE);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -44,7 +36,7 @@ public class DialogoErrorLogin extends JDialog {
         lblTexto2.setFont(new Font("Arial", Font.PLAIN, 12));
 
         JButton btnReintentar = new JButton(GestorIdiomas.getTexto("error_login.reintentar"));
-        btnReintentar.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        btnReintentar.setBackground(new Color(10, 0, 60)); 
         btnReintentar.setForeground(Color.WHITE);
         
         JButton btnOlvide = new JButton(GestorIdiomas.getTexto("error_login.olvide"));
@@ -60,9 +52,9 @@ public class DialogoErrorLogin extends JDialog {
         
         add(pnlPrincipal);
 
-        // ---------------------------------------------------------
-        // 3. EVENTOS DE LOS BOTONES
-        // ---------------------------------------------------------
+        
+        
+        
         btnReintentar.addActionListener(e -> {
             dispose();
         });

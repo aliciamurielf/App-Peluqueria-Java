@@ -11,16 +11,14 @@ public class PanelClienteAnular extends JPanel {
     public PanelClienteAnular(VentanaPrincipal vp) {
         this.vp = vp;
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Verde menta de tu diseño
+        setBackground(new Color(168, 222, 206)); 
 
-        // --- CABECERA ---
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
-        pnlCabecera.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        pnlCabecera.setBackground(new Color(10, 0, 60)); 
         pnlCabecera.setPreferredSize(new Dimension(350, 140));
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
 
-        // -- COLUMNA IZQUIERDA (Icono de idioma) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 2;
@@ -28,7 +26,7 @@ public class PanelClienteAnular extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.NORTHWEST;
         gbcCabecera.insets = new Insets(15, 15, 0, 0);
         
-        JButton btnIconoIdioma = new JButton("🌐");
+        JButton btnIconoIdioma = new JButton();
         btnIconoIdioma.setForeground(Color.WHITE);
         btnIconoIdioma.setBorderPainted(false);
         btnIconoIdioma.setContentAreaFilled(false);
@@ -48,7 +46,6 @@ public class PanelClienteAnular extends JPanel {
         });
         pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
-        // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 1; 
@@ -56,7 +53,7 @@ public class PanelClienteAnular extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.CENTER;
         gbcCabecera.insets = new Insets(15, 0, 5, 0);
         
-        JLabel lblLogo = new JLabel("✂️");
+        JLabel lblLogo = new JLabel();
         lblLogo.setForeground(Color.WHITE);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
@@ -75,7 +72,6 @@ public class PanelClienteAnular extends JPanel {
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
         pnlCabecera.add(lblLogoTexto, gbcCabecera);
 
-        // -- COLUMNA DERECHA (Fantasma) --
         gbcCabecera.gridx = 2; 
         gbcCabecera.gridy = 0;
         gbcCabecera.weightx = 0.33;
@@ -83,7 +79,6 @@ public class PanelClienteAnular extends JPanel {
 
         add(pnlCabecera, BorderLayout.NORTH);
 
-        // --- CUERPO (El "Cuaderno" de citas) ---
         modelo = new DefaultListModel<>();
         actualizarListaFiltrada();
         
@@ -94,7 +89,6 @@ public class PanelClienteAnular extends JPanel {
         
         add(scroll, BorderLayout.CENTER);
 
-        // --- BOTONES INFERIORES ---
         JPanel pnlBotones = new JPanel(new FlowLayout());
         pnlBotones.setOpaque(false);
 
@@ -108,14 +102,14 @@ public class PanelClienteAnular extends JPanel {
         pnlBotones.add(btnVolver);
         add(pnlBotones, BorderLayout.SOUTH);
 
-        // --- LÓGICA ---
+        
         btnAnular.addActionListener(e -> {
             String seleccion = lista.getSelectedValue();
             if (seleccion != null) {
                 int confirm = JOptionPane.showConfirmDialog(this, GestorIdiomas.getTexto("anular.confirmar"));
                 if (confirm == JOptionPane.YES_OPTION) {
                     gestor.eliminarCita(seleccion);
-                    actualizarListaFiltrada(); // Refresca la pantalla
+                    actualizarListaFiltrada(); 
                 }
             } else {
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("anular.seleccionar"));
@@ -127,9 +121,7 @@ public class PanelClienteAnular extends JPanel {
 
     private void actualizarListaFiltrada() {
         modelo.clear();
-        String usuarioActual = vp.getUsuarioLogueado(); // Sacamos el nombre del cliente
-        
-        // Leemos todas las citas y solo nos quedamos con las que son de este cliente
+        String usuarioActual = vp.getUsuarioLogueado();       
         List<String> todas = gestor.leerCitas();
         for (String cita : todas) {
             if (cita.contains(usuarioActual)) {

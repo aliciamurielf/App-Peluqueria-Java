@@ -10,9 +10,8 @@ public class PanelSolicitudAdmin extends JPanel {
         this.ventanaPrincipal = ventana;
         
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Fondo verde agua
-        
-        // --- CABECERA AZUL OSCURO (Igual que en PanelLogin) ---
+        setBackground(new Color(168, 222, 206)); 
+ 
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
         pnlCabecera.setBackground(new Color(10, 0, 60)); 
         pnlCabecera.setPreferredSize(new Dimension(350, 140));
@@ -20,7 +19,7 @@ public class PanelSolicitudAdmin extends JPanel {
         GridBagConstraints gbcC = new GridBagConstraints();
         gbcC.gridx = 0; gbcC.gridy = 0; gbcC.insets = new Insets(15, 0, 5, 0);
         
-        JLabel lblLogo = new JLabel("✂️"); 
+        JLabel lblLogo = new JLabel(); 
         lblLogo.setForeground(Color.WHITE);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
@@ -40,7 +39,6 @@ public class PanelSolicitudAdmin extends JPanel {
 
         add(pnlCabecera, BorderLayout.NORTH);
 
-        // --- TARJETA BLANCA CENTRAL ---
         JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false); 
 
@@ -52,7 +50,6 @@ public class PanelSolicitudAdmin extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        // Títulos y textos (Internacionalizados)
         JLabel lblTitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("solicitud.titulo") + "</center></html>", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(Color.BLACK);
@@ -61,7 +58,6 @@ public class PanelSolicitudAdmin extends JPanel {
         lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 10));
         lblSubtitulo.setForeground(Color.GRAY);
 
-        // Componentes (Internacionalizados)
         JLabel lblNombre = new JLabel(GestorIdiomas.getTexto("solicitud.nombre")); lblNombre.setFont(new Font("Arial", Font.BOLD, 10));
         JTextField txtNombre = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.nombre"));
         
@@ -83,15 +79,14 @@ public class PanelSolicitudAdmin extends JPanel {
         btnVolver.setBackground(new Color(40, 40, 80)); 
         btnVolver.setForeground(Color.WHITE);
         btnVolver.setFocusPainted(false);
-
-        // EVENTOS
+    
         btnEnviar.addActionListener(e -> {
             boolean vacio = txtNombre.getText().trim().isEmpty() || txtDNI.getText().trim().isEmpty() ||
                             txtCorreo.getText().trim().isEmpty() || txtTelefono.getText().trim().isEmpty() ||
                             txtNombre.getText().equals(GestorIdiomas.getTexto("solicitud.nombre"));
             
             if (vacio) {
-                // Alert genérico amarillo de la app
+                
                 UIManager.put("OptionPane.background", new Color(255, 230, 100));
                 UIManager.put("Panel.background", new Color(255, 230, 100));
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("solicitud.error_campos"), GestorIdiomas.getTexto("solicitud.error_titulo"), JOptionPane.WARNING_MESSAGE);
@@ -105,7 +100,7 @@ public class PanelSolicitudAdmin extends JPanel {
 
         btnVolver.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
 
-        // Montaje en tarjeta (Añadimos con espaciados)
+        
         gbc.gridy = 0; tarjetaBlanca.add(lblTitulo, gbc);
         gbc.gridy = 1; gbc.insets = new Insets(10, 0, 15, 0); tarjetaBlanca.add(lblSubtitulo, gbc);
         
@@ -156,8 +151,8 @@ public class PanelSolicitudAdmin extends JPanel {
     }
 
     private void mostrarPopUpExito() {
-        // Reproducir el Pop-up Verde de "Solicitud Realizada" del Figma
-        UIManager.put("OptionPane.background", new Color(30, 130, 76)); // Verde fuerte
+        
+        UIManager.put("OptionPane.background", new Color(30, 130, 76)); 
         UIManager.put("Panel.background", new Color(30, 130, 76));
         UIManager.put("OptionPane.messageForeground", Color.WHITE);
         
@@ -167,8 +162,7 @@ public class PanelSolicitudAdmin extends JPanel {
             GestorIdiomas.getTexto("solicitud.exito_titulo"), 
             JOptionPane.PLAIN_MESSAGE
         );
-        
-        // Limpiamos la configuración gráfica
+
         UIManager.put("OptionPane.background", null);
         UIManager.put("Panel.background", null);
         UIManager.put("OptionPane.messageForeground", null);

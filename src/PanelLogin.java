@@ -13,26 +13,21 @@ public class PanelLogin extends JPanel {
         this.ventanaPrincipal = ventanaPrincipal;
 
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Fondo verde
+        setBackground(new Color(168, 222, 206)); 
 
-        // ---------------------------------------------------------
-        // 1. CABECERA AZUL OSCURO (Con imágenes)
-        // ---------------------------------------------------------
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
-        pnlCabecera.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        pnlCabecera.setBackground(new Color(10, 0, 60)); 
         pnlCabecera.setPreferredSize(new Dimension(350, 140));
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
-
-        // -- COLUMNA IZQUIERDA (Icono de idioma MODO BOTÓN para que responda a clicks) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
-        gbcCabecera.gridheight = 2; // Ocupa las dos filas de altura
-        gbcCabecera.weightx = 0.33; // Ocupa un tercio del espacio horizontal
-        gbcCabecera.anchor = GridBagConstraints.NORTHWEST; // Pegado arriba a la izquierda
-        gbcCabecera.insets = new Insets(15, 15, 0, 0); // Margen
+        gbcCabecera.gridheight = 2; 
+        gbcCabecera.weightx = 0.33; 
+        gbcCabecera.anchor = GridBagConstraints.NORTHWEST; 
+        gbcCabecera.insets = new Insets(15, 15, 0, 0); 
         
-        JButton btnIconoIdioma = new JButton("🌐"); // Emoji por si no hay imagen
+        JButton btnIconoIdioma = new JButton(); 
         btnIconoIdioma.setForeground(Color.WHITE);
         btnIconoIdioma.setBorderPainted(false);
         btnIconoIdioma.setContentAreaFilled(false);
@@ -44,11 +39,10 @@ public class PanelLogin extends JPanel {
             if (iconIdioma.getIconWidth() > 0) {
                 Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
                 btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
-                btnIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
+                btnIconoIdioma.setText(""); 
             }
         } catch (Exception e) {}
 
-        // Evento que acciona I18n
         btnIconoIdioma.addActionListener(e -> {
             GestorIdiomas.cambiarIdiomaBase();
             ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
@@ -56,15 +50,14 @@ public class PanelLogin extends JPanel {
 
         pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
-        // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1;
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 1;
-        gbcCabecera.weightx = 0.33; // Ocupa el tercio central
+        gbcCabecera.weightx = 0.33; 
         gbcCabecera.anchor = GridBagConstraints.CENTER;
         gbcCabecera.insets = new Insets(15, 0, 5, 0);
 
-        JLabel lblLogo = new JLabel("✂️"); // Emoji por si no hay logo
+        JLabel lblLogo = new JLabel(); 
         lblLogo.setForeground(Color.WHITE);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
@@ -77,24 +70,20 @@ public class PanelLogin extends JPanel {
         }
         pnlCabecera.add(lblLogo, gbcCabecera);
 
-        gbcCabecera.gridy = 1; // Fila de abajo para el título
+        gbcCabecera.gridy = 1; 
         gbcCabecera.insets = new Insets(0, 0, 15, 0);
         JLabel lblLogoTexto = new JLabel("Laura Estilistas");
         lblLogoTexto.setForeground(Color.WHITE);
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
         pnlCabecera.add(lblLogoTexto, gbcCabecera);
 
-        // -- COLUMNA DERECHA (Fantasma para equilibrar el centro) --
         gbcCabecera.gridx = 2;
         gbcCabecera.gridy = 0;
-        gbcCabecera.weightx = 0.33; // El último tercio vacío
+        gbcCabecera.weightx = 0.33; 
         pnlCabecera.add(new JLabel(" "), gbcCabecera);
 
         add(pnlCabecera, BorderLayout.NORTH);
 
-        // ---------------------------------------------------------
-        // 2. CONTENEDOR CENTRAL Y TARJETA BLANCA
-        // ---------------------------------------------------------
         JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false);
 
@@ -106,7 +95,6 @@ public class PanelLogin extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        //        // Títulos y textos intercionalizados
         JLabel lblTitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("login.titulo") + "</center></html>", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
         lblTitulo.setForeground(Color.BLACK);
@@ -115,7 +103,6 @@ public class PanelLogin extends JPanel {
         lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 12));
         lblSubtitulo.setForeground(Color.GRAY);
 
-        // Componentes (Usuario / Contraseña)
         JLabel lblUsuario = new JLabel(GestorIdiomas.getTexto("login.usuario"));
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 12));
         JTextField txtUsuario = new JTextField(15);
@@ -129,11 +116,10 @@ public class PanelLogin extends JPanel {
         chkGuardar.setFont(new Font("Arial", Font.PLAIN, 10));
 
         JButton btnEntrar = new JButton(GestorIdiomas.getTexto("login.entrar"));
-        btnEntrar.setBackground(new Color(10, 0, 60)); // Azul oscuro tipo Figma
+        btnEntrar.setBackground(new Color(10, 0, 60)); 
         btnEntrar.setForeground(Color.WHITE);
         btnEntrar.setFocusPainted(false);
 
-        // Botones fantasma
         JButton btnRecuperar = new JButton(GestorIdiomas.getTexto("login.recuperar"));
         btnRecuperar.setFont(new Font("Arial", Font.PLAIN, 10));
         btnRecuperar.setForeground(Color.GRAY);
@@ -162,12 +148,11 @@ public class PanelLogin extends JPanel {
             ventanaPrincipal.cambiarVista(new PanelSolicitudAdmin(ventanaPrincipal));
         });
 
-        // Y usamos el ActionListener estándar que SÍ habéis dado
+        
         btnRegistro.addActionListener(e -> {
             ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
         });
 
-        // Añadir a la tarjeta
         gbc.gridy = 0;
         tarjetaBlanca.add(lblTitulo, gbc);
         gbc.gridy = 1;
@@ -201,16 +186,11 @@ public class PanelLogin extends JPanel {
         pnlCentro.add(tarjetaBlanca);
         add(pnlCentro, BorderLayout.CENTER);
 
-        // ---------------------------------------------------------
-        // EVENTO DEL BOTÓN
-        // ---------------------------------------------------------
-        // Dentro de PanelLogin.java, en el evento del botón entrar:
-
         btnEntrar.addActionListener(e -> {
             String user = txtUsuario.getText();
             String pass = new String(txtContrasena.getPassword());
 
-            // Aquí llamas a tu método de validar (ej: gestor.validarUsuario(user, pass))
+            
             String rol = gestorUsuarios.obtenerRol(user, pass);
 
             if (rol != null) {
@@ -219,12 +199,12 @@ public class PanelLogin extends JPanel {
                 } else if (rol.equalsIgnoreCase("cliente")) {
                     JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("login.bienvenida_cliente"));
 
-                    // --- AQUÍ PONES LAS LÍNEAS NUEVAS ---
-                    ventanaPrincipal.setUsuarioLogueado(user); // Guardamos quién entró
-                    ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal)); // Saltamos al menú
+                    
+                    ventanaPrincipal.setUsuarioLogueado(user); 
+                    ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal)); 
                 }
             } else {
-                // Aquí es donde saltaría tu diálogo de "Credenciales incorrectas"
+                
                 new DialogoErrorLogin(ventanaPrincipal).setVisible(true);
             }
         });
@@ -232,7 +212,7 @@ public class PanelLogin extends JPanel {
         btnRecuperar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Usamos el método de la ventana principal para cargar la nueva vista
+                
                 ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal));
             }
         });

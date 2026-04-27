@@ -17,20 +17,17 @@ public class PanelAdminFichaCliente extends JPanel {
         gbc.insets = new Insets(8, 0, 8, 0);
         gbc.gridx = 0;
 
-        // TÍTULO (Internacionalizado)
         JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("ficha.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
         lblTitulo.setForeground(new Color(10, 0, 60)); 
         gbc.gridy = 0; tarjetaBlanca.add(lblTitulo, gbc);
 
-        // HEADER CLIENTE (Icono + Nombre)
         JPanel pnlHeaderCliente = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pnlHeaderCliente.setBackground(Color.WHITE);
         
-        JLabel lblImg = new JLabel("👤");
+        JLabel lblImg = new JLabel();
         lblImg.setFont(new Font("Arial", Font.PLAIN, 24));
         try {
-            // Buscamos si hay un avatar genérico en carpeta images
             ImageIcon iconImg = new ImageIcon("src/images/avatar_chica.png");
             if (iconImg.getIconWidth() > 0) {
                 Image imgResized = iconImg.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -45,7 +42,7 @@ public class PanelAdminFichaCliente extends JPanel {
         pnlHeaderCliente.add(lblNombre);
         gbc.gridy = 1; tarjetaBlanca.add(pnlHeaderCliente, gbc);
 
-        // AREAS DE TEXTO (Internacionalizadas)
+        
         JPanel pnlAlergias = crearCajaEdicion(GestorIdiomas.getTexto("ficha.alergias"));
         JPanel pnlHistorial = crearCajaEdicion(GestorIdiomas.getTexto("ficha.historial"));
         JPanel pnlContacto = crearCajaEdicion(GestorIdiomas.getTexto("ficha.contacto"));
@@ -54,7 +51,7 @@ public class PanelAdminFichaCliente extends JPanel {
         gbc.gridy = 3; tarjetaBlanca.add(pnlHistorial, gbc);
         gbc.gridy = 4; tarjetaBlanca.add(pnlContacto, gbc);
 
-        // BOTONES (Internacionalizados)
+        
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         pnlBotones.setBackground(Color.WHITE);
         pnlBotones.setBorder(new EmptyBorder(10, 0, 0, 0));
@@ -64,21 +61,21 @@ public class PanelAdminFichaCliente extends JPanel {
         btnGuardar.setForeground(Color.WHITE);
 
         JButton btnCancelar = new JButton(GestorIdiomas.getTexto("ficha.cancelar"));
-        btnCancelar.setBackground(new Color(255, 230, 100)); // Amarillo
+        btnCancelar.setBackground(new Color(255, 230, 100)); 
         btnCancelar.setForeground(Color.BLACK);
 
         btnGuardar.addActionListener(e -> {
-            // GUARDADO REAL EN ARCHIVO .txt (como vimos en GestorUsuarios)
+            
             try {
                 java.io.FileWriter fw = new java.io.FileWriter("fichas_clientes.txt", true);
                 java.io.PrintWriter out = new java.io.PrintWriter(fw);
                 
-                // Extraemos el texto de los JTextArea que están dentro del panel
+                
                 JTextArea txtAlergias = (JTextArea) pnlAlergias.getComponent(1);
                 JTextArea txtHistorial = (JTextArea) pnlHistorial.getComponent(1);
                 JTextArea txtContacto = (JTextArea) pnlContacto.getComponent(1);
                 
-                // Formato: Nombre;Alergias;Historial;Contacto
+                
                 out.println(nombreCliente + ";" + txtAlergias.getText().replace("\n", " ") + ";" + 
                             txtHistorial.getText().replace("\n", " ") + ";" + txtContacto.getText().replace("\n", " "));
                 out.close();
@@ -87,12 +84,12 @@ public class PanelAdminFichaCliente extends JPanel {
                 ((PanelAdminPrincipal)pnlPrincipalAdmin).cambiarVistaInterna(new PanelAdminInicio()); 
                 
             } catch (Exception ex) {
-                mostrarErrorSimulado(tarjetaBlanca); // Si algo de verdad falla, mostramos tu error amarillo Figma
+                mostrarErrorSimulado(tarjetaBlanca); 
             }
         });
 
         btnCancelar.addActionListener(e -> {
-             // Volver a inicio
+             
              ((PanelAdminPrincipal)pnlPrincipalAdmin).cambiarVistaInterna(new PanelAdminInicio()); 
         });
 
@@ -119,11 +116,11 @@ public class PanelAdminFichaCliente extends JPanel {
     }
 
     private void mostrarErrorSimulado(Component parent) {
-        // Simulando el error amarillo personalizado (JOptionPane) visto en "Error Modificación Figma"
+        
         UIManager.put("OptionPane.background", new Color(255, 230, 100));
         UIManager.put("Panel.background", new Color(255, 230, 100));
         JOptionPane.showMessageDialog(parent, GestorIdiomas.getTexto("ficha.error_guardar"), GestorIdiomas.getTexto("ficha.error_titulo"), JOptionPane.WARNING_MESSAGE);
-        // Reset colors
+        
         UIManager.put("OptionPane.background", null);
         UIManager.put("Panel.background", null);
     }

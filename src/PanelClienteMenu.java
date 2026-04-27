@@ -7,16 +7,15 @@ public class PanelClienteMenu extends JPanel {
     public PanelClienteMenu(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); // Verde menta del prototipo
+        setBackground(new Color(168, 222, 206)); 
 
-        // --- Cabecera ---
+        
         JPanel pnlCabecera = new JPanel(new GridBagLayout());
-        pnlCabecera.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        pnlCabecera.setBackground(new Color(10, 0, 60)); 
         pnlCabecera.setPreferredSize(new Dimension(350, 140));
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
 
-        // -- COLUMNA IZQUIERDA (Icono de idioma MODO BOTÓN) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 2;
@@ -24,7 +23,7 @@ public class PanelClienteMenu extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.NORTHWEST;
         gbcCabecera.insets = new Insets(15, 15, 0, 0);
         
-        JButton btnIconoIdioma = new JButton("🌐");
+        JButton btnIconoIdioma = new JButton();
         btnIconoIdioma.setForeground(Color.WHITE);
         btnIconoIdioma.setBorderPainted(false);
         btnIconoIdioma.setContentAreaFilled(false);
@@ -44,7 +43,6 @@ public class PanelClienteMenu extends JPanel {
         });
         pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
-        // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 1; 
@@ -52,7 +50,7 @@ public class PanelClienteMenu extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.CENTER;
         gbcCabecera.insets = new Insets(15, 0, 5, 0);
         
-        JLabel lblLogo = new JLabel("✂️");
+        JLabel lblLogo = new JLabel();
         lblLogo.setForeground(Color.WHITE);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
@@ -71,7 +69,6 @@ public class PanelClienteMenu extends JPanel {
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
         pnlCabecera.add(lblLogoTexto, gbcCabecera);
 
-        // -- COLUMNA DERECHA (Fantasma) --
         gbcCabecera.gridx = 2; 
         gbcCabecera.gridy = 0;
         gbcCabecera.weightx = 0.33;
@@ -79,8 +76,6 @@ public class PanelClienteMenu extends JPanel {
 
         add(pnlCabecera, BorderLayout.NORTH);
 
-
-        // --- Cuerpo (Botones Grandes) ---
         JPanel pnlBotones = new JPanel(new GridBagLayout());
         pnlBotones.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -88,13 +83,13 @@ public class PanelClienteMenu extends JPanel {
         gbc.fill = GridBagConstraints.BOTH;
 
         JButton btnPedir = new JButton(GestorIdiomas.getTexto("cliente.pedir"));
-        btnPedir.setBackground(new Color(10, 0, 60)); // Azul oscuro
+        btnPedir.setBackground(new Color(10, 0, 60)); 
         btnPedir.setForeground(Color.WHITE);
         btnPedir.setFont(new Font("Arial", Font.BOLD, 20));
         btnPedir.setPreferredSize(new Dimension(200, 150));
 
         JButton btnAnular = new JButton(GestorIdiomas.getTexto("cliente.anular"));
-        btnAnular.setBackground(new Color(255, 230, 150)); // Amarillo suave
+        btnAnular.setBackground(new Color(255, 230, 150)); 
         btnAnular.setForeground(Color.BLACK);
         btnAnular.setFont(new Font("Arial", Font.BOLD, 18));
         btnAnular.setPreferredSize(new Dimension(200, 80));
@@ -103,10 +98,8 @@ public class PanelClienteMenu extends JPanel {
         gbc.gridy = 1; pnlBotones.add(btnAnular, gbc);
         add(pnlBotones, BorderLayout.CENTER);
 
-        // --- Pie de página (Cerrar sesión) ---
         add(crearPieCerrarSesion(), BorderLayout.SOUTH);
 
-        // Eventos
         btnPedir.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelClienteDatos(ventanaPrincipal)));
         btnAnular.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelClienteAnular(ventanaPrincipal)));
     }

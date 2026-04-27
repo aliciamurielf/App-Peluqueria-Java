@@ -20,7 +20,7 @@ public class PanelAdminInventario extends JPanel {
     public PanelAdminInventario(VentanaPrincipal ventana) {
         this.ventanaPrincipal = ventana;
         
-        // Inicializar datos falsos
+        
         listaProductos.add(new Producto("Champú 1L", 5));
         listaProductos.add(new Producto("Acondicionador", 4));
         listaProductos.add(new Producto("Tinte 6.0", 7));
@@ -35,15 +35,15 @@ public class PanelAdminInventario extends JPanel {
         tarjetaBlanca.setBackground(Color.WHITE);
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // TÍTULO (Internacionalizado)
+        
         JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("inventario.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(new Color(10, 0, 60));
         lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
         tarjetaBlanca.add(lblTitulo, BorderLayout.NORTH);
 
-        // CUADRÍCULA DE PRODUCTOS
-        gridProductos = new JPanel(new GridLayout(0, 3, 10, 10)); // 3 columnas
+        
+        gridProductos = new JPanel(new GridLayout(0, 3, 10, 10)); 
         gridProductos.setBackground(Color.WHITE);
         refrescarGrid();
 
@@ -52,24 +52,24 @@ public class PanelAdminInventario extends JPanel {
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         tarjetaBlanca.add(scroll, BorderLayout.CENTER);
 
-        // BOTONES DE AÑADIR / ELIMINAR (Internacionalizados)
+        
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         pnlBotones.setBackground(Color.WHITE);
         pnlBotones.setBorder(new EmptyBorder(15, 0, 0, 0));
 
         JButton btnEliminar = new JButton(GestorIdiomas.getTexto("inventario.eliminar"));
-        btnEliminar.setBackground(new Color(220, 53, 69)); // Rojo suave
+        btnEliminar.setBackground(new Color(220, 53, 69)); 
         btnEliminar.setForeground(Color.WHITE);
         btnEliminar.setFocusPainted(false);
 
         JButton btnAnadir = new JButton(GestorIdiomas.getTexto("inventario.anadir"));
-        btnAnadir.setBackground(new Color(30, 130, 76)); // Verde fuerte
+        btnAnadir.setBackground(new Color(30, 130, 76)); 
         btnAnadir.setForeground(Color.WHITE);
         btnAnadir.setFocusPainted(false);
 
         btnEliminar.addActionListener(e -> {
             if(listaProductos.size() > 0) {
-                // Elimina el último producto para el ejemplo
+                
                 listaProductos.remove(listaProductos.size() - 1);
                 refrescarGrid();
             } else {
@@ -95,7 +95,7 @@ public class PanelAdminInventario extends JPanel {
         pnlBotones.add(btnAnadir);
         tarjetaBlanca.add(pnlBotones, BorderLayout.SOUTH);
 
-        // Envolverlo en Panel Central
+        
         JPanel wrapperCentro = new JPanel(new GridBagLayout());
         wrapperCentro.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -119,11 +119,11 @@ public class PanelAdminInventario extends JPanel {
         card.setBackground(Color.WHITE);
         card.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
         
-        // Cantidad (STOCK) arriba a la izquierda
+        
         JLabel lblStock = new JLabel(" " + String.valueOf(p.stock) + " ");
         lblStock.setFont(new Font("Arial", Font.BOLD, 10));
         lblStock.setOpaque(true);
-        // Si el stock es 0, que salga rojito para advertir
+        
         lblStock.setBackground(p.stock == 0 ? Color.RED : Color.WHITE);
         lblStock.setForeground(p.stock == 0 ? Color.WHITE : Color.BLACK);
         lblStock.setBorder(new LineBorder(Color.GRAY, 1));
@@ -133,14 +133,14 @@ public class PanelAdminInventario extends JPanel {
         pnlStock.add(lblStock);
         card.add(pnlStock, BorderLayout.NORTH);
 
-        // IMAGEN EN EL CENTRO
-        JLabel lblImg = new JLabel("📦", SwingConstants.CENTER); // Emoji caja
+        
+        JLabel lblImg = new JLabel("", SwingConstants.CENTER); 
         lblImg.setFont(new Font("Arial", Font.PLAIN, 40));
         card.add(lblImg, BorderLayout.CENTER);
 
-        // NOMBRE ABAJO
+        
         JLabel lblNombre = new JLabel(p.nombre, SwingConstants.CENTER);
-        lblNombre.setFont(new Font("Arial", Font.BOLD, 9)); // Letra más pequeñita para que quepa
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 9)); 
         lblNombre.setBorder(new EmptyBorder(5, 2, 5, 2));
         card.add(lblNombre, BorderLayout.SOUTH);
 
