@@ -67,7 +67,7 @@ public class PanelLogin extends JPanel {
         JLabel lblLogo = new JLabel("✂️"); // Emoji por si no hay logo
         lblLogo.setForeground(Color.WHITE);
         try {
-            ImageIcon iconLogo = new ImageIcon("images/logo.png");
+            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
                 Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                 lblLogo.setIcon(new ImageIcon(imgLogo));
@@ -217,7 +217,7 @@ public class PanelLogin extends JPanel {
                 if (rol.equalsIgnoreCase("admin")) {
                     ventanaPrincipal.cambiarVista(new PanelAdminPrincipal(ventanaPrincipal));
                 } else if (rol.equalsIgnoreCase("cliente")) {
-                    JOptionPane.showMessageDialog(this, "¡Bienvenido Cliente!");
+                    JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("login.bienvenida_cliente"));
 
                     // --- AQUÍ PONES LAS LÍNEAS NUEVAS ---
                     ventanaPrincipal.setUsuarioLogueado(user); // Guardamos quién entró

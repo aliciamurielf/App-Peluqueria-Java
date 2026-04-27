@@ -2,6 +2,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class GestorIdiomas {
+    // Locale para Java 17 (Locale.of() requiere Java 19+)
     private static Locale localeActual = new Locale("es", "ES");
     private static ResourceBundle bundle = ResourceBundle.getBundle("bundles.Textos", localeActual);
 
@@ -22,5 +23,9 @@ public class GestorIdiomas {
         } catch (Exception e) {
             return "!" + clave + "!";
         }
+    }
+
+    public static Locale getLocaleActual() {
+        return localeActual;
     }
 }

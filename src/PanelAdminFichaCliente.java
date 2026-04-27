@@ -17,8 +17,8 @@ public class PanelAdminFichaCliente extends JPanel {
         gbc.insets = new Insets(8, 0, 8, 0);
         gbc.gridx = 0;
 
-        // TÍTULO
-        JLabel lblTitulo = new JLabel("FICHA DEL CLIENTE", SwingConstants.CENTER);
+        // TÍTULO (Internacionalizado)
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("ficha.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
         lblTitulo.setForeground(new Color(10, 0, 60)); 
         gbc.gridy = 0; tarjetaBlanca.add(lblTitulo, gbc);
@@ -45,30 +45,30 @@ public class PanelAdminFichaCliente extends JPanel {
         pnlHeaderCliente.add(lblNombre);
         gbc.gridy = 1; tarjetaBlanca.add(pnlHeaderCliente, gbc);
 
-        // AREAS DE TEXTO (Alergias, Historial, Contacto)
-        JPanel pnlAlergias = crearCajaEdicion("Alergias");
-        JPanel pnlHistorial = crearCajaEdicion("Historial de tintes");
-        JPanel pnlContacto = crearCajaEdicion("Datos de contacto");
+        // AREAS DE TEXTO (Internacionalizadas)
+        JPanel pnlAlergias = crearCajaEdicion(GestorIdiomas.getTexto("ficha.alergias"));
+        JPanel pnlHistorial = crearCajaEdicion(GestorIdiomas.getTexto("ficha.historial"));
+        JPanel pnlContacto = crearCajaEdicion(GestorIdiomas.getTexto("ficha.contacto"));
         
         gbc.gridy = 2; tarjetaBlanca.add(pnlAlergias, gbc);
         gbc.gridy = 3; tarjetaBlanca.add(pnlHistorial, gbc);
         gbc.gridy = 4; tarjetaBlanca.add(pnlContacto, gbc);
 
-        // BOTONES
+        // BOTONES (Internacionalizados)
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         pnlBotones.setBackground(Color.WHITE);
         pnlBotones.setBorder(new EmptyBorder(10, 0, 0, 0));
 
-        JButton btnGuardar = new JButton("Guardar");
+        JButton btnGuardar = new JButton(GestorIdiomas.getTexto("ficha.guardar"));
         btnGuardar.setBackground(new Color(0, 128, 0));
         btnGuardar.setForeground(Color.WHITE);
 
-        JButton btnCancelar = new JButton("Cancelar");
+        JButton btnCancelar = new JButton(GestorIdiomas.getTexto("ficha.cancelar"));
         btnCancelar.setBackground(new Color(255, 230, 100)); // Amarillo
         btnCancelar.setForeground(Color.BLACK);
 
         btnGuardar.addActionListener(e -> {
-            // GURDADO REAL EN ARCHIVO .txt (como vimos en GestorUsuarios)
+            // GUARDADO REAL EN ARCHIVO .txt (como vimos en GestorUsuarios)
             try {
                 java.io.FileWriter fw = new java.io.FileWriter("fichas_clientes.txt", true);
                 java.io.PrintWriter out = new java.io.PrintWriter(fw);
@@ -83,7 +83,7 @@ public class PanelAdminFichaCliente extends JPanel {
                             txtHistorial.getText().replace("\n", " ") + ";" + txtContacto.getText().replace("\n", " "));
                 out.close();
                 
-                JOptionPane.showMessageDialog(this, "Datos guardados correctamente.");
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("ficha.guardado_ok"));
                 ((PanelAdminPrincipal)pnlPrincipalAdmin).cambiarVistaInterna(new PanelAdminInicio()); 
                 
             } catch (Exception ex) {
@@ -92,7 +92,7 @@ public class PanelAdminFichaCliente extends JPanel {
         });
 
         btnCancelar.addActionListener(e -> {
-             // Volver a inicio (Como panel contenedor de "agenda" / vacío) o clientes
+             // Volver a inicio
              ((PanelAdminPrincipal)pnlPrincipalAdmin).cambiarVistaInterna(new PanelAdminInicio()); 
         });
 
@@ -122,7 +122,7 @@ public class PanelAdminFichaCliente extends JPanel {
         // Simulando el error amarillo personalizado (JOptionPane) visto en "Error Modificación Figma"
         UIManager.put("OptionPane.background", new Color(255, 230, 100));
         UIManager.put("Panel.background", new Color(255, 230, 100));
-        JOptionPane.showMessageDialog(parent, "Error en la modificación.\n\nNo se han podido guardar los cambios.\nInténtelo de nuevo más tarde.", "Error", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(parent, GestorIdiomas.getTexto("ficha.error_guardar"), GestorIdiomas.getTexto("ficha.error_titulo"), JOptionPane.WARNING_MESSAGE);
         // Reset colors
         UIManager.put("OptionPane.background", null);
         UIManager.put("Panel.background", null);

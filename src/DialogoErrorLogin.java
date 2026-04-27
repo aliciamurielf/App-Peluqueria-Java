@@ -1,8 +1,5 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class DialogoErrorLogin extends JDialog {
 
@@ -14,7 +11,7 @@ public class DialogoErrorLogin extends JDialog {
 
         JPanel pnlPrincipal = new JPanel(new BorderLayout());
         pnlPrincipal.setBackground(Color.WHITE);
-        pnlPrincipal.setBorder(new LineBorder(new Color(224, 204, 58), 5, true));
+        pnlPrincipal.setBorder(BorderFactory.createLineBorder(new Color(224, 204, 58), 5, true));
 
         // ---------------------------------------------------------
         // 1. CABECERA AMARILLA
@@ -23,7 +20,7 @@ public class DialogoErrorLogin extends JDialog {
         pnlCabecera.setBackground(new Color(224, 204, 58)); 
         
         JLabel lblIcono = new JLabel(" ⚠️ "); 
-        JLabel lblTitulo = new JLabel("Credenciales incorrectas");
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("error_login.titulo"));
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
         
         pnlCabecera.add(lblIcono);
@@ -31,7 +28,7 @@ public class DialogoErrorLogin extends JDialog {
         pnlPrincipal.add(pnlCabecera, BorderLayout.NORTH);
 
         // ---------------------------------------------------------
-        // 2. CUERPO DE TEXTO Y BOTONES
+        // 2. CUERPO DE TEXTO Y BOTONES (Internacionalizado)
         // ---------------------------------------------------------
         JPanel pnlCuerpo = new JPanel(new GridBagLayout());
         pnlCuerpo.setBackground(Color.WHITE);
@@ -40,17 +37,17 @@ public class DialogoErrorLogin extends JDialog {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        JLabel lblTexto1 = new JLabel("<html>El usuario o la contraseña no<br>coinciden.</html>");
+        JLabel lblTexto1 = new JLabel("<html>" + GestorIdiomas.getTexto("error_login.texto1") + "</html>");
         lblTexto1.setFont(new Font("Arial", Font.PLAIN, 12));
         
-        JLabel lblTexto2 = new JLabel("<html>Por favor, revisa tus datos e<br>inténtalo de nuevo.</html>");
+        JLabel lblTexto2 = new JLabel("<html>" + GestorIdiomas.getTexto("error_login.texto2") + "</html>");
         lblTexto2.setFont(new Font("Arial", Font.PLAIN, 12));
 
-        JButton btnReintentar = new JButton("Reintentar");
+        JButton btnReintentar = new JButton(GestorIdiomas.getTexto("error_login.reintentar"));
         btnReintentar.setBackground(new Color(10, 0, 60)); // Azul oscuro
         btnReintentar.setForeground(Color.WHITE);
         
-        JButton btnOlvide = new JButton("Olvidé mi contraseña");
+        JButton btnOlvide = new JButton(GestorIdiomas.getTexto("error_login.olvide"));
         btnOlvide.setBackground(new Color(10, 0, 60)); 
         btnOlvide.setForeground(Color.WHITE);
 
@@ -70,13 +67,10 @@ public class DialogoErrorLogin extends JDialog {
             dispose();
         });
 
-        btnOlvide.addActionListener(new ActionListener() { 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose(); 
-                VentanaPrincipal principal = (VentanaPrincipal) parent;
-                principal.cambiarVista(new PanelRecuperar(principal));
-            }
+        btnOlvide.addActionListener(e -> {
+            dispose(); 
+            VentanaPrincipal principal = (VentanaPrincipal) parent;
+            principal.cambiarVista(new PanelRecuperar(principal));
         });
     }
 }

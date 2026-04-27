@@ -35,8 +35,8 @@ public class PanelAdminInventario extends JPanel {
         tarjetaBlanca.setBackground(Color.WHITE);
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // TÍTULO
-        JLabel lblTitulo = new JLabel("INVENTARIO", SwingConstants.CENTER);
+        // TÍTULO (Internacionalizado)
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("inventario.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(new Color(10, 0, 60));
         lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
@@ -52,17 +52,17 @@ public class PanelAdminInventario extends JPanel {
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         tarjetaBlanca.add(scroll, BorderLayout.CENTER);
 
-        // BOTONES DE AÑADIR / ELIMINAR
+        // BOTONES DE AÑADIR / ELIMINAR (Internacionalizados)
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         pnlBotones.setBackground(Color.WHITE);
         pnlBotones.setBorder(new EmptyBorder(15, 0, 0, 0));
 
-        JButton btnEliminar = new JButton("- ELIMINAR");
+        JButton btnEliminar = new JButton(GestorIdiomas.getTexto("inventario.eliminar"));
         btnEliminar.setBackground(new Color(220, 53, 69)); // Rojo suave
         btnEliminar.setForeground(Color.WHITE);
         btnEliminar.setFocusPainted(false);
 
-        JButton btnAnadir = new JButton("+ AÑADIR");
+        JButton btnAnadir = new JButton(GestorIdiomas.getTexto("inventario.anadir"));
         btnAnadir.setBackground(new Color(30, 130, 76)); // Verde fuerte
         btnAnadir.setForeground(Color.WHITE);
         btnAnadir.setFocusPainted(false);
@@ -73,20 +73,20 @@ public class PanelAdminInventario extends JPanel {
                 listaProductos.remove(listaProductos.size() - 1);
                 refrescarGrid();
             } else {
-                JOptionPane.showMessageDialog(this, "No hay productos para eliminar.");
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("inventario.no_productos"));
             }
         });
 
         btnAnadir.addActionListener(e -> {
-            String nuevoNombre = JOptionPane.showInputDialog(this, "Nombre del nuevo producto:");
+            String nuevoNombre = JOptionPane.showInputDialog(this, GestorIdiomas.getTexto("inventario.nombre_producto"));
             if(nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
-                String stockStr = JOptionPane.showInputDialog(this, "Cantidad en stock (Ej: 10):");
+                String stockStr = JOptionPane.showInputDialog(this, GestorIdiomas.getTexto("inventario.stock"));
                 try {
                     int stock = Integer.parseInt(stockStr);
                     listaProductos.add(new Producto(nuevoNombre, stock));
                     refrescarGrid();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero válido.");
+                    JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("inventario.stock_error"));
                 }
             }
         });
@@ -123,7 +123,7 @@ public class PanelAdminInventario extends JPanel {
         JLabel lblStock = new JLabel(" " + String.valueOf(p.stock) + " ");
         lblStock.setFont(new Font("Arial", Font.BOLD, 10));
         lblStock.setOpaque(true);
-        // Si el stock es 0, que salga rojito para advertir (es un extra que queda bien y es sencillo)
+        // Si el stock es 0, que salga rojito para advertir
         lblStock.setBackground(p.stock == 0 ? Color.RED : Color.WHITE);
         lblStock.setForeground(p.stock == 0 ? Color.WHITE : Color.BLACK);
         lblStock.setBorder(new LineBorder(Color.GRAY, 1));

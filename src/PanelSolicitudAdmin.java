@@ -23,7 +23,7 @@ public class PanelSolicitudAdmin extends JPanel {
         JLabel lblLogo = new JLabel("✂️"); 
         lblLogo.setForeground(Color.WHITE);
         try {
-            ImageIcon iconLogo = new ImageIcon("src/images/logo.png");
+            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
                 Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                 lblLogo.setIcon(new ImageIcon(imgLogo));
@@ -52,34 +52,34 @@ public class PanelSolicitudAdmin extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        // Títulos y textos
-        JLabel lblTitulo = new JLabel("<html><center>Solicitud de acceso<br>de administrador</center></html>", SwingConstants.CENTER);
+        // Títulos y textos (Internacionalizados)
+        JLabel lblTitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("solicitud.titulo") + "</center></html>", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(Color.BLACK);
         
-        JLabel lblSubtitulo = new JLabel("<html><center>Completa el siguiente formulario<br>para solicitar una cuenta de<br>administrador o recuperar tu<br>contraseña. El acceso será<br>validado por el sistema.</center></html>", SwingConstants.CENTER);
+        JLabel lblSubtitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("solicitud.subtitulo") + "</center></html>", SwingConstants.CENTER);
         lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 10));
         lblSubtitulo.setForeground(Color.GRAY);
 
-        // Componentes
-        JLabel lblNombre = new JLabel("Nombre completo"); lblNombre.setFont(new Font("Arial", Font.BOLD, 10));
-        JTextField txtNombre = crearCajaDeTexto("Nombre completo");
+        // Componentes (Internacionalizados)
+        JLabel lblNombre = new JLabel(GestorIdiomas.getTexto("solicitud.nombre")); lblNombre.setFont(new Font("Arial", Font.BOLD, 10));
+        JTextField txtNombre = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.nombre"));
         
-        JLabel lblDNI = new JLabel("DNI"); lblDNI.setFont(new Font("Arial", Font.BOLD, 10));
-        JTextField txtDNI = crearCajaDeTexto("DNI");
+        JLabel lblDNI = new JLabel(GestorIdiomas.getTexto("solicitud.dni")); lblDNI.setFont(new Font("Arial", Font.BOLD, 10));
+        JTextField txtDNI = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.dni"));
         
-        JLabel lblCorreo = new JLabel("Correo electrónico"); lblCorreo.setFont(new Font("Arial", Font.BOLD, 10));
-        JTextField txtCorreo = crearCajaDeTexto("Correo electrónico");
+        JLabel lblCorreo = new JLabel(GestorIdiomas.getTexto("solicitud.correo")); lblCorreo.setFont(new Font("Arial", Font.BOLD, 10));
+        JTextField txtCorreo = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.correo"));
         
-        JLabel lblTelefono = new JLabel("Número de teléfono"); lblTelefono.setFont(new Font("Arial", Font.BOLD, 10));
-        JTextField txtTelefono = crearCajaDeTexto("Número de teléfono");
+        JLabel lblTelefono = new JLabel(GestorIdiomas.getTexto("solicitud.telefono")); lblTelefono.setFont(new Font("Arial", Font.BOLD, 10));
+        JTextField txtTelefono = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.telefono"));
 
-        JButton btnEnviar = new JButton("Enviar solicitud");
+        JButton btnEnviar = new JButton(GestorIdiomas.getTexto("solicitud.enviar"));
         btnEnviar.setBackground(new Color(10, 0, 60));
         btnEnviar.setForeground(Color.WHITE);
         btnEnviar.setFocusPainted(false);
 
-        JButton btnVolver = new JButton("Volver a iniciar sesión");
+        JButton btnVolver = new JButton(GestorIdiomas.getTexto("solicitud.volver"));
         btnVolver.setBackground(new Color(40, 40, 80)); 
         btnVolver.setForeground(Color.WHITE);
         btnVolver.setFocusPainted(false);
@@ -88,13 +88,13 @@ public class PanelSolicitudAdmin extends JPanel {
         btnEnviar.addActionListener(e -> {
             boolean vacio = txtNombre.getText().trim().isEmpty() || txtDNI.getText().trim().isEmpty() ||
                             txtCorreo.getText().trim().isEmpty() || txtTelefono.getText().trim().isEmpty() ||
-                            txtNombre.getText().equals("Nombre completo");
+                            txtNombre.getText().equals(GestorIdiomas.getTexto("solicitud.nombre"));
             
             if (vacio) {
-                // Tu alert genérico amarillo de la app (lo estilizamos rapidillo simulando figma)
+                // Alert genérico amarillo de la app
                 UIManager.put("OptionPane.background", new Color(255, 230, 100));
                 UIManager.put("Panel.background", new Color(255, 230, 100));
-                JOptionPane.showMessageDialog(this, "Debe rellenar todos los campos del formulario.", "Faltan datos", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("solicitud.error_campos"), GestorIdiomas.getTexto("solicitud.error_titulo"), JOptionPane.WARNING_MESSAGE);
                 UIManager.put("OptionPane.background", null);
                 UIManager.put("Panel.background", null);
             } else {
@@ -163,12 +163,12 @@ public class PanelSolicitudAdmin extends JPanel {
         
         JOptionPane.showMessageDialog(
             this, 
-            "<html><div style='text-align: center; color: white;'><b>Solicitud realizada</b><br><br>Hemos recibido tu solicitud. Te<br>contactaremos en breve.</div></html>", 
-            "Éxito", 
+            "<html><div style='text-align: center; color: white;'><b>" + GestorIdiomas.getTexto("solicitud.exito_titulo") + "</b><br><br>" + GestorIdiomas.getTexto("solicitud.exito") + "</div></html>", 
+            GestorIdiomas.getTexto("solicitud.exito_titulo"), 
             JOptionPane.PLAIN_MESSAGE
         );
         
-        // Limpiamos la configuración gráfica para no ensuciar el resto de la aplicación
+        // Limpiamos la configuración gráfica
         UIManager.put("OptionPane.background", null);
         UIManager.put("Panel.background", null);
         UIManager.put("OptionPane.messageForeground", null);

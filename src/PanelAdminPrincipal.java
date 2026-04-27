@@ -125,7 +125,7 @@ public class PanelAdminPrincipal extends JPanel {
 
         // Evento SALIR (El que sí te funciona)
         btnSalir.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que quieres cerrar sesión?", GestorIdiomas.getTexto("nav.salir"), JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this, GestorIdiomas.getTexto("nav.confirmar_salir"), GestorIdiomas.getTexto("nav.salir"), JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             }

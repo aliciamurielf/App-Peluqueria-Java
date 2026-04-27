@@ -10,7 +10,7 @@ public class PanelRecuperar extends JPanel {
     public PanelRecuperar(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         
-        setLayout(new BorderLayout()); //[cite: 2]
+        setLayout(new BorderLayout());
         setBackground(new Color(168, 222, 206)); // Fondo verde menta
 
         // ---------------------------------------------------------
@@ -22,7 +22,7 @@ public class PanelRecuperar extends JPanel {
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
 
-        // -- COLUMNA IZQUIERDA (Icono de idioma) --
+        // -- COLUMNA IZQUIERDA (Icono de idioma MODO BOTÓN) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 2; // Ocupa las dos filas de altura
@@ -30,17 +30,29 @@ public class PanelRecuperar extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.NORTHWEST; // Pegado arriba a la izquierda
         gbcCabecera.insets = new Insets(15, 15, 0, 0); // Margen
         
-        JLabel lblIconoIdioma = new JLabel("🌐"); // Emoji por si no hay imagen
-        lblIconoIdioma.setForeground(Color.WHITE);
+        JButton btnIconoIdioma = new JButton("🌐"); // Emoji por si no hay imagen
+        btnIconoIdioma.setForeground(Color.WHITE);
+        btnIconoIdioma.setBorderPainted(false);
+        btnIconoIdioma.setContentAreaFilled(false);
+        btnIconoIdioma.setFocusPainted(false);
+        btnIconoIdioma.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         try {
-            ImageIcon iconIdioma = new ImageIcon("images/icono_idioma.png");
+            ImageIcon iconIdioma = new ImageIcon("src/images/icono_idioma.png");
             if (iconIdioma.getIconWidth() > 0) {
                 Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-                lblIconoIdioma.setIcon(new ImageIcon(imgIdioma));
-                lblIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
+                btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
+                btnIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
             }
         } catch (Exception e) {}
-        pnlCabecera.add(lblIconoIdioma, gbcCabecera);
+
+        // Evento que acciona I18n
+        btnIconoIdioma.addActionListener(e -> {
+            GestorIdiomas.cambiarIdiomaBase();
+            ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal));
+        });
+
+        pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
         // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1; 
@@ -53,7 +65,7 @@ public class PanelRecuperar extends JPanel {
         JLabel lblLogo = new JLabel("✂️"); // Emoji por si no hay logo
         lblLogo.setForeground(Color.WHITE);
         try {
-            ImageIcon iconLogo = new ImageIcon("images/logo.png");
+            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
                 Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                 lblLogo.setIcon(new ImageIcon(imgLogo));
@@ -80,36 +92,34 @@ public class PanelRecuperar extends JPanel {
         // ---------------------------------------------------------
         // 2. CONTENEDOR CENTRAL Y TARJETA BLANCA
         // ---------------------------------------------------------
-        JPanel pnlCentro = new JPanel(new GridBagLayout()); //[cite: 2]
+        JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false); 
 
         JPanel tarjetaBlanca = new JPanel(new GridBagLayout());
         tarjetaBlanca.setBackground(Color.WHITE);
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20));
 
-        GridBagConstraints gbc = new GridBagConstraints(); //[cite: 2]
+        GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
 
-        // --- COMPONENTES DE LA TARJETA ---
-        JLabel lblTitulo = new JLabel("Recuperar contraseña", SwingConstants.CENTER);
+        // --- COMPONENTES DE LA TARJETA (Internacionalizados) ---
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("recuperar.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setForeground(new Color(10, 0, 60)); 
         
         // Uso de HTML para el salto de línea en el texto explicativo
-        JLabel lblExplicacion = new JLabel("<html><div style='text-align: center; color: gray;'>Ingresa el número de teléfono<br>asociado a tu cuenta y te<br>enviaremos un enlace para<br>restablecer tu contraseña</div></html>", SwingConstants.CENTER);
+        JLabel lblExplicacion = new JLabel("<html><div style='text-align: center; color: gray;'>" + GestorIdiomas.getTexto("recuperar.explicacion") + "</div></html>", SwingConstants.CENTER);
         lblExplicacion.setFont(new Font("Arial", Font.PLAIN, 12));
         
-        JTextField txtTelefono = new JTextField(15); //[cite: 2]
-        // *Nota: Java Swing no tiene "placeholders" nativos de forma sencilla, 
-        // así que lo dejamos vacío o le ponemos un ToolTipText.
-        txtTelefono.setToolTipText("Introduce tu número de teléfono");
+        JTextField txtTelefono = new JTextField(15);
+        txtTelefono.setToolTipText(GestorIdiomas.getTexto("recuperar.intro_telefono"));
         
-        JButton btnRecuperar = new JButton("Recuperar contraseña"); //[cite: 2]
+        JButton btnRecuperar = new JButton(GestorIdiomas.getTexto("recuperar.boton"));
         btnRecuperar.setBackground(new Color(10, 0, 60)); 
         btnRecuperar.setForeground(Color.WHITE);
         
-        JButton btnVolver = new JButton("Volver a iniciar sesión");
+        JButton btnVolver = new JButton(GestorIdiomas.getTexto("recuperar.volver"));
         btnVolver.setBackground(new Color(30, 20, 80)); 
         btnVolver.setForeground(Color.WHITE);
 
@@ -121,7 +131,7 @@ public class PanelRecuperar extends JPanel {
         gbc.gridy = 4; gbc.insets = new Insets(0, 0, 0, 0); tarjetaBlanca.add(btnVolver, gbc);
 
         pnlCentro.add(tarjetaBlanca);
-        add(pnlCentro, BorderLayout.CENTER); //[cite: 2]
+        add(pnlCentro, BorderLayout.CENTER);
 
         // ---------------------------------------------------------
         // 3. EVENTOS DE LOS BOTONES
@@ -133,7 +143,7 @@ public class PanelRecuperar extends JPanel {
                 String tel = txtTelefono.getText().trim();
                 
                 if(tel.isEmpty()) {
-                    JOptionPane.showMessageDialog(PanelRecuperar.this, "Por favor, introduce tu número de teléfono.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(PanelRecuperar.this, GestorIdiomas.getTexto("recuperar.intro_telefono"), GestorIdiomas.getTexto("recuperar.aviso"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -141,13 +151,12 @@ public class PanelRecuperar extends JPanel {
                 
                 if (gestor.existeUsuario(tel)) {
                     // FLUJO DE ÉXITO (Cartel Verde en Figma)
-                    // Obviamente, como no tenemos servidor, simulamos el SMS
-                    Object[] opcionesExito = {"Iniciar sesión"};
+                    Object[] opcionesExito = {GestorIdiomas.getTexto("recuperar.exito_boton")};
                     JOptionPane.showOptionDialog(PanelRecuperar.this,
-                            "¡Listo! Te hemos enviado un enlace\npara restablecer tu contraseña por SMS.",
-                            "SMS enviado",
+                            GestorIdiomas.getTexto("recuperar.exito"),
+                            GestorIdiomas.getTexto("recuperar.exito_titulo"),
                             JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE, // Icono de información
+                            JOptionPane.INFORMATION_MESSAGE,
                             null, opcionesExito, opcionesExito[0]);
                     
                     // Al darle a aceptar, le mandamos al Login
@@ -155,19 +164,19 @@ public class PanelRecuperar extends JPanel {
                     
                 } else {
                     // FLUJO DE ERROR (Cartel Amarillo en Figma)
-                    Object[] opcionesError = {"Reintentar", "Crear cuenta"};
+                    Object[] opcionesError = {GestorIdiomas.getTexto("recuperar.reintentar"), GestorIdiomas.getTexto("recuperar.crear_cuenta")};
                     int seleccion = JOptionPane.showOptionDialog(PanelRecuperar.this,
-                            "El número de teléfono introducido no\nestá vinculado a ninguna cuenta de cliente.",
-                            "Número de teléfono no vinculado",
+                            GestorIdiomas.getTexto("recuperar.error"),
+                            GestorIdiomas.getTexto("recuperar.error_titulo"),
                             JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE, // Icono de advertencia
+                            JOptionPane.WARNING_MESSAGE,
                             null, opcionesError, opcionesError[0]);
                     
                     if (seleccion == 1) { 
                         // Si elige la opción 1 ("Crear cuenta"), le mandamos al registro
                         ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
                     }
-                    // Si elige 0 ("Reintentar") o cierra la ventana, se queda en la misma pantalla para escribir de nuevo
+                    // Si elige 0 ("Reintentar") o cierra la ventana, se queda en la misma pantalla
                 }
             }
         });
@@ -175,8 +184,8 @@ public class PanelRecuperar extends JPanel {
         btnVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Manejo de vistas: Volvemos al panel de Login[cite: 4]
-                ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)); //[cite: 4]
+                // Manejo de vistas: Volvemos al panel de Login
+                ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             }
         });
     }

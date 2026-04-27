@@ -20,7 +20,7 @@ public class PanelRegistro extends JPanel {
 
         GridBagConstraints gbcCabecera = new GridBagConstraints();
 
-        // -- COLUMNA IZQUIERDA (Icono de idioma) --
+        // -- COLUMNA IZQUIERDA (Icono de idioma MODO BOTÓN) --
         gbcCabecera.gridx = 0; 
         gbcCabecera.gridy = 0;
         gbcCabecera.gridheight = 2; // Ocupa las dos filas de altura
@@ -28,17 +28,29 @@ public class PanelRegistro extends JPanel {
         gbcCabecera.anchor = GridBagConstraints.NORTHWEST; // Pegado arriba a la izquierda
         gbcCabecera.insets = new Insets(15, 15, 0, 0); // Margen
         
-        JLabel lblIconoIdioma = new JLabel("🌐"); // Emoji por si no hay imagen
-        lblIconoIdioma.setForeground(Color.WHITE);
+        JButton btnIconoIdioma = new JButton("🌐"); // Emoji por si no hay imagen
+        btnIconoIdioma.setForeground(Color.WHITE);
+        btnIconoIdioma.setBorderPainted(false);
+        btnIconoIdioma.setContentAreaFilled(false);
+        btnIconoIdioma.setFocusPainted(false);
+        btnIconoIdioma.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         try {
-            ImageIcon iconIdioma = new ImageIcon("images/icono_idioma.png");
+            ImageIcon iconIdioma = new ImageIcon("src/images/icono_idioma.png");
             if (iconIdioma.getIconWidth() > 0) {
                 Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-                lblIconoIdioma.setIcon(new ImageIcon(imgIdioma));
-                lblIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
+                btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
+                btnIconoIdioma.setText(""); // Borramos el emoji si carga la imagen
             }
         } catch (Exception e) {}
-        pnlCabecera.add(lblIconoIdioma, gbcCabecera);
+
+        // Evento que acciona I18n
+        btnIconoIdioma.addActionListener(e -> {
+            GestorIdiomas.cambiarIdiomaBase();
+            ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
+        });
+
+        pnlCabecera.add(btnIconoIdioma, gbcCabecera);
 
         // -- COLUMNA CENTRAL (Logo y Texto) --
         gbcCabecera.gridx = 1; 
@@ -51,7 +63,7 @@ public class PanelRegistro extends JPanel {
         JLabel lblLogo = new JLabel("✂️"); // Emoji por si no hay logo
         lblLogo.setForeground(Color.WHITE);
         try {
-            ImageIcon iconLogo = new ImageIcon("images/logo.png");
+            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
                 Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                 lblLogo.setIcon(new ImageIcon(imgLogo));
@@ -89,8 +101,8 @@ public class PanelRegistro extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0; gbc.weightx = 1.0;
 
-        // --- COMPONENTES ---
-        JLabel lblTitulo = new JLabel("Crea tu cuenta", SwingConstants.CENTER);
+        // --- COMPONENTES (Internacionalizados) ---
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("registro.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setForeground(new Color(10, 0, 60));
         
@@ -98,23 +110,23 @@ public class PanelRegistro extends JPanel {
         Font fontLabels = new Font("Arial", Font.BOLD, 11);
         Color colorAzulOscuro = new Color(10, 0, 60);
 
-        JLabel lblNombre = new JLabel("Nombre"); lblNombre.setFont(fontLabels); lblNombre.setForeground(colorAzulOscuro);
+        JLabel lblNombre = new JLabel(GestorIdiomas.getTexto("registro.nombre")); lblNombre.setFont(fontLabels); lblNombre.setForeground(colorAzulOscuro);
         JTextField txtNombre = new JTextField(15);
         
-        JLabel lblApellidos = new JLabel("Apellidos"); lblApellidos.setFont(fontLabels); lblApellidos.setForeground(colorAzulOscuro);
+        JLabel lblApellidos = new JLabel(GestorIdiomas.getTexto("registro.apellidos")); lblApellidos.setFont(fontLabels); lblApellidos.setForeground(colorAzulOscuro);
         JTextField txtApellidos = new JTextField(15);
         
-        JLabel lblTelefono = new JLabel("Número de teléfono"); lblTelefono.setFont(fontLabels); lblTelefono.setForeground(colorAzulOscuro);
+        JLabel lblTelefono = new JLabel(GestorIdiomas.getTexto("registro.telefono")); lblTelefono.setFont(fontLabels); lblTelefono.setForeground(colorAzulOscuro);
         JTextField txtTelefono = new JTextField(15);
         
-        JLabel lblPass = new JLabel("Contraseña"); lblPass.setFont(fontLabels); lblPass.setForeground(colorAzulOscuro);
+        JLabel lblPass = new JLabel(GestorIdiomas.getTexto("registro.contrasena")); lblPass.setFont(fontLabels); lblPass.setForeground(colorAzulOscuro);
         JPasswordField txtPass = new JPasswordField(15);
-        JLabel lblSubPass = new JLabel("Al menos 8 caracteres"); lblSubPass.setFont(new Font("Arial", Font.PLAIN, 9)); lblSubPass.setForeground(Color.GRAY);
+        JLabel lblSubPass = new JLabel(GestorIdiomas.getTexto("registro.sub_contrasena")); lblSubPass.setFont(new Font("Arial", Font.PLAIN, 9)); lblSubPass.setForeground(Color.GRAY);
         
-        JLabel lblConfPass = new JLabel("Confirmar Contraseña"); lblConfPass.setFont(fontLabels); lblConfPass.setForeground(colorAzulOscuro);
+        JLabel lblConfPass = new JLabel(GestorIdiomas.getTexto("registro.confirmar")); lblConfPass.setFont(fontLabels); lblConfPass.setForeground(colorAzulOscuro);
         JPasswordField txtConfPass = new JPasswordField(15);
 
-        JButton btnRegistrar = new JButton("REGISTRARME");
+        JButton btnRegistrar = new JButton(GestorIdiomas.getTexto("registro.boton"));
         btnRegistrar.setBackground(new Color(10, 0, 60)); btnRegistrar.setForeground(Color.WHITE);
 
         // --- AÑADIR AL GRID ---
@@ -142,7 +154,7 @@ public class PanelRegistro extends JPanel {
         add(pnlCentro, BorderLayout.CENTER);
 
         // Botón inferior flotante
-        JButton btnVolver = new JButton("Volver a inicio");
+        JButton btnVolver = new JButton(GestorIdiomas.getTexto("registro.volver"));
         btnVolver.setBackground(Color.WHITE); btnVolver.setForeground(new Color(10, 0, 60));
         JPanel pnlSur = new JPanel(); pnlSur.setOpaque(false); pnlSur.add(btnVolver);
         add(pnlSur, BorderLayout.SOUTH);
@@ -164,28 +176,28 @@ public class PanelRegistro extends JPanel {
 
             // Validación 1: Campos vacíos
             if(txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() || tel.isEmpty() || p1.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos obligatorios.", "Campos sin rellenar", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_campos"), GestorIdiomas.getTexto("registro.error_campos_titulo"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             // Validación 2: Teléfono (asumimos que debe tener 9 dígitos como en España)
             if(!tel.matches("\\d{9}")) {
                 txtTelefono.setBorder(new LineBorder(Color.RED, 1));
-                JOptionPane.showMessageDialog(this, "Número de teléfono inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_telefono"), GestorIdiomas.getTexto("registro.error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Validación 3: Contraseña corta
             if(p1.length() < 8) {
                 txtPass.setBorder(new LineBorder(Color.RED, 1));
-                JOptionPane.showMessageDialog(this, "La contraseña es demasiado corta. Al menos 8 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_corta"), GestorIdiomas.getTexto("registro.error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Validación 4: Coincidencia
             if(!p1.equals(p2)) {
                 txtConfPass.setBorder(new LineBorder(Color.RED, 1));
-                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.error_coincide"), GestorIdiomas.getTexto("registro.error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -195,11 +207,11 @@ public class PanelRegistro extends JPanel {
 
             if(exito) {
                 // Mensaje verde de éxito
-                JOptionPane.showMessageDialog(this, "¡Listo! Cuenta creada con éxito.\nYa puedes iniciar sesión.", "Cuenta creada", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.exito"), GestorIdiomas.getTexto("registro.exito_titulo"), JOptionPane.INFORMATION_MESSAGE);
                 ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             } else {
                 // Mensaje amarillo de usuario existente
-                JOptionPane.showMessageDialog(this, "Este número de teléfono ya está asociado a una cuenta.", "Usuario registrado", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.existe"), GestorIdiomas.getTexto("registro.existe_titulo"), JOptionPane.WARNING_MESSAGE);
             }
         });
     }

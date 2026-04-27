@@ -32,12 +32,15 @@ public class DialogoAnadirCita extends JDialog {
         txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
         txtNombre.setHorizontalAlignment(JTextField.LEFT);
 
-        // Combo Servicio
-        String[] servicios = { GestorIdiomas.getTexto("cita.servicio"), "Corte", "Tinte", "Peinado" };
+        // Combo Servicio (Internacionalizado)
+        String[] servicios = { GestorIdiomas.getTexto("cita.servicio"), 
+                               GestorIdiomas.getTexto("cita.corte"), 
+                               GestorIdiomas.getTexto("cita.tinte"), 
+                               GestorIdiomas.getTexto("cita.peinado") };
         comboServicio = new JComboBox<>(servicios);
         comboServicio.setBackground(new Color(230, 230, 230));
 
-        // Botón Fecha
+        // Botón Fecha (Meses internacionalizados)
         btnFecha = new JButton("\uD83D\uDCC5 " + GestorIdiomas.getTexto("cita.fecha"));
         btnFecha.setBackground(Color.WHITE);
         btnFecha.setFocusPainted(false);
@@ -47,18 +50,24 @@ public class DialogoAnadirCita extends JDialog {
                 dias[i] = String.valueOf(i + 1);
             JComboBox<String> comboDias = new JComboBox<>(dias);
 
-            String[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
-                    "Octubre", "Noviembre", "Diciembre" };
+            String[] meses = {
+                GestorIdiomas.getTexto("cita.enero"), GestorIdiomas.getTexto("cita.febrero"),
+                GestorIdiomas.getTexto("cita.marzo"), GestorIdiomas.getTexto("cita.abril"),
+                GestorIdiomas.getTexto("cita.mayo"), GestorIdiomas.getTexto("cita.junio"),
+                GestorIdiomas.getTexto("cita.julio"), GestorIdiomas.getTexto("cita.agosto"),
+                GestorIdiomas.getTexto("cita.septiembre"), GestorIdiomas.getTexto("cita.octubre"),
+                GestorIdiomas.getTexto("cita.noviembre"), GestorIdiomas.getTexto("cita.diciembre")
+            };
             JComboBox<String> comboMeses = new JComboBox<>(meses);
 
             JPanel pnlFechaConf = new JPanel(new GridLayout(1, 2, 5, 0));
             pnlFechaConf.add(comboDias);
             pnlFechaConf.add(comboMeses);
 
-            int result = JOptionPane.showConfirmDialog(this, pnlFechaConf, "Seleccione día y mes",
+            int result = JOptionPane.showConfirmDialog(this, pnlFechaConf, GestorIdiomas.getTexto("cita.seleccionar_dia_mes"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
-                btnFecha.setText("📅 " + comboDias.getSelectedItem() + " de " + comboMeses.getSelectedItem());
+                btnFecha.setText("📅 " + comboDias.getSelectedItem() + " " + GestorIdiomas.getTexto("cita.de") + " " + comboMeses.getSelectedItem());
             }
         });
 
@@ -75,16 +84,16 @@ public class DialogoAnadirCita extends JDialog {
                 btnHora.setText("\u23F0 " + seleccion);
         });
 
-        // Botones Inferiores (OK / Cancelar)
+        // Botones Inferiores (OK / Cancelar) (Internacionalizados)
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         pnlBotones.setBackground(Color.WHITE);
 
-        JButton btnOk = new JButton("OK");
+        JButton btnOk = new JButton(GestorIdiomas.getTexto("cita.ok"));
         btnOk.setBackground(new Color(0, 128, 0));
         btnOk.setForeground(Color.WHITE);
         btnOk.setFocusPainted(false);
 
-        JButton btnCancelar = new JButton("Cancelar");
+        JButton btnCancelar = new JButton(GestorIdiomas.getTexto("cita.cancelar"));
         btnCancelar.setBackground(new Color(255, 230, 100));
         btnCancelar.setForeground(new Color(10, 0, 60));
         btnCancelar.setFocusPainted(false);
@@ -103,8 +112,8 @@ public class DialogoAnadirCita extends JDialog {
 
             String fechaExtr = btnFecha.getText().replace("📅 ", "");
             String horaExtr = btnHora.getText().replace("⏰ ", "");
-            this.horaCita = (fechaExtr.equals("Fecha") ? "Hoy" : fechaExtr) + " - "
-                    + (horaExtr.equals("Hora") ? "00:00" : horaExtr);
+            this.horaCita = (fechaExtr.equals(GestorIdiomas.getTexto("cita.fecha")) ? GestorIdiomas.getTexto("cita.hoy") : fechaExtr) + " - "
+                    + (horaExtr.equals(GestorIdiomas.getTexto("cita.hora")) ? "00:00" : horaExtr);
 
             this.confirmado = true;
             dispose();

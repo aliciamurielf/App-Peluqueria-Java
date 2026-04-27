@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class PanelAdminClientes extends JPanel {
 
@@ -18,8 +17,8 @@ public class PanelAdminClientes extends JPanel {
         // Dejamos un margen exterior para que el fondo verde se vea alrededor
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // --- TÍTULO ---
-        JLabel lblTitulo = new JLabel("CLIENTES", SwingConstants.CENTER);
+        // --- TÍTULO (Internacionalizado) ---
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("clientes.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(new Color(10, 0, 60)); // Azul oscuro
         lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
@@ -95,7 +94,7 @@ public class PanelAdminClientes extends JPanel {
         btnAvatar.add(lblImg, BorderLayout.CENTER);
         btnAvatar.add(lblNombre, BorderLayout.SOUTH);
 
-        // EVENTO CLICK: Ir a la ficha del cliente (TAREA 4)
+        // EVENTO CLICK: Ir a la ficha del cliente
         btnAvatar.addActionListener(e -> {
             if (pnlPrincipalAdmin != null) {
                 pnlPrincipalAdmin.cambiarVistaInterna(new PanelAdminFichaCliente(nombre, pnlPrincipalAdmin));
