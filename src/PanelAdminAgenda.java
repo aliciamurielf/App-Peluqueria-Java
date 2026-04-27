@@ -67,7 +67,7 @@ public class PanelAdminAgenda extends JPanel {
         btnAnadir.addActionListener(e -> {
             Window parentWindow = SwingUtilities.getWindowAncestor(this);
             DialogoAnadirCita dialogo = new DialogoAnadirCita(parentWindow);
-            dialogo.setVisible(true); // Se detiene aquí hasta que se cierra al ser Modal
+            dialogo.setVisible(true); 
             
             if (dialogo.isConfirmado()) {
                 gestor.guardarCita(dialogo.getHoraCita(), dialogo.getNombreCliente());
@@ -84,8 +84,8 @@ public class PanelAdminAgenda extends JPanel {
                     "Confirmar anulación", JOptionPane.YES_NO_OPTION);
                 
                 if (confirm == JOptionPane.YES_OPTION) {
-                    gestor.eliminarCita(seleccionado); // Borra del txt
-                    actualizarListaDesdeArchivo();     // Refresca la interfaz
+                    gestor.eliminarCita(seleccionado); 
+                    actualizarListaDesdeArchivo();    
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, selecciona una cita de la lista.", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -99,7 +99,6 @@ public class PanelAdminAgenda extends JPanel {
         add(tarjetaBlanca);
     }
 
-    // Método para refrescar la lista visual con lo que haya en el archivo
     private void actualizarListaDesdeArchivo() {
         modeloLista.clear();
         List<String> citas = gestor.leerCitas();

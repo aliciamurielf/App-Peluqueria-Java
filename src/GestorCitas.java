@@ -2,8 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class GestorCitas {
-    private final String RUTA = "citas.txt"; // Asegúrate de que esté en la raíz
-
+    private final String RUTA = "citas.txt";
     public List<String> leerCitas() {
         List<String> lista = new ArrayList<>();
         try (Scanner sc = new Scanner(new File(RUTA))) {
