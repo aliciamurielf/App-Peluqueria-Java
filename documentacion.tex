@@ -1,0 +1,585 @@
+% Documentación de la Práctica Final de Sistemas Interactivos 2025-26
+\documentclass[12pt,a4paper]{report}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{longtable}
+\geometry{left=3cm,right=2.5cm,top=3cm,bottom=3cm}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Práctica Final - Sistemas Interactivos}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Universidad de Córdoba}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+\onehalfspacing
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    {\scshape\LARGE Universidad de Córdoba\par}
+    \vspace{1cm}
+    {\huge\bfseries Práctica Final de Sistemas Interactivos 2025-26\par}
+    \vspace{1.5cm}
+    {\Large \textit{Diseño e implementación de una interfaz de gestión para peluquería}}\par
+    \vspace{2cm}
+    {\Large Autor: Alicia Muriel Fernández}\par
+    \vspace{0.5cm}
+    {\Large Asignatura: Sistemas Interactivos}\par
+    \vspace{0.5cm}
+    {\Large Curso: 2025/26}\par
+    \vspace{0.5cm}
+    {\Large Entrega: Práctica Final}\par
+    \vfill
+    \vspace{1cm}
+    {\large \today}\par
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+\chapter*{Resumen}
+\addcontentsline{toc}{chapter}{Resumen}
+Este documento describe la implementación de la interfaz gráfica desarrollada en Java Swing para la práctica final de Sistemas Interactivos. Se basa en el prototipo anterior (i32camol_i32mufea_prototipo) y documenta las diferencias relevantes, la organización del código, los aspectos de diseño y la forma de ejecutar la aplicación.
+\clearpage
+
+\chapter{Introducción al problema}
+\section{Descripción del problema}
+En muchas peluquerías y salones de belleza se sigue trabajando con agendas de papel, hojas sueltas y anotaciones manuales. Esta forma de gestión provoca pérdidas de citas, dificultades para consultar el historial del cliente, errores en la planificación de servicios y descontrol en el inventario.
+
+Los principales problemas detectados son:
+\begin{itemize}
+    \item Dificultad para mantener una agenda actualizada y evitar duplicidades.
+    \item Falta de información centralizada del historial de cada cliente.
+    \item Control manual del stock que genera carencias o exceso de producto.
+    \item Proceso de reserva de cita poco accesible para el cliente.
+\end{itemize}
+
+\section{Objetivo de la interfaz}
+El objetivo es ofrecer una interfaz que permita a los profesionales y a los clientes gestionar los procesos de reserva y administración de forma eficiente, clara y accesible.
+\begin{itemize}
+    \item Para el profesional: gestionará agenda, clientes e inventario.
+    \item Para el cliente: podrá reservar cita y consultar información básica sin intervención telefónica.
+\end{itemize}
+
+\section{Plataforma y público objetivo}
+La aplicación está diseñada para escritorio con apariencia de interfaz móvil dentro de Java Swing, adaptada a dos perfiles principales:
+\begin{itemize}
+    \item Profesional de peluquería: necesita herramientas para controlar citas, clientes y stock.
+    \item Cliente: desea reservar cita de forma rápida y sin errores.
+\end{itemize}
+
+\section{Consideraciones de diseño}
+Las decisiones de diseño se han basado en principios de usabilidad:
+\begin{itemize}
+    \item Interfaz simple y coherente en todas las vistas.
+    \item Feedback claro al usuario en acciones como registro, reserva y errores.
+    \item Minimización de errores mediante entradas guiadas (listas desplegables, validación de teléfono, etc.).
+    \item Uso de colores y botones contrastados para resaltar acciones importantes.
+\end{itemize}
+
+\section{Requisitos mínimos de la interfaz}
+Según el guion de la práctica, la interfaz implementada debe incluir al menos:
+\begin{itemize}
+    \item Pantalla principal para el profesional y para el cliente.
+    \item Agenda con creación y cancelación de citas.
+    \item Gestión de clientes con ficha técnica.
+    \item Control de inventario.
+    \item Internacionalización en, como mínimo, dos idiomas.
+\end{itemize}
+
+\chapter{Antecedentes}
+La práctica se ha realizado como continuación del prototipo previo entregado en la primera fase. El prototipo original definió las pantallas y flujos básicos, sobre los que se ha construido la implementación actual en Java Swing.
+
+\chapter{Diseño centrado en el usuario}
+\section{Usuarios tipo}
+\subsection{Profesional}
+Usuario encargado de gestionar la agenda, consultar clientes y revisar inventario.
+
+\subsection{Cliente}
+Usuario final que desea reservar cita y consultar su información.
+
+\section{Escenarios de uso}
+Se contemplan dos flujos principales:
+\begin{itemize}
+    \item Reserva de cita por cliente.
+    \item Gestión de agenda, clientes e inventario por el profesional.
+\end{itemize}
+
+\section{Wireframes}
+Los wireframes iniciales del prototipo definían las pantallas principales de acceso, registro, agenda, ficha de cliente e inventario. La implementación final respeta la organización general, con algunas adaptaciones justificadas en el documento.
+
+\chapter{Implementación de la interfaz}
+\section{Organización del código}
+El proyecto utiliza la siguiente estructura de directorios:
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.8\textwidth}
+    \begin{verbatim}
+src/
+  DialogoAnadirCita.java
+  DialogoErrorLogin.java
+  GestorCitas.java
+  GestorIdiomas.java
+  GestorUsuarios.java
+  PanelAdminAgenda.java
+  PanelAdminClientes.java
+  PanelAdminFichaCliente.java
+  PanelAdminInicio.java
+  PanelAdminInventario.java
+  PanelAdminPrincipal.java
+  PanelClienteAnular.java
+  PanelClienteDatos.java
+  PanelClienteMenu.java
+  PanelLogin.java
+  PanelRecuperar.java
+  PanelRegistro.java
+  PanelSolicitudAdmin.java
+  VentanaPrincipal.java
+  bundles/
+    Textos_en_GB.properties
+    Textos_es_ES.properties
+    Textos_fr_FR.properties
+  images/
+    (iconos y recursos gráficos)
+    \end{verbatim}
+    \end{minipage}
+    \caption{Estructura de directorios del proyecto}
+\end{figure}
+
+\section{Diagrama de clases}
+A continuación se muestra un diagrama simplificado de las clases principales:
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Clases principales del proyecto:}
+    \begin{itemize}
+        \item \texttt{VentanaPrincipal}: controlador principal que gestiona el cambio de vistas.
+        \item \texttt{PanelLogin}, \texttt{PanelRegistro}, \texttt{PanelRecuperar}: pantallas de autenticación.
+        \item \texttt{PanelAdminPrincipal}: navegación del administrador.
+        \item \texttt{PanelAdminAgenda}, \texttt{PanelAdminClientes}, \texttt{PanelAdminInventario}: paneles de gestión.
+        \item \texttt{PanelClienteMenu}, \texttt{PanelClienteDatos}, \texttt{PanelClienteAnular}: interfaz del cliente.
+        \item \texttt{GestorIdiomas}, \texttt{GestorUsuarios}, \texttt{GestorCitas}: clases de lógica de negocio.
+        \item \texttt{DialogoAnadirCita}, \texttt{DialogoErrorLogin}: diálogos modales.
+    \end{itemize}
+    \caption{Componentes principales de la aplicación}
+\end{figure}
+
+\section{Aspectos significativos de la implementación}
+\subsection{Internacionalización}
+La aplicación está internacionalizada en tres idiomas: español, inglés y francés. Se emplea la clase \texttt{GestorIdiomas} junto a los ficheros de recursos en \texttt{src/bundles/}:
+\begin{itemize}
+    \item \texttt{Textos_es_ES.properties}
+    \item \texttt{Textos_en_GB.properties}
+    \item \texttt{Textos_fr_FR.properties}
+\end{itemize}
+
+\subsection{Gestión de datos}
+Los datos se guardan en archivos de texto plano:
+\begin{itemize}
+    \item \texttt{usuarios.txt} para el registro de usuarios.
+    \item \texttt{citas.txt} para las reservas.
+    \item \texttt{fichas_clientes.txt} para los datos de clientes.
+\end{itemize}
+
+\subsection{Decisiones de diseño}
+Se ha utilizado Java Swing con paneles modulares para que cada pantalla sea independiente:
+\begin{itemize}
+    \item \texttt{VentanaPrincipal} controla el cambio de vistas.
+    \item \texttt{PanelAdminPrincipal} organiza la navegación entre paneles administrativos.
+    \item \texttt{PanelClienteMenu} ofrece las opciones específicas del cliente.
+\end{itemize}
+
+\subsection{Aplicación de conceptos teóricos}
+Se aplican conceptos vistos en clase como:
+\begin{itemize}
+    \item Uso de \texttt{BorderLayout}, \texttt{GridBagLayout}, \texttt{GridLayout} y \texttt{FlowLayout}.
+    \item Manejo de eventos con \texttt{ActionListener} y lambdas.
+    \item Validación de formularios con retroalimentación visual.
+    \item Separación de lógica de interfaz y acceso a datos mediante clases auxiliares.
+\end{itemize}
+
+\chapter{Tutorial / breve manual de usuario}
+\section{Compilación}
+Para compilar el proyecto desde la consola, situarse en la raíz del proyecto y ejecutar:
+
+\begin{verbatim}
+javac -d bin src/*.java
+\end{verbatim}
+
+Si se utiliza un IDE, importar el proyecto como proyecto Java y compilar con el compilador estándar.
+
+\section{Ejecución}
+Para ejecutar la aplicación:
+
+\begin{verbatim}
+java -cp bin VentanaPrincipal
+\end{verbatim}
+
+\section{Descripción detallada de las pantallas}
+
+\subsection{1. Pantalla de Inicio de Sesión (Login)}
+La pantalla inicial de la aplicación presenta un formulario de autenticación bimodal. En la esquina superior derecha existe un botón para cambiar el idioma de la interfaz. El formulario contiene dos campos de texto: uno para el teléfono (identificador de usuario) y otro para la contraseña. Existen tres botones principales:
+\begin{itemize}
+    \item \textbf{Iniciar sesión}: valida las credenciales contra la base de datos de usuarios en \texttt{usuarios.txt}. Si son correctas y el usuario es administrador, redirige a \texttt{PanelAdminPrincipal}. Si es cliente, va a \texttt{PanelClienteMenu}.
+    \item \textbf{Registro}: permite a nuevos usuarios crear una cuenta. Abre la pantalla de registro.
+    \item \textbf{Recuperar contraseña}: permite buscar una cuenta existente por teléfono e intentar recuperar acceso.
+\end{itemize}
+Implementación: \texttt{PanelLogin.java} utiliza \texttt{BorderLayout} para organizar el formulario en el centro y botones en la base. La validación se realiza mediante \texttt{GestorUsuarios.obtenerRol()}.
+
+\subsection{2. Pantalla de Registro}
+Pantalla para registrar nuevos usuarios con validación de datos:
+\begin{itemize}
+    \item \textbf{Campo de teléfono}: valida exactamente 9 dígitos mediante expresión regular \texttt{\\d\{9\}}.
+    \item \textbf{Campo de contraseña}: requiere mínimo 8 caracteres.
+    \item \textbf{Confirmación de contraseña}: debe coincidir con el campo anterior.
+\end{itemize}
+Al registrarse, se guarda la línea \texttt{teléfono:contraseña:cliente} en \texttt{usuarios.txt}. Incluye validación para evitar duplicados. Si el registro es exitoso, muestra un diálogo de confirmación y regresa a login. Implementación: \texttt{PanelRegistro.java} con \texttt{GridBagLayout} para formularios.
+
+\subsection{3. Pantalla de Recuperación de Contraseña}
+Permite a usuarios olvidados recuperar acceso:
+\begin{itemize}
+    \item Campo de entrada de teléfono.
+    \item Botón para buscar el usuario por teléfono.
+    \item Si se encuentra, muestra un diálogo con la contraseña.
+    \item Si no existe, muestra mensaje de error.
+\end{itemize}
+Implementación: \texttt{PanelRecuperar.java} con búsqueda lineal en \texttt{usuarios.txt}.
+
+\subsection{4. Menú Principal del Cliente}
+Pantalla inicial tras autenticarse como cliente. Contiene dos botones principales en un panel con \texttt{GridLayout}:
+\begin{itemize}
+    \item \textbf{Pedir cita}: abre \texttt{PanelClienteDatos} para reservar una nueva cita.
+    \item \textbf{Anular cita}: abre \texttt{PanelClienteAnular} para visualizar y cancelar citas existentes.
+\end{itemize}
+Incluye opción de cierre de sesión para volver a login. Implementación: \texttt{PanelClienteMenu.java}.
+
+\subsection{5. Pantalla de Reserva de Cita (Cliente)}
+Formulario para que el cliente seleccione fecha, hora y tipo de servicio:
+\begin{itemize}
+    \item \texttt{JComboBox} para seleccionar día (listado dinámico o fijo).
+    \item \texttt{JComboBox} para seleccionar hora.
+    \item \texttt{JComboBox} para seleccionar el tipo de servicio.
+    \item Botón de confirmación que guarda en \texttt{citas.txt}.
+    \item Botón de cancelación que regresa al menú.
+\end{itemize}
+Implementación: \texttt{PanelClienteDatos.java} utiliza \texttt{GridBagLayout}. La reserva se almacena con formato \texttt{hora - nombreCliente}.
+
+\subsection{6. Pantalla de Anulación de Cita (Cliente)}
+Muestra al cliente únicamente sus propias citas:
+\begin{itemize}
+    \item \texttt{JList} con las citas del usuario actual filtradas de \texttt{citas.txt}.
+    \item Botón \textbf{Anular cita} que elimina la cita seleccionada.
+    \item Botón de retorno al menú.
+\end{itemize}
+Implementación: \texttt{PanelClienteAnular.java}.
+
+\subsection{7. Panel de Administración Principal}
+Pantalla de navegación del administrador. En la parte superior hay botones de navegación con \texttt{GridLayout}:
+\begin{itemize}
+    \item \textbf{Inicio}: muestra un resumen de citas del día.
+    \item \textbf{Agenda}: gestión completa de citas.
+    \item \textbf{Clientes}: visualización de clientes en grid.
+    \item \textbf{Inventario}: gestión de productos.
+\end{itemize}
+En el área central (\texttt{pnlContenidoCentral}) se cambia dinámicamente el contenido según el botón pulsado. Implementación: \texttt{PanelAdminPrincipal.java} con \texttt{CardLayout} virtual mediante lógica de cambio de paneles.
+
+\subsection{8. Panel de Inicio (Admin)}
+Resumen ejecutivo del administrador:
+\begin{itemize}
+    \item Título: ``Citas de hoy''
+    \item Listado de citas programadas (ej: ``10:00 - Ana García'', ``11:30 - Juan Pérez'').
+    \item Botón ``Modificar agenda'' que navega a la pantalla de agenda.
+\end{itemize}
+Implementación: \texttt{PanelAdminInicio.java} con \texttt{JList} en \texttt{BorderLayout}.
+
+\subsection{9. Panel de Agenda (Admin)}
+Gestión completa de citas por el administrador:
+\begin{itemize}
+    \item \texttt{DefaultListModel} con todas las citas del sistema desde \texttt{citas.txt}.
+    \item Botón \textbf{Añadir cita}: abre \texttt{DialogoAnadirCita}.
+    \item Botón \textbf{Anular cita}: elimina la cita seleccionada.
+\end{itemize}
+Implementación: \texttt{PanelAdminAgenda.java}. La cita se elimina reescribiendo \texttt{citas.txt} sin la línea seleccionada.
+
+\subsection{10. Diálogo Añadir Cita (Admin)}
+Modal para añadir citas rápidamente:
+\begin{itemize}
+    \item Selección de día/mes/año mediante \texttt{JComboBox}.
+    \item Selección de hora mediante \texttt{JSpinner} o \texttt{JComboBox}.
+    \item Campo de texto para el nombre del cliente.
+    \item Botones Aceptar/Cancelar.
+\end{itemize}
+Implementación: \texttt{DialogoAnadirCita.java} con \texttt{GridBagLayout}.
+
+\subsection{11. Panel de Clientes (Admin)}
+Visualización en grid de todos los clientes registrados:
+\begin{itemize}
+    \item \texttt{GridLayout(0, 3)} para mostrar clientes en columnas de 3.
+    \item Cada celda es un \texttt{JButton} con el nombre del cliente.
+    \item Al hacer clic en un cliente, se abre \texttt{PanelAdminFichaCliente}.
+\end{itemize}
+Implementación: \texttt{PanelAdminClientes.java}.
+
+\subsection{12. Ficha de Cliente (Admin)}
+Formulario para editar información del cliente seleccionado:
+\begin{itemize}
+    \item \texttt{JTextField} con el nombre (no editable).
+    \item \texttt{JTextArea} para alergias (editable, multilinea).
+    \item \texttt{JTextArea} para historial de servicios (editable, multilinea).
+    \item \texttt{JTextField} para teléfono de contacto.
+    \item Botón \textbf{Guardar}: persiste en \texttt{fichas_clientes.txt}.
+    \item Botón \textbf{Cancelar}: regresa sin guardar.
+\end{itemize}
+Implementación: \texttt{PanelAdminFichaCliente.java} con \texttt{GridBagLayout}.
+
+\subsection{13. Panel de Inventario (Admin)}
+Gestión de productos y stock:
+\begin{itemize}
+    \item Visualización en grid de productos (ej: ``Champú'', ``Tinte'', ``Acondicionador'').
+    \item Cada producto muestra su cantidad actual de stock.
+    \item Botones para aumentar/disminuir stock.
+    \item Botón de eliminación de productos.
+\end{itemize}
+Implementación: \texttt{PanelAdminInventario.java} con clase interna \texttt{Producto}.
+
+\section{Gestores y Lógica de Negocio}
+
+\subsection{GestorIdiomas}
+Clase responsable de la internacionalización:
+\begin{itemize}
+    \item Mantiene el idioma actual (\texttt{localeActual}) con tres opciones: \texttt{ES\_ES}, \texttt{EN\_GB}, \texttt{FR\_FR}.
+    \item Método \texttt{cambiarIdiomaBase()}: cicla entre idiomas en orden ES → EN → FR → ES.
+    \item Método \texttt{getTexto(String clave)}: retorna la traducción desde el \texttt{ResourceBundle} correspondiente.
+    \item Los recursos se cargan desde \texttt{src/bundles/Textos\_[idioma].properties}.
+\end{itemize}
+
+\subsection{GestorUsuarios}
+Gestión de usuarios y autenticación:
+\begin{itemize}
+    \item \texttt{registrarUsuario(telefono, contrasena)}: agrega una línea a \texttt{usuarios.txt} con formato \texttt{telefono:contrasena:cliente}.
+    \item \texttt{obtenerRol(telefono, contrasena)}: verifica credenciales y retorna \texttt{``admin''}, \texttt{``cliente''} o \texttt{null}.
+    \item \texttt{existeUsuario(telefono)}: comprueba si el usuario ya está registrado.
+    \item Validación de formato de teléfono: exactamente 9 dígitos.
+    \item Validación de contraseña: mínimo 8 caracteres.
+\end{itemize}
+
+\subsection{GestorCitas}
+Gestión de citas y persistencia:
+\begin{itemize}
+    \item \texttt{leerCitas()}: lee todas las líneas de \texttt{citas.txt}.
+    \item \texttt{guardarCita(hora, cliente)}: appenda una nueva cita al archivo.
+    \item \texttt{eliminarCita(linea)}: reescribe \texttt{citas.txt} omitiendo la línea especificada.
+    \item Formato de almacenamiento: \texttt{hora - nombreCliente}.
+\end{itemize}
+
+\section{Diálogos Modales}
+
+\subsection{DialogoErrorLogin}
+Ventana modal que aparece cuando falla la autenticación:
+\begin{itemize}
+    \item Encabezado amarillo con el mensaje de error.
+    \item Botones: \textbf{Reintentar} (vuelve al login) y \textbf{¿Olvidó su contraseña?} (va a recuperar).
+\end{itemize}
+
+\subsection{DialogoAnadirCita}
+Ya descrito anteriormente como parte del flujo de administrador.
+
+\section{Capturas de pantalla}
+A continuación se incluyen las pantallas principales implementadas:
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 1: Inicio de Sesión}
+    
+    Formulario de autenticación con campos de teléfono y contraseña. Botón de cambio de idioma en esquina superior derecha. Botones para iniciar sesión, registrarse y recuperar contraseña.
+    \caption{Pantalla de login}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 2: Registro de Usuario}
+    
+    Formulario con campos de teléfono (9 dígitos), contraseña (8+ caracteres), confirmación de contraseña. Validación integrada. Botones de registrarse y cancelar.
+    \caption{Formulario de registro}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 3: Recuperación de Contraseña}
+    
+    Interfaz simple con búsqueda por teléfono. Muestra la contraseña del usuario encontrado o error si no existe. Botones de búsqueda y retorno.
+    \caption{Pantalla de recuperación}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 4: Menú del Cliente}
+    
+    Dos botones principales: ``Pedir cita'' (azul/oscuro) y ``Anular cita'' (amarillo). Opción de cambio de idioma y cierre de sesión. Navegación bimodal.
+    \caption{Menú principal del cliente}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 5: Reserva de Cita (Cliente)}
+    
+    Formulario con desplegables para día, hora y tipo de servicio. Campo de confirmación. Botones de guardar y cancelar. Persiste en \texttt{citas.txt}.
+    \caption{Pantalla de reserva de cita}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 6: Anulación de Cita (Cliente)}
+    
+    Lista de citas del cliente autenticado. Botón de anulación para eliminar citas. Botón de retorno al menú. Actualiza \texttt{citas.txt} dinámicamente.
+    \caption{Pantalla de anulación de cita}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 7: Panel de Administración Principal}
+    
+    Cuatro botones de navegación en fila: Inicio, Agenda, Clientes, Inventario. Área central que cambia dinámicamente según la selección. Opción de cierre de sesión.
+    \caption{Panel de administración}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 8: Agenda del Administrador}
+    
+    Lista completa de citas del sistema. Botones para añadir cita (abre diálogo modal) y anular cita seleccionada. Gestión centralizada de todas las reservas.
+    \caption{Panel de gestión de agenda}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 9: Clientes y Fichas}
+    
+    Grid de clientes en columnas de 3. Cada cliente es un botón con su nombre. Al seleccionar, abre formulario de ficha con campos de alergias, historial y teléfono. Guardado en \texttt{fichas\_clientes.txt}.
+    \caption{Panel de gestión de clientes}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \textbf{Pantalla 10: Inventario (Productos)}
+    
+    Grid de productos con stock visible. Botones para aumentar/disminuir cantidad. Botón de eliminación. Gestión dinámica del inventario.
+    \caption{Panel de inventario}
+\end{figure}
+
+\chapter{Diferencias respecto al prototipo}
+
+\section{Cambios de diseño justificados}
+
+La implementación final presenta varias diferencias respecto al prototipo del proyecto presentado en la primera entrega. A continuación se detallan y justifican:
+
+\subsection{Eliminación de iconografía visual (emojis)}
+En el prototipo se incluían emojis y símbolos gráficos como ``🌐'' para idioma, ``✂️'' para el logo, ``👤'' para avatares, etc. En la implementación final, estos se han eliminado porque:
+\begin{itemize}
+    \item Garantizan compatibilidad universal con cualquier entorno Java.
+    \item Evitan problemas de codificación en sistemas heterogéneos.
+    \item Mantienen la interfaz limpia y profesional.
+    \item Se utilizan componentes de texto plano en su lugar.
+\end{itemize}
+
+\subsection{Estructura de datos simplificada}
+El prototipo planteaba campos complejos; la implementación utiliza archivos de texto plano:
+\begin{itemize}
+    \item \texttt{usuarios.txt}: formato \texttt{telefono:contrasena:rol}
+    \item \texttt{citas.txt}: formato \texttt{hora - cliente}
+    \item \texttt{fichas\_clientes.txt}: formato simple con datos de alergias, historial y contacto.
+\end{itemize}
+Esta decisión simplifica la persistencia y es apropiada para una práctica de interfaz gráfica sin base de datos.
+
+\subsection{Validaciones más estrictas}
+Se han implementado validaciones más robustas que en el prototipo:
+\begin{itemize}
+    \item Validación de teléfono: exactamente 9 dígitos (expresión regular).
+    \item Validación de contraseña: mínimo 8 caracteres.
+    \item Prevención de duplicados al registrarse.
+\end{itemize}
+
+\subsection{Gestión de pantallas revisada}
+En lugar de un cambio de vista simplista, se utiliza:
+\begin{itemize}
+    \item Método \texttt{cambiarVista()} en \texttt{VentanaPrincipal} que revalida contenedores.
+    \item Método \texttt{cambiarVistaInterna()} en \texttt{PanelAdminPrincipal} para navegación dentro de la sección admin.
+    \item Transiciones explícitas que garantizan actualización de la interfaz.
+\end{itemize}
+
+\subsection{Internacionalización completa}
+El prototipo no incluía i18n. La implementación:
+\begin{itemize}
+    \item Incluye 3 idiomas (español, inglés, francés).
+    \item Utiliza \texttt{ResourceBundle} desde los archivos \texttt{src/bundles/Textos\_[idioma].properties}.
+    \item Permite cambio dinámico de idioma en cualquier momento.
+\end{itemize}
+
+\subsection{Componentes más modulares}
+Cada pantalla es una clase \texttt{JPanel} independiente, permitiendo:
+\begin{itemize}
+    \item Reutilización y mantenibilidad.
+    \item Encapsulación de lógica de cada vista.
+    \item Facilidad para agregar nuevas pantallas.
+\end{itemize}
+
+\section{Elementos conservados del prototipo}
+\begin{itemize}
+    \item Estructura de dos roles (administrador y cliente).
+    \item Funcionalidades principales: agenda, clientes, inventario.
+    \item Flujos de autenticación con registro y recuperación.
+    \item Diseño de interfaz intuitivo y accesible.
+    \item Nombre de la aplicación: ``Laura Estilistas''.
+\end{itemize}
+
+\chapter{Conclusiones y Reflexión}
+
+\section{Logros alcanzados}
+La aplicación implementa la mayoría de los requisitos de la práctica final con éxito:
+\begin{itemize}
+    \item \textbf{Interfaz gráfica}: Construida con Java Swing, estructurada en 13 pantallas/componentes modulares.
+    \item \textbf{Arquitectura}: Separación clara entre lógica de negocio (Gestores) e interfaz (Paneles y Diálogos).
+    \item \textbf{Internacionalización}: Soporte de 3 idiomas con cambio dinámico.
+    \item \textbf{Persistencia}: Sistema de archivos de texto para usuarios, citas y fichas de clientes.
+    \item \textbf{Validaciones}: Implementadas en registros, autenticación y entrada de datos.
+    \item \textbf{Conceptos aplicados}: BorderLayout, GridLayout, GridBagLayout, FlowLayout, ActionListener, expresiones lambda, ResourceBundle.
+\end{itemize}
+
+\section{Aspectos mejorables}
+De cara a futuras iteraciones, se podría:
+\begin{itemize}
+    \item Migrar a una base de datos relacional (SQLite, MySQL) en lugar de archivos de texto.
+    \item Implementar búsqueda y filtrado avanzado de citas y clientes.
+    \item Agregar reportes y estadísticas de uso.
+    \item Mejorar el diseño visual con temas personalizados.
+    \item Implementar autenticación más segura (hashing de contraseñas).
+    \item Agregar sincronización y multi-usuario en tiempo real.
+\end{itemize}
+
+\section{Conclusión final}
+Esta práctica ha permitido afianzar los conocimientos de Java Swing, diseño de interfaces gráficas, gestión de eventos y arquitectura de aplicaciones con separación de responsabilidades. La implementación respeta los conceptos enseñados en la asignatura ``Sistemas Interactivos'' y demuestra capacidad para traducir un prototipo en papel a un aplicativo funcional.
+
+\appendix
+\chapter{Anexos}
+\section{Comandos útiles}
+\begin{itemize}
+    \item Compilar: \texttt{javac -d bin src/*.java}
+    \item Ejecutar: \texttt{java -cp bin VentanaPrincipal}
+    \item Cambiar idioma: usar el botón de idioma en pantalla de login.
+\end{itemize}
+
+\end{document}
