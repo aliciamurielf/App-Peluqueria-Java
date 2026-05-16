@@ -4,35 +4,63 @@ import java.awt.*;
 public class PanelAdminPrincipal extends JPanel {
 
     private VentanaPrincipal ventanaPrincipal;
-    private JPanel pnlContenidoCentral; 
+    private JPanel pnlContenidoCentral;
 
     public PanelAdminPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); 
-  
-        // Cabecera refinada (estilo SI): logo centrado arriba y título debajo
+        setBackground(new Color(168, 222, 206));
+
+        // CABECERA 
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(new Color(10, 0, 60));
         header.setPreferredSize(new Dimension(0, 120));
 
-        JPanel center = new JPanel(new GridLayout(2, 1));
+        JPanel center = new JPanel();
+        center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
         center.setOpaque(false);
+
+        JLabel lblLogo = new JLabel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                ImageIcon icon = (ImageIcon) getIcon();
+                if (icon != null) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setClip(new java.awt.geom.RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 55, 55));
+                    g2.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                    g2.dispose();
+                }
+            }
+        };
+        lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblLogo.setPreferredSize(new Dimension(60, 60));
+        lblLogo.setMaximumSize(new Dimension(60, 60));
+
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
                 Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                JLabel lblLogo = new JLabel(new ImageIcon(imgLogo), SwingConstants.CENTER);
-                lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-                center.add(lblLogo);
+                lblLogo.setIcon(new ImageIcon(imgLogo));
             }
         } catch (Exception e) {}
+
         JLabel lblTituloCab = new JLabel("Laura Estilistas", SwingConstants.CENTER);
         lblTituloCab.setForeground(Color.WHITE);
         lblTituloCab.setFont(new Font("Arial", Font.BOLD, 22));
+        lblTituloCab.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        center.add(Box.createVerticalGlue());
+        center.add(lblLogo);
+        center.add(Box.createVerticalStrut(5));
         center.add(lblTituloCab);
+        center.add(Box.createVerticalGlue());
+
         header.add(center, BorderLayout.CENTER);
         add(header, BorderLayout.NORTH);
+
+        // CONTENIDO CENTRAL 
         pnlContenidoCentral = new JPanel(new BorderLayout());
         pnlContenidoCentral.setOpaque(false);
         add(pnlContenidoCentral, BorderLayout.CENTER);
@@ -43,9 +71,9 @@ public class PanelAdminPrincipal extends JPanel {
     }
 
     public void cambiarVistaInterna(JPanel nuevaVista) {
-        pnlContenidoCentral.removeAll(); 
-        pnlContenidoCentral.add(nuevaVista, BorderLayout.CENTER); 
-        pnlContenidoCentral.revalidate(); 
+        pnlContenidoCentral.removeAll();
+        pnlContenidoCentral.add(nuevaVista, BorderLayout.CENTER);
+        pnlContenidoCentral.revalidate();
         pnlContenidoCentral.repaint();
     }
 
@@ -54,14 +82,12 @@ public class PanelAdminPrincipal extends JPanel {
         panel.setBackground(Color.WHITE);
         panel.setPreferredSize(new Dimension(350, 75));
 
-        
-        JButton btnInicio = new JButton(GestorIdiomas.getTexto("nav.inicio"));
-        JButton btnAgenda = new JButton(GestorIdiomas.getTexto("nav.agenda"));
-        JButton btnClientes = new JButton(GestorIdiomas.getTexto("nav.clientes"));
-        JButton btnInventario = new JButton(GestorIdiomas.getTexto("nav.inventario"));
-        JButton btnSalir = new JButton(GestorIdiomas.getTexto("nav.salir"));
+        JButton btnInicio = new JButton();
+        JButton btnAgenda = new JButton();
+        JButton btnClientes = new JButton();
+        JButton btnInventario = new JButton();
+        JButton btnSalir = new JButton();
 
-        
         JButton[] botones = {btnInicio, btnAgenda, btnClientes, btnInventario, btnSalir};
         String[] nombresArchivos = {"nav_inicio.png", "nav_agenda.png", "nav_clientes.png", "nav_inventario.png", "nav_salir.png"};
         String[] textos = {"nav.inicio", "nav.agenda", "nav.clientes", "nav.inventario", "nav.salir"};
@@ -84,39 +110,30 @@ public class PanelAdminPrincipal extends JPanel {
             panel.add(botones[i]);
         }
 
-        btnInicio.addActionListener(e -> {
-            System.out.println("Cargando Inicio...");
-            cambiarVistaInterna(new PanelAdminInicio());
-        });
-        
+        btnInicio.addActionListener(e -> cambiarVistaInterna(new PanelAdminInicio()));
+
         btnAgenda.addActionListener(e -> {
-            System.out.println("Intentando abrir PanelAdminAgenda...");
             try {
-                PanelAdminAgenda vistaAgenda = new PanelAdminAgenda();
-                cambiarVistaInterna(vistaAgenda);
-                System.out.println("¡Agenda cargada!");
+                cambiarVistaInterna(new PanelAdminAgenda());
             } catch (Exception ex) {
-                System.err.println("Error al instanciar PanelAdminAgenda: " + ex.getMessage());
                 ex.printStackTrace();
             }
         });
-        
-        btnClientes.addActionListener(e -> {
-            System.out.println("Cargando Panel de Clientes...");
-            cambiarVistaInterna(new PanelAdminClientes(this));
-        });
 
-        btnInventario.addActionListener(e -> {
-            System.out.println("Cargando Panel de Inventario...");
-            cambiarVistaInterna(new PanelAdminInventario(ventanaPrincipal));
-        });
+        btnClientes.addActionListener(e -> cambiarVistaInterna(new PanelAdminClientes(this)));
+
+        btnInventario.addActionListener(e -> cambiarVistaInterna(new PanelAdminInventario(ventanaPrincipal)));
 
         btnSalir.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(this, GestorIdiomas.getTexto("nav.confirmar_salir"), GestorIdiomas.getTexto("nav.salir"), JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    GestorIdiomas.getTexto("nav.confirmar_salir"),
+                    GestorIdiomas.getTexto("nav.salir"),
+                    JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
             }
         });
+
         return panel;
     }
 }
