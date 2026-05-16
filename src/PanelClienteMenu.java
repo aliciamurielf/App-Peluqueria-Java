@@ -39,13 +39,13 @@ public class PanelClienteMenu extends JPanel {
         gbc.insets = new java.awt.Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
 
-        JButton btnPedir = new JButton(GestorIdiomas.getTexto("cliente.pedir"));
+        JButton btnPedir = new JButton("<html><center>" + GestorIdiomas.getTexto("cliente.pedir") + "</center></html>");
         btnPedir.setBackground(new Color(10, 0, 60)); 
         btnPedir.setForeground(Color.WHITE);
         btnPedir.setFont(new Font("Arial", Font.BOLD, 20));
         btnPedir.setPreferredSize(new Dimension(200, 150));
 
-        JButton btnAnular = new JButton(GestorIdiomas.getTexto("cliente.anular"));
+        JButton btnAnular = new JButton("<html><center>" + GestorIdiomas.getTexto("cliente.anular") + "</center></html>");
         btnAnular.setBackground(new Color(255, 230, 150)); 
         btnAnular.setForeground(Color.BLACK);
         btnAnular.setFont(new Font("Arial", Font.BOLD, 18));
@@ -62,13 +62,33 @@ public class PanelClienteMenu extends JPanel {
     }
 
     private JPanel crearPieCerrarSesion() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
+        panel.setPreferredSize(new Dimension(0, 75));
+
+        // Botón que ocupa toda la franja
         JButton btnSalir = new JButton(GestorIdiomas.getTexto("cliente.cerrar"));
+        btnSalir.setFont(new Font("Arial", Font.BOLD, 14));
+        btnSalir.setForeground(new Color(10, 0, 60));
         btnSalir.setBorderPainted(false);
         btnSalir.setContentAreaFilled(false);
+        btnSalir.setFocusPainted(false);
+        btnSalir.setHorizontalAlignment(SwingConstants.CENTER);
         btnSalir.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
-        panel.add(btnSalir);
+
+        // Icono nav_salir en la esquina derecha
+        JLabel lblIconoSalir = new JLabel();
+        lblIconoSalir.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
+        java.io.File archivo = new java.io.File("src/images/nav_salir.png");
+        if (archivo.exists()) {
+            ImageIcon icon = new ImageIcon(archivo.getAbsolutePath());
+            Image img = icon.getImage().getScaledInstance(28, 28, Image.SCALE_SMOOTH);
+            lblIconoSalir.setIcon(new ImageIcon(img));
+        }
+
+        panel.add(btnSalir, BorderLayout.CENTER);
+        panel.add(lblIconoSalir, BorderLayout.EAST);
+
         return panel;
     }
 }
