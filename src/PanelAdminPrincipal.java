@@ -52,7 +52,7 @@ public class PanelAdminPrincipal extends JPanel {
     private JPanel crearBarraNavegacion() {
         JPanel panel = new JPanel(new GridLayout(1, 5));
         panel.setBackground(Color.WHITE);
-        panel.setPreferredSize(new Dimension(350, 50));
+        panel.setPreferredSize(new Dimension(350, 75));
 
         
         JButton btnInicio = new JButton(GestorIdiomas.getTexto("nav.inicio"));
@@ -76,7 +76,7 @@ public class PanelAdminPrincipal extends JPanel {
             java.io.File archivo = new java.io.File("src/images/" + nombresArchivos[i]);
             if (archivo.exists()) {
                 ImageIcon icon = new ImageIcon(archivo.getAbsolutePath());
-                Image img = icon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+                Image img = icon.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
                 botones[i].setIcon(new ImageIcon(img));
             } else {
                 botones[i].setText("?");

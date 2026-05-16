@@ -17,7 +17,7 @@ public class PanelLogin extends JPanel {
         // ── CABECERA ──────────────────────────────────────────────────────────
         JPanel pnlCabecera = new JPanel(new BorderLayout());
         pnlCabecera.setBackground(new Color(10, 0, 60));
-        pnlCabecera.setPreferredSize(new Dimension(350, 140));
+        pnlCabecera.setPreferredSize(new Dimension(450, 140));
 
         // --- Icono idioma (izquierda) ---
         JButton btnIconoIdioma = new JButton();

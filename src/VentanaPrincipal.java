@@ -15,7 +15,7 @@ public class VentanaPrincipal extends JFrame {
     public VentanaPrincipal() {
         super("Laura Estilistas - App"); 
 
-        setSize(350, 700);
+        setSize(450, 975);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false); 
         setLocationRelativeTo(null); 
