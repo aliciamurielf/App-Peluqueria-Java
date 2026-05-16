@@ -6,63 +6,84 @@ import java.awt.event.ActionListener;
 public class PanelLogin extends JPanel {
 
     private VentanaPrincipal ventanaPrincipal;
-
     private GestorUsuarios gestorUsuarios = new GestorUsuarios();
 
     public PanelLogin(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
 
         setLayout(new BorderLayout());
-        setBackground(new Color(168, 222, 206)); 
+        setBackground(new Color(168, 222, 206));
 
-        // Cabecera refinada siguiendo patrones de SI: logo centrado arriba y título centrado debajo
-        JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(new Color(10, 0, 60));
-        header.setPreferredSize(new Dimension(0, 120));
+        // ── CABECERA ──────────────────────────────────────────────────────────
+        JPanel pnlCabecera = new JPanel(new BorderLayout());
+        pnlCabecera.setBackground(new Color(10, 0, 60));
+        pnlCabecera.setPreferredSize(new Dimension(350, 140));
 
-        JPanel center = new JPanel(new GridLayout(2, 1));
-        center.setOpaque(false);
-        try {
-            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
-            if (iconLogo.getIconWidth() > 0) {
-                Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                JLabel lblLogo = new JLabel(new ImageIcon(imgLogo), SwingConstants.CENTER);
-                lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-                center.add(lblLogo);
-            }
-        } catch (Exception e) {}
+        // --- Icono idioma (izquierda) ---
+        JButton btnIconoIdioma = new JButton();
+        btnIconoIdioma.setForeground(Color.WHITE);
+        btnIconoIdioma.setBorderPainted(false);
+        btnIconoIdioma.setContentAreaFilled(false);
+        btnIconoIdioma.setFocusPainted(false);
+        btnIconoIdioma.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel lblTituloCab = new JLabel("Laura Estilistas", SwingConstants.CENTER);
-        lblTituloCab.setForeground(Color.WHITE);
-        lblTituloCab.setFont(new Font("Arial", Font.BOLD, 22));
-        center.add(lblTituloCab);
-
-        header.add(center, BorderLayout.CENTER);
-
-        // Botón idioma (solo en login)
-        JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        right.setOpaque(false);
-        JButton btnIdioma = new JButton();
-        btnIdioma.setBorderPainted(false);
-        btnIdioma.setContentAreaFilled(false);
-        btnIdioma.setFocusPainted(false);
         try {
             ImageIcon iconIdioma = new ImageIcon("src/images/icono_idioma.png");
             if (iconIdioma.getIconWidth() > 0) {
                 Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-                btnIdioma.setIcon(new ImageIcon(imgIdioma));
-                btnIdioma.setText("");
+                btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
             }
         } catch (Exception e) {}
-        btnIdioma.addActionListener(e -> {
+
+        btnIconoIdioma.addActionListener(e -> {
             GestorIdiomas.cambiarIdiomaBase();
             ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
         });
-        right.add(btnIdioma);
-        header.add(right, BorderLayout.EAST);
 
-        add(header, BorderLayout.NORTH);
+        // Panel izquierdo con margen para el icono
+        JPanel pnlIzquierda = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlIzquierda.setOpaque(false);
+        pnlIzquierda.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+        pnlIzquierda.add(btnIconoIdioma);
 
+        // --- Logo + Título centrados ---
+        JPanel pnlCentroHeader = new JPanel();
+        pnlCentroHeader.setLayout(new BoxLayout(pnlCentroHeader, BoxLayout.Y_AXIS));
+        pnlCentroHeader.setOpaque(false);
+
+        JLabel lblLogo = new JLabel();
+        lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        try {
+            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
+            if (iconLogo.getIconWidth() > 0) {
+                Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                lblLogo.setIcon(new ImageIcon(imgLogo));
+            }
+        } catch (Exception e) {}
+
+        JLabel lblLogoTexto = new JLabel("Laura Estilistas");
+        lblLogoTexto.setForeground(Color.WHITE);
+        lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
+        lblLogoTexto.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        pnlCentroHeader.add(Box.createVerticalGlue());
+        pnlCentroHeader.add(lblLogo);
+        pnlCentroHeader.add(Box.createVerticalStrut(5));
+        pnlCentroHeader.add(lblLogoTexto);
+        pnlCentroHeader.add(Box.createVerticalGlue());
+
+        // Panel derecho vacío del mismo tamaño que el izquierdo (para compensar)
+        JPanel pnlDerecha = new JPanel();
+        pnlDerecha.setOpaque(false);
+        pnlDerecha.setPreferredSize(pnlIzquierda.getPreferredSize());
+
+        pnlCabecera.add(pnlIzquierda, BorderLayout.WEST);
+        pnlCabecera.add(pnlCentroHeader, BorderLayout.CENTER);
+        pnlCabecera.add(pnlDerecha, BorderLayout.EAST);
+
+        add(pnlCabecera, BorderLayout.NORTH);
+
+        // ── CENTRO (formulario) ───────────────────────────────────────────────
         JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false);
 
@@ -77,7 +98,7 @@ public class PanelLogin extends JPanel {
         JLabel lblTitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("login.titulo") + "</center></html>", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
         lblTitulo.setForeground(Color.BLACK);
-        
+
         JLabel lblSubtitulo = new JLabel(GestorIdiomas.getTexto("login.subtitulo"), SwingConstants.CENTER);
         lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 12));
         lblSubtitulo.setForeground(Color.GRAY);
@@ -95,7 +116,7 @@ public class PanelLogin extends JPanel {
         chkGuardar.setFont(new Font("Arial", Font.PLAIN, 10));
 
         JButton btnEntrar = new JButton(GestorIdiomas.getTexto("login.entrar"));
-        btnEntrar.setBackground(new Color(10, 0, 60)); 
+        btnEntrar.setBackground(new Color(10, 0, 60));
         btnEntrar.setForeground(Color.WHITE);
         btnEntrar.setFocusPainted(false);
 
@@ -122,16 +143,43 @@ public class PanelLogin extends JPanel {
         btnRegistroAdmin.setBorderPainted(false);
         btnRegistroAdmin.setContentAreaFilled(false);
         btnRegistroAdmin.setFocusPainted(false);
-        
+
+        // ── LISTENERS ─────────────────────────────────────────────────────────
         btnRegistroAdmin.addActionListener(e -> {
             ventanaPrincipal.cambiarVista(new PanelSolicitudAdmin(ventanaPrincipal));
         });
 
-        
         btnRegistro.addActionListener(e -> {
             ventanaPrincipal.cambiarVista(new PanelRegistro(ventanaPrincipal));
         });
 
+        btnEntrar.addActionListener(e -> {
+            String user = txtUsuario.getText();
+            String pass = new String(txtContrasena.getPassword());
+
+            String rol = gestorUsuarios.obtenerRol(user, pass);
+
+            if (rol != null) {
+                if (rol.equalsIgnoreCase("admin")) {
+                    ventanaPrincipal.cambiarVista(new PanelAdminPrincipal(ventanaPrincipal));
+                } else if (rol.equalsIgnoreCase("cliente")) {
+                    JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("login.bienvenida_cliente"));
+                    ventanaPrincipal.setUsuarioLogueado(user);
+                    ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal));
+                }
+            } else {
+                new DialogoErrorLogin(ventanaPrincipal).setVisible(true);
+            }
+        });
+
+        btnRecuperar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal));
+            }
+        });
+
+        // ── AÑADIR COMPONENTES A LA TARJETA ───────────────────────────────────
         gbc.gridy = 0;
         tarjetaBlanca.add(lblTitulo, gbc);
         gbc.gridy = 1;
@@ -164,36 +212,5 @@ public class PanelLogin extends JPanel {
 
         pnlCentro.add(tarjetaBlanca);
         add(pnlCentro, BorderLayout.CENTER);
-
-        btnEntrar.addActionListener(e -> {
-            String user = txtUsuario.getText();
-            String pass = new String(txtContrasena.getPassword());
-
-            
-            String rol = gestorUsuarios.obtenerRol(user, pass);
-
-            if (rol != null) {
-                if (rol.equalsIgnoreCase("admin")) {
-                    ventanaPrincipal.cambiarVista(new PanelAdminPrincipal(ventanaPrincipal));
-                } else if (rol.equalsIgnoreCase("cliente")) {
-                    JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("login.bienvenida_cliente"));
-
-                    
-                    ventanaPrincipal.setUsuarioLogueado(user); 
-                    ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal)); 
-                }
-            } else {
-                
-                new DialogoErrorLogin(ventanaPrincipal).setVisible(true);
-            }
-        });
-
-        btnRecuperar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                ventanaPrincipal.cambiarVista(new PanelRecuperar(ventanaPrincipal));
-            }
-        });
     }
 }
