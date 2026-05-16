@@ -12,28 +12,7 @@ public class PanelClienteDatos extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(168, 222, 206));
 
-        // Cabecera refinada (estilo SI): logo centrado arriba y título debajo
-        JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(new Color(10, 0, 60));
-        header.setPreferredSize(new Dimension(0, 120));
-
-        JPanel center = new JPanel(new GridLayout(2, 1));
-        center.setOpaque(false);
-        try {
-            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
-            if (iconLogo.getIconWidth() > 0) {
-                Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                JLabel lblLogo = new JLabel(new ImageIcon(imgLogo), SwingConstants.CENTER);
-                lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-                center.add(lblLogo);
-            }
-        } catch (Exception e) {}
-        JLabel lblTituloCab = new JLabel("Laura Estilistas", SwingConstants.CENTER);
-        lblTituloCab.setForeground(Color.WHITE);
-        lblTituloCab.setFont(new Font("Arial", Font.BOLD, 22));
-        center.add(lblTituloCab);
-        header.add(center, BorderLayout.CENTER);
-        add(header, BorderLayout.NORTH);
+        add(new CabeceraPanel(), BorderLayout.NORTH);
 
         JPanel pnlForm = new JPanel(new GridLayout(5, 1, 10, 10));
         pnlForm.setBackground(Color.WHITE);
@@ -122,5 +101,4 @@ public class PanelClienteDatos extends JPanel {
         btnCancelar.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal)));
     }
 
-    private JPanel crearCabecera() {  return new JPanel(); }
 }
