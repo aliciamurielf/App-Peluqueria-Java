@@ -13,7 +13,7 @@ public class DialogoAnadirCita extends JDialog {
 
     public DialogoAnadirCita(Window parent) {
         super(parent, "Laura Estilistas", Dialog.ModalityType.APPLICATION_MODAL);
-        setSize(250, 300);
+        setSize(250, 330);
         setLocationRelativeTo(parent);
         setResizable(false);
         setUndecorated(true);
@@ -26,6 +26,10 @@ public class DialogoAnadirCita extends JDialog {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.gridx = 0;
+
+        JLabel lblNombre = new JLabel("Nombre y Apellido");
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 10));
+        lblNombre.setForeground(Color.GRAY);
 
         txtNombre = new JTextField(GestorIdiomas.getTexto("cita.nombre"));
         txtNombre.setForeground(Color.GRAY);
@@ -59,7 +63,7 @@ public class DialogoAnadirCita extends JDialog {
         comboServicio.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 
         
-        btnFecha = new JButton("\uD83D\uDCC5 " + GestorIdiomas.getTexto("cita.fecha"));
+        btnFecha = new JButton(GestorIdiomas.getTexto("cita.fecha"));
         btnFecha.setBackground(Color.WHITE);
         btnFecha.setFocusPainted(false);
         btnFecha.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
@@ -84,25 +88,25 @@ public class DialogoAnadirCita extends JDialog {
             pnlFechaConf.add(comboDias);
             pnlFechaConf.add(comboMeses);
 
-            int result = JOptionPane.showConfirmDialog(this, pnlFechaConf, GestorIdiomas.getTexto("cita.seleccionar_dia_mes"),
+            int result = JOptionPane.showConfirmDialog(parent, pnlFechaConf, GestorIdiomas.getTexto("cita.seleccionar_dia_mes"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 btnFecha.setText(comboDias.getSelectedItem() + " " + GestorIdiomas.getTexto("cita.de") + " " + comboMeses.getSelectedItem());
             }
         });
  
-        btnHora = new JButton("\u23F0 " + GestorIdiomas.getTexto("cita.hora"));
+        btnHora = new JButton(GestorIdiomas.getTexto("cita.hora"));
         btnHora.setBackground(Color.WHITE);
         btnHora.setFocusPainted(false);
         btnHora.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         btnHora.setPreferredSize(new Dimension(220, 28));
         btnHora.addActionListener(e -> {
             String[] opciones = { "10:00", "12:30", "17:00", "18:00" };
-            String seleccion = (String) JOptionPane.showInputDialog(this,
+            String seleccion = (String) JOptionPane.showInputDialog(parent,
                     GestorIdiomas.getTexto("cita.hora_seleccionar"), GestorIdiomas.getTexto("cita.hora"),
                     JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]);
             if (seleccion != null)
-                btnHora.setText("\u23F0 " + seleccion);
+                btnHora.setText(seleccion);
         });
 
         JPanel pnlBotones = new JPanel(new GridLayout(1, 2, 10, 0));
@@ -152,16 +156,19 @@ public class DialogoAnadirCita extends JDialog {
 
         
         gbc.gridy = 0;
-        gbc.insets = new Insets(20, 15, 10, 15);
-        panelPrincipal.add(txtNombre, gbc);
+        gbc.insets = new Insets(20, 15, 2, 15);
+        panelPrincipal.add(lblNombre, gbc);
         gbc.gridy = 1;
+        gbc.insets = new Insets(0, 15, 10, 15);
+        panelPrincipal.add(txtNombre, gbc);
+        gbc.gridy = 2;
         gbc.insets = new Insets(5, 15, 10, 15);
         panelPrincipal.add(comboServicio, gbc);
-        gbc.gridy = 2;
-        panelPrincipal.add(btnFecha, gbc);
         gbc.gridy = 3;
-        panelPrincipal.add(btnHora, gbc);
+        panelPrincipal.add(btnFecha, gbc);
         gbc.gridy = 4;
+        panelPrincipal.add(btnHora, gbc);
+        gbc.gridy = 5;
         gbc.insets = new Insets(20, 15, 20, 15);
         panelPrincipal.add(pnlBotones, gbc);
 

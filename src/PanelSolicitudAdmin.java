@@ -20,6 +20,7 @@ public class PanelSolicitudAdmin extends JPanel {
         JPanel tarjetaBlanca = new JPanel(new GridBagLayout());
         tarjetaBlanca.setBackground(Color.WHITE);
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        tarjetaBlanca.setPreferredSize(new Dimension(320, 500));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -28,10 +29,12 @@ public class PanelSolicitudAdmin extends JPanel {
         JLabel lblTitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("solicitud.titulo") + "</center></html>", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitulo.setForeground(Color.BLACK);
+        lblTitulo.setPreferredSize(new Dimension(280, 50));
         
         JLabel lblSubtitulo = new JLabel("<html><center>" + GestorIdiomas.getTexto("solicitud.subtitulo") + "</center></html>", SwingConstants.CENTER);
         lblSubtitulo.setFont(new Font("Arial", Font.PLAIN, 10));
         lblSubtitulo.setForeground(Color.GRAY);
+        lblSubtitulo.setPreferredSize(new Dimension(280, 40));
 
         JLabel lblNombre = new JLabel(GestorIdiomas.getTexto("solicitud.nombre")); lblNombre.setFont(new Font("Arial", Font.BOLD, 10));
         JTextField txtNombre = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.nombre"));
@@ -76,7 +79,8 @@ public class PanelSolicitudAdmin extends JPanel {
         btnVolver.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
 
         
-        gbc.gridy = 0; tarjetaBlanca.add(lblTitulo, gbc);
+        gbc.weightx = 1.0;
+        gbc.gridy = 0; tarjetaBlanca.add(lblTitulo, gbc);  
         gbc.gridy = 1; gbc.insets = new Insets(10, 0, 15, 0); tarjetaBlanca.add(lblSubtitulo, gbc);
         
         gbc.insets = new Insets(0, 0, 3, 0);
@@ -106,7 +110,7 @@ public class PanelSolicitudAdmin extends JPanel {
         JTextField txt = new JTextField(placeholder);
         txt.setForeground(Color.GRAY);
         txt.setFont(new Font("Arial", Font.PLAIN, 12));
-        txt.setPreferredSize(new Dimension(220, 30));
+        txt.setPreferredSize(new Dimension(280, 30));
         
         txt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
