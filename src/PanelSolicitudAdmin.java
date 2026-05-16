@@ -12,32 +12,30 @@ public class PanelSolicitudAdmin extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(168, 222, 206)); 
  
-        JPanel pnlCabecera = new JPanel(new GridBagLayout());
-        pnlCabecera.setBackground(new Color(10, 0, 60)); 
-        pnlCabecera.setPreferredSize(new Dimension(350, 140));
+        // Cabecera refinada: logo centrado arriba y título centrado debajo (estilo SI)
+        JPanel header = new JPanel(new BorderLayout());
+        header.setBackground(new Color(10, 0, 60));
+        header.setPreferredSize(new Dimension(0, 120));
 
-        GridBagConstraints gbcC = new GridBagConstraints();
-        gbcC.gridx = 0; gbcC.gridy = 0; gbcC.insets = new Insets(15, 0, 5, 0);
-        
-        JLabel lblLogo = new JLabel(); 
-        lblLogo.setForeground(Color.WHITE);
+        JPanel center = new JPanel(new GridLayout(2, 1));
+        center.setOpaque(false);
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
                 Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                lblLogo.setIcon(new ImageIcon(imgLogo));
-                lblLogo.setText(""); 
+                JLabel lblLogo = new JLabel(new ImageIcon(imgLogo), SwingConstants.CENTER);
+                lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+                center.add(lblLogo);
             }
         } catch (Exception e) {}
-        pnlCabecera.add(lblLogo, gbcC);
 
-        gbcC.gridy = 1; gbcC.insets = new Insets(0, 0, 15, 0);
-        JLabel lblLogoTexto = new JLabel("Laura Estilistas");
-        lblLogoTexto.setForeground(Color.WHITE);
-        lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
-        pnlCabecera.add(lblLogoTexto, gbcC);
+        JLabel lblTituloCab = new JLabel("Laura Estilistas", SwingConstants.CENTER);
+        lblTituloCab.setForeground(Color.WHITE);
+        lblTituloCab.setFont(new Font("Arial", Font.BOLD, 22));
+        center.add(lblTituloCab);
 
-        add(pnlCabecera, BorderLayout.NORTH);
+        header.add(center, BorderLayout.CENTER);
+        add(header, BorderLayout.NORTH);
 
         JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false); 
@@ -151,20 +149,28 @@ public class PanelSolicitudAdmin extends JPanel {
     }
 
     private void mostrarPopUpExito() {
-        
-        UIManager.put("OptionPane.background", new Color(30, 130, 76)); 
-        UIManager.put("Panel.background", new Color(30, 130, 76));
-        UIManager.put("OptionPane.messageForeground", Color.WHITE);
-        
-        JOptionPane.showMessageDialog(
-            this, 
-            "<html><div style='text-align: center; color: white;'><b>" + GestorIdiomas.getTexto("solicitud.exito_titulo") + "</b><br><br>" + GestorIdiomas.getTexto("solicitud.exito") + "</div></html>", 
-            GestorIdiomas.getTexto("solicitud.exito_titulo"), 
-            JOptionPane.PLAIN_MESSAGE
-        );
+        JDialog dialog = new JDialog(ventanaPrincipal, GestorIdiomas.getTexto("solicitud.exito_titulo"), true);
 
-        UIManager.put("OptionPane.background", null);
-        UIManager.put("Panel.background", null);
-        UIManager.put("OptionPane.messageForeground", null);
+        JPanel panelDialog = new JPanel(new GridLayout(3, 1));
+        panelDialog.setBackground(new Color(30, 130, 76));
+
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("solicitud.exito_titulo"), SwingConstants.CENTER);
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
+
+        JLabel lblMensaje = new JLabel(GestorIdiomas.getTexto("solicitud.exito"), SwingConstants.CENTER);
+        lblMensaje.setForeground(Color.WHITE);
+
+        JButton btnCerrar = new JButton(GestorIdiomas.getTexto("solicitud.volver"));
+        btnCerrar.addActionListener(e -> dialog.setVisible(false));
+
+        panelDialog.add(lblTitulo);
+        panelDialog.add(lblMensaje);
+        panelDialog.add(btnCerrar);
+
+        dialog.setContentPane(panelDialog);
+        dialog.setSize(360, 170);
+        dialog.setLocationRelativeTo(ventanaPrincipal);
+        dialog.setVisible(true);
     }
 }

@@ -11,8 +11,28 @@ public class PanelAdminPrincipal extends JPanel {
         setLayout(new BorderLayout());
         setBackground(new Color(168, 222, 206)); 
   
-        JPanel pnlCabecera = crearCabecera();
-        add(pnlCabecera, BorderLayout.NORTH);
+        // Cabecera refinada (estilo SI): logo centrado arriba y título debajo
+        JPanel header = new JPanel(new BorderLayout());
+        header.setBackground(new Color(10, 0, 60));
+        header.setPreferredSize(new Dimension(0, 120));
+
+        JPanel center = new JPanel(new GridLayout(2, 1));
+        center.setOpaque(false);
+        try {
+            ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
+            if (iconLogo.getIconWidth() > 0) {
+                Image imgLogo = iconLogo.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                JLabel lblLogo = new JLabel(new ImageIcon(imgLogo), SwingConstants.CENTER);
+                lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+                center.add(lblLogo);
+            }
+        } catch (Exception e) {}
+        JLabel lblTituloCab = new JLabel("Laura Estilistas", SwingConstants.CENTER);
+        lblTituloCab.setForeground(Color.WHITE);
+        lblTituloCab.setFont(new Font("Arial", Font.BOLD, 22));
+        center.add(lblTituloCab);
+        header.add(center, BorderLayout.CENTER);
+        add(header, BorderLayout.NORTH);
         pnlContenidoCentral = new JPanel(new BorderLayout());
         pnlContenidoCentral.setOpaque(false);
         add(pnlContenidoCentral, BorderLayout.CENTER);
@@ -27,18 +47,6 @@ public class PanelAdminPrincipal extends JPanel {
         pnlContenidoCentral.add(nuevaVista, BorderLayout.CENTER); 
         pnlContenidoCentral.revalidate(); 
         pnlContenidoCentral.repaint();
-    }
-
-    private JPanel crearCabecera() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(10, 0, 60)); 
-        panel.setPreferredSize(new Dimension(350, 100)); 
-        
-        JLabel lblTitulo = new JLabel("Laura Estilistas");
-        lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 22));
-        panel.add(lblTitulo);
-        return panel;
     }
 
     private JPanel crearBarraNavegacion() {
@@ -56,20 +64,22 @@ public class PanelAdminPrincipal extends JPanel {
         
         JButton[] botones = {btnInicio, btnAgenda, btnClientes, btnInventario, btnSalir};
         String[] nombresArchivos = {"nav_inicio.png", "nav_agenda.png", "nav_clientes.png", "nav_inventario.png", "nav_salir.png"};
+        String[] textos = {"nav.inicio", "nav.agenda", "nav.clientes", "nav.inventario", "nav.salir"};
 
         for (int i = 0; i < botones.length; i++) {
-            botones[i].setBackground(Color.WHITE);
+            botones[i].setOpaque(false);
+            botones[i].setContentAreaFilled(false);
             botones[i].setFocusPainted(false);
             botones[i].setBorderPainted(false);
-            
-            
+            botones[i].setText("");
+            botones[i].setToolTipText(GestorIdiomas.getTexto(textos[i]));
             java.io.File archivo = new java.io.File("src/images/" + nombresArchivos[i]);
             if (archivo.exists()) {
                 ImageIcon icon = new ImageIcon(archivo.getAbsolutePath());
                 Image img = icon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
                 botones[i].setIcon(new ImageIcon(img));
             } else {
-                botones[i].setText("?"); 
+                botones[i].setText("?");
             }
             panel.add(botones[i]);
         }

@@ -13,13 +13,15 @@ public class DialogoErrorLogin extends JDialog {
         pnlPrincipal.setBackground(Color.WHITE);
         pnlPrincipal.setBorder(BorderFactory.createLineBorder(new Color(224, 204, 58), 5, true));
         
-        JPanel pnlCabecera = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel pnlCabecera = new JPanel(new BorderLayout());
         pnlCabecera.setBackground(new Color(224, 204, 58)); 
         
-        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("error_login.titulo"));
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("error_login.titulo"), SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        pnlCabecera.add(lblTitulo);
+        pnlCabecera.add(lblTitulo, BorderLayout.CENTER);
         pnlPrincipal.add(pnlCabecera, BorderLayout.NORTH);     
         
         JPanel pnlCuerpo = new JPanel(new GridBagLayout());

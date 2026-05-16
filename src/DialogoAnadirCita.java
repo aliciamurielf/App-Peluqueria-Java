@@ -13,37 +13,57 @@ public class DialogoAnadirCita extends JDialog {
 
     public DialogoAnadirCita(Window parent) {
         super(parent, "Laura Estilistas", Dialog.ModalityType.APPLICATION_MODAL);
-        setSize(280, 350);
+        setSize(250, 300);
         setLocationRelativeTo(parent);
         setResizable(false);
         setUndecorated(true);
 
         JPanel panelPrincipal = new JPanel(new GridBagLayout());
         panelPrincipal.setBackground(Color.WHITE);
-        panelPrincipal.setBorder(BorderFactory.createLineBorder(new Color(168, 222, 206), 3));
+        panelPrincipal.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.gridx = 0;
 
-        txtNombre = new JTextField();
-        txtNombre.setBorder(BorderFactory.createTitledBorder(GestorIdiomas.getTexto("cita.nombre")));
+        txtNombre = new JTextField(GestorIdiomas.getTexto("cita.nombre"));
+        txtNombre.setForeground(Color.GRAY);
         txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
-        txtNombre.setHorizontalAlignment(JTextField.LEFT);
+        txtNombre.setPreferredSize(new Dimension(220, 28));
+        txtNombre.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (txtNombre.getText().equals(GestorIdiomas.getTexto("cita.nombre"))) {
+                    txtNombre.setText("");
+                    txtNombre.setForeground(Color.BLACK);
+                }
+            }
 
-        
-        String[] servicios = { GestorIdiomas.getTexto("cita.servicio"), 
-                               GestorIdiomas.getTexto("cita.corte"), 
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (txtNombre.getText().trim().isEmpty()) {
+                    txtNombre.setForeground(Color.GRAY);
+                    txtNombre.setText(GestorIdiomas.getTexto("cita.nombre"));
+                }
+            }
+        });
+
+        String[] servicios = { GestorIdiomas.getTexto("cita.corte"), 
                                GestorIdiomas.getTexto("cita.tinte"), 
                                GestorIdiomas.getTexto("cita.peinado") };
         comboServicio = new JComboBox<>(servicios);
-        comboServicio.setBackground(new Color(230, 230, 230));
+        comboServicio.setBackground(new Color(245, 245, 245));
+        comboServicio.setPreferredSize(new Dimension(220, 28));
+        comboServicio.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 
         
         btnFecha = new JButton("\uD83D\uDCC5 " + GestorIdiomas.getTexto("cita.fecha"));
         btnFecha.setBackground(Color.WHITE);
         btnFecha.setFocusPainted(false);
+        btnFecha.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        btnFecha.setPreferredSize(new Dimension(220, 28));
         btnFecha.addActionListener(e -> {
             String[] dias = new String[31];
             for (int i = 0; i < 31; i++)
@@ -74,6 +94,8 @@ public class DialogoAnadirCita extends JDialog {
         btnHora = new JButton("\u23F0 " + GestorIdiomas.getTexto("cita.hora"));
         btnHora.setBackground(Color.WHITE);
         btnHora.setFocusPainted(false);
+        btnHora.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        btnHora.setPreferredSize(new Dimension(220, 28));
         btnHora.addActionListener(e -> {
             String[] opciones = { "10:00", "12:30", "17:00", "18:00" };
             String seleccion = (String) JOptionPane.showInputDialog(this,
@@ -90,23 +112,26 @@ public class DialogoAnadirCita extends JDialog {
         btnOk.setBackground(new Color(0, 128, 0));
         btnOk.setForeground(Color.WHITE);
         btnOk.setFocusPainted(false);
+        btnOk.setPreferredSize(new Dimension(100, 30));
 
         JButton btnCancelar = new JButton(GestorIdiomas.getTexto("cita.cancelar"));
         btnCancelar.setBackground(new Color(255, 230, 100));
         btnCancelar.setForeground(new Color(10, 0, 60));
         btnCancelar.setFocusPainted(false);
+        btnCancelar.setPreferredSize(new Dimension(100, 30));
 
         btnOk.addActionListener(e -> {
-            if (txtNombre.getText().trim().isEmpty()) {
+            String nombreTexto = txtNombre.getText().trim();
+            if (nombreTexto.isEmpty() || nombreTexto.equals(GestorIdiomas.getTexto("cita.nombre"))) {
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("cita.error_nombre"));
                 return;
             }
-            if (comboServicio.getSelectedIndex() == 0) {
+            if (comboServicio.getSelectedIndex() < 0) {
                 JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("cita.error_servicio"));
                 return;
             }
             
-            this.nombreCliente = txtNombre.getText().trim();
+            this.nombreCliente = nombreTexto;
 
             String fechaExtr = btnFecha.getText();
             String horaExtr = btnHora.getText();
