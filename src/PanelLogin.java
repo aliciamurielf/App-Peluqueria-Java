@@ -30,7 +30,7 @@ public class PanelLogin extends JPanel {
         try {
             ImageIcon iconIdioma = new ImageIcon("src/images/icono_idioma.png");
             if (iconIdioma.getIconWidth() > 0) {
-                Image imgIdioma = iconIdioma.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+                Image imgIdioma = iconIdioma.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
                 btnIconoIdioma.setIcon(new ImageIcon(imgIdioma));
             }
         } catch (Exception e) {}
@@ -51,8 +51,23 @@ public class PanelLogin extends JPanel {
         pnlCentroHeader.setLayout(new BoxLayout(pnlCentroHeader, BoxLayout.Y_AXIS));
         pnlCentroHeader.setOpaque(false);
 
-        JLabel lblLogo = new JLabel();
+        JLabel lblLogo = new JLabel() { //para redondear las esquinas del logo
+            @Override
+            protected void paintComponent(Graphics g) {
+                ImageIcon icon = (ImageIcon) getIcon();
+                if (icon != null) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setClip(new java.awt.geom.RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 55, 55)); //55 es el radio
+                    g2.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                    g2.dispose();
+                }
+            }
+        };
         lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblLogo.setPreferredSize(new Dimension(60, 60));
+        lblLogo.setMaximumSize(new Dimension(60, 60));
+
         try {
             ImageIcon iconLogo = new ImageIcon("src/images/logo.jpg");
             if (iconLogo.getIconWidth() > 0) {
