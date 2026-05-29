@@ -49,28 +49,32 @@ public class PanelClienteMenu extends JPanel {
         panel.setBackground(Color.WHITE);
         panel.setPreferredSize(new Dimension(0, 75));
 
-        // Botón que ocupa toda la franja
-        JButton btnSalir = new JButton(GestorIdiomas.getTexto("cliente.cerrar"));
-        btnSalir.setFont(new Font("Arial", Font.BOLD, 14));
-        btnSalir.setForeground(new Color(10, 0, 60));
-        btnSalir.setBorderPainted(false);
-        btnSalir.setContentAreaFilled(false);
-        btnSalir.setFocusPainted(false);
-        btnSalir.setHorizontalAlignment(SwingConstants.CENTER);
-        btnSalir.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
+        JLabel lblSalir = new JLabel(GestorIdiomas.getTexto("cliente.cerrar"), SwingConstants.CENTER);
+        lblSalir.setFont(new Font("Arial", Font.BOLD, 14));
+        lblSalir.setForeground(new Color(10, 0, 60));
 
-        // Icono nav_salir en la esquina derecha
-        JLabel lblIconoSalir = new JLabel();
-        lblIconoSalir.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
+        JButton btnIconoSalir = new JButton();
+        btnIconoSalir.setBorderPainted(false);
+        btnIconoSalir.setContentAreaFilled(false);
+        btnIconoSalir.setFocusPainted(false);
+        btnIconoSalir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnIconoSalir.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 15));
+
         java.io.File archivo = new java.io.File("src/images/nav_salir.png");
         if (archivo.exists()) {
             ImageIcon icon = new ImageIcon(archivo.getAbsolutePath());
             Image img = icon.getImage().getScaledInstance(28, 28, Image.SCALE_SMOOTH);
-            lblIconoSalir.setIcon(new ImageIcon(img));
+            btnIconoSalir.setIcon(new ImageIcon(img));
+        } else {
+            btnIconoSalir.setText("X");
+            btnIconoSalir.setFont(new Font("Arial", Font.BOLD, 18));
+            btnIconoSalir.setForeground(new Color(10, 0, 60));
         }
 
-        panel.add(btnSalir, BorderLayout.CENTER);
-        panel.add(lblIconoSalir, BorderLayout.EAST);
+        btnIconoSalir.addActionListener(e -> ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal)));
+
+        panel.add(lblSalir, BorderLayout.CENTER);
+        panel.add(btnIconoSalir, BorderLayout.EAST);
 
         return panel;
     }

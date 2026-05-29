@@ -1,2 +1,2 @@
-647883497;12345678;cliente;alicia;muriel
 admin;;12345678;644895634;admin
+lucia;cañero;12456379;689125647;cliente
