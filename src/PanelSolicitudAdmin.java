@@ -48,6 +48,11 @@ public class PanelSolicitudAdmin extends JPanel {
         JLabel lblTelefono = new JLabel(GestorIdiomas.getTexto("solicitud.telefono")); lblTelefono.setFont(new Font("Arial", Font.BOLD, 10));
         JTextField txtTelefono = crearCajaDeTexto(GestorIdiomas.getTexto("solicitud.telefono"));
 
+        JLabel lblContrasena = new JLabel(GestorIdiomas.getTexto("solicitud.contrasena")); lblContrasena.setFont(new Font("Arial", Font.BOLD, 10));
+        JPasswordField txtContrasena = new JPasswordField(15);
+        txtContrasena.setFont(new Font("Arial", Font.PLAIN, 12));
+        txtContrasena.setPreferredSize(new Dimension(280, 30));
+
         JButton btnEnviar = new JButton(GestorIdiomas.getTexto("solicitud.enviar"));
         btnEnviar.setBackground(new Color(10, 0, 60));
         btnEnviar.setForeground(Color.WHITE);
@@ -59,9 +64,10 @@ public class PanelSolicitudAdmin extends JPanel {
         btnVolver.setFocusPainted(false);
     
         btnEnviar.addActionListener(e -> {
+            String password = new String(txtContrasena.getPassword()).trim();
             boolean vacio = txtNombre.getText().trim().isEmpty() || txtDNI.getText().trim().isEmpty() ||
                             txtCorreo.getText().trim().isEmpty() || txtTelefono.getText().trim().isEmpty() ||
-                            txtNombre.getText().equals(GestorIdiomas.getTexto("solicitud.nombre"));
+                            password.isEmpty() || txtNombre.getText().equals(GestorIdiomas.getTexto("solicitud.nombre"));
             
             if (vacio) {
                 
@@ -71,8 +77,20 @@ public class PanelSolicitudAdmin extends JPanel {
                 UIManager.put("OptionPane.background", null);
                 UIManager.put("Panel.background", null);
             } else {
-                mostrarPopUpExito();
-                ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
+                String nombreCompleto = txtNombre.getText().trim();
+                String[] partesNombre = nombreCompleto.split(" ", 2);
+                String nombre = partesNombre.length > 0 ? partesNombre[0] : nombreCompleto;
+                String apellidos = partesNombre.length > 1 ? partesNombre[1] : "";
+
+                GestorUsuarios gestor = new GestorUsuarios();
+                boolean exito = gestor.registrarUsuario(txtTelefono.getText().trim(), password, nombre, apellidos, "admin");
+
+                if (exito) {
+                    mostrarPopUpExito();
+                    ventanaPrincipal.cambiarVista(new PanelLogin(ventanaPrincipal));
+                } else {
+                    JOptionPane.showMessageDialog(this, GestorIdiomas.getTexto("registro.existe"), GestorIdiomas.getTexto("registro.existe_titulo"), JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
@@ -97,10 +115,12 @@ public class PanelSolicitudAdmin extends JPanel {
         
         gbc.insets = new Insets(0, 0, 3, 0);
         gbc.gridy = 8; tarjetaBlanca.add(lblTelefono, gbc);
-        gbc.gridy = 9; gbc.insets = new Insets(0, 0, 15, 0); tarjetaBlanca.add(txtTelefono, gbc);
+        gbc.gridy = 9; gbc.insets = new Insets(0, 0, 10, 0); tarjetaBlanca.add(txtTelefono, gbc);
+        gbc.gridy = 10; tarjetaBlanca.add(lblContrasena, gbc);
+        gbc.gridy = 11; gbc.insets = new Insets(0, 0, 15, 0); tarjetaBlanca.add(txtContrasena, gbc);
         
-        gbc.gridy = 10; gbc.insets = new Insets(10, 0, 5, 0); tarjetaBlanca.add(btnEnviar, gbc);
-        gbc.gridy = 11; tarjetaBlanca.add(btnVolver, gbc);
+        gbc.gridy = 12; gbc.insets = new Insets(10, 0, 5, 0); tarjetaBlanca.add(btnEnviar, gbc);
+        gbc.gridy = 13; tarjetaBlanca.add(btnVolver, gbc);
 
         pnlCentro.add(tarjetaBlanca);
         add(pnlCentro, BorderLayout.CENTER);
@@ -123,6 +143,39 @@ public class PanelSolicitudAdmin extends JPanel {
                 if (txt.getText().isEmpty()) {
                     txt.setForeground(Color.GRAY);
                     txt.setText(placeholder);
+                }
+            }
+        });
+        return txt;
+    }
+
+    private JPasswordField crearCajaDePassword(String placeholder) {
+        JPasswordField txt = new JPasswordField();
+        char defaultEcho = txt.getEchoChar();
+        txt.setText(placeholder);
+        txt.setEchoChar((char) 0);
+        txt.setForeground(Color.GRAY);
+        txt.setFont(new Font("Arial", Font.PLAIN, 12));
+        txt.setPreferredSize(new Dimension(280, 30));
+
+        txt.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                String value = String.valueOf(txt.getPassword());
+                if (value.equals(placeholder)) {
+                    txt.setText("");
+                    txt.setEchoChar(defaultEcho);
+                    txt.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                String value = String.valueOf(txt.getPassword());
+                if (value.isEmpty()) {
+                    txt.setEchoChar((char) 0);
+                    txt.setText(placeholder);
+                    txt.setForeground(Color.GRAY);
                 }
             }
         });
