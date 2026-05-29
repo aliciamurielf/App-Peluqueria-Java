@@ -27,7 +27,7 @@ public class DialogoAnadirCita extends JDialog {
         gbc.insets = new Insets(10, 15, 10, 15);
         gbc.gridx = 0;
 
-        JLabel lblNombre = new JLabel("Nombre y Apellido");
+        JLabel lblNombre = new JLabel(GestorIdiomas.getTexto("cita.nombre"));
         lblNombre.setFont(new Font("Arial", Font.BOLD, 10));
         lblNombre.setForeground(Color.GRAY);
 
