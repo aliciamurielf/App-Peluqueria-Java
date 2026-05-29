@@ -114,7 +114,7 @@ public class PanelRegistro extends JPanel {
             }
 
             GestorUsuarios gestor = new GestorUsuarios();
-            boolean exito = gestor.registrarUsuario(tel, p1);
+            boolean exito = gestor.registrarUsuario(tel, p1, txtNombre.getText().trim(), txtApellidos.getText().trim());
 
             if(exito) {
                 

@@ -13,7 +13,7 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public VentanaPrincipal() {
-        super("Laura Estilistas - App"); 
+        super(GestorIdiomas.getTexto("app.titulo")); 
 
         setSize(450, 975);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

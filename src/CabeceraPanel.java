@@ -37,7 +37,7 @@ public class CabeceraPanel extends JPanel {
             }
         } catch (Exception e) {}
 
-        JLabel lblTitulo = new JLabel("Laura Estilistas");
+        JLabel lblTitulo = new JLabel(GestorIdiomas.getTexto("app.nombre"));
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 22));
         lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);

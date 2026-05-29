@@ -76,7 +76,7 @@ public class PanelLogin extends JPanel {
             }
         } catch (Exception e) {}
 
-        JLabel lblLogoTexto = new JLabel("Laura Estilistas");
+        JLabel lblLogoTexto = new JLabel(GestorIdiomas.getTexto("app.nombre"));
         lblLogoTexto.setForeground(Color.WHITE);
         lblLogoTexto.setFont(new Font("Arial", Font.BOLD, 22));
         lblLogoTexto.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -169,8 +169,8 @@ public class PanelLogin extends JPanel {
         });
 
         btnEntrar.addActionListener(e -> {
-            String user = txtUsuario.getText();
-            String pass = new String(txtContrasena.getPassword());
+            String user = txtUsuario.getText().trim();
+            String pass = new String(txtContrasena.getPassword()).trim();
 
             String rol = gestorUsuarios.obtenerRol(user, pass);
 

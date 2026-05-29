@@ -12,7 +12,7 @@ public class DialogoAnadirCita extends JDialog {
     private JButton btnHora;
 
     public DialogoAnadirCita(Window parent) {
-        super(parent, "Laura Estilistas", Dialog.ModalityType.APPLICATION_MODAL);
+        super(parent, GestorIdiomas.getTexto("app.nombre"), Dialog.ModalityType.APPLICATION_MODAL);
         setSize(250, 330);
         setLocationRelativeTo(parent);
         setResizable(false);
