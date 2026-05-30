@@ -1,2 +1,5 @@
 admin;;12345678;644895634;admin
 lucia;cañero;12456379;689125647;cliente
+juan;jimenez;juan_123;956241857;cliente
+isabel;galvez;isa_admin1;621452748;admin
+isa;;isa_admin1_;645125784;admin

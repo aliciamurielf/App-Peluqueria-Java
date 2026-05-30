@@ -16,11 +16,16 @@ public class PanelSolicitudAdmin extends JPanel {
 
         JPanel pnlCentro = new JPanel(new GridBagLayout());
         pnlCentro.setOpaque(false); 
+        GridBagConstraints gbcCentro = new GridBagConstraints();
+        gbcCentro.weightx = 1.0;
+        gbcCentro.weighty = 1.0;
+        gbcCentro.fill = GridBagConstraints.BOTH;
+        gbcCentro.insets = new Insets(10, 15, 10, 15);
 
         JPanel tarjetaBlanca = new JPanel(new GridBagLayout());
         tarjetaBlanca.setBackground(Color.WHITE);
         tarjetaBlanca.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        tarjetaBlanca.setPreferredSize(new Dimension(320, 500));
+        tarjetaBlanca.setMaximumSize(new Dimension(360, 600));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -122,7 +127,7 @@ public class PanelSolicitudAdmin extends JPanel {
         gbc.gridy = 12; gbc.insets = new Insets(10, 0, 5, 0); tarjetaBlanca.add(btnEnviar, gbc);
         gbc.gridy = 13; tarjetaBlanca.add(btnVolver, gbc);
 
-        pnlCentro.add(tarjetaBlanca);
+        pnlCentro.add(tarjetaBlanca, gbcCentro);
         add(pnlCentro, BorderLayout.CENTER);
     }
 
@@ -203,7 +208,7 @@ public class PanelSolicitudAdmin extends JPanel {
         panelDialog.add(btnCerrar);
 
         dialog.setContentPane(panelDialog);
-        dialog.setSize(360, 170);
+        dialog.setSize(500, 170);
         dialog.setLocationRelativeTo(ventanaPrincipal);
         dialog.setVisible(true);
     }
