@@ -20,7 +20,6 @@ public class PanelAdminInventario extends JPanel {
     public PanelAdminInventario(VentanaPrincipal ventana) {
         this.ventanaPrincipal = ventana;
         
-        
         listaProductos.add(new Producto("Champú 1L", 5));
         listaProductos.add(new Producto("Acondicionador", 4));
         listaProductos.add(new Producto("Tinte 6.0", 7));
@@ -118,12 +117,10 @@ public class PanelAdminInventario extends JPanel {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(Color.WHITE);
         card.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
-        
-        
+
         JLabel lblStock = new JLabel(" " + String.valueOf(p.stock) + " ");
         lblStock.setFont(new Font("Arial", Font.BOLD, 10));
         lblStock.setOpaque(true);
-        
         lblStock.setBackground(p.stock == 0 ? Color.RED : Color.WHITE);
         lblStock.setForeground(p.stock == 0 ? Color.WHITE : Color.BLACK);
         lblStock.setBorder(new LineBorder(Color.GRAY, 1));
@@ -133,14 +130,17 @@ public class PanelAdminInventario extends JPanel {
         pnlStock.add(lblStock);
         card.add(pnlStock, BorderLayout.NORTH);
 
-        
-        JLabel lblImg = new JLabel("", SwingConstants.CENTER); 
-        lblImg.setFont(new Font("Arial", Font.PLAIN, 40));
+        JLabel lblImg = new JLabel("", SwingConstants.CENTER);
+        java.io.File archivoImg = new java.io.File("src/images/producto.png");
+        if (archivoImg.exists()) {
+            ImageIcon iconImg = new ImageIcon(archivoImg.getAbsolutePath());
+            Image imgResized = iconImg.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            lblImg.setIcon(new ImageIcon(imgResized));
+        }
         card.add(lblImg, BorderLayout.CENTER);
 
-        
         JLabel lblNombre = new JLabel(p.nombre, SwingConstants.CENTER);
-        lblNombre.setFont(new Font("Arial", Font.BOLD, 9)); 
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 9));
         lblNombre.setBorder(new EmptyBorder(5, 2, 5, 2));
         card.add(lblNombre, BorderLayout.SOUTH);
 
