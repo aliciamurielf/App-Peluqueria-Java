@@ -18,7 +18,8 @@ public class PanelClienteDatos extends JPanel {
         pnlForm.setBackground(Color.WHITE);
         pnlForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JTextField txtNombre = new JTextField(GestorIdiomas.getTexto("cita.nombre"));
+        JTextField txtNombre = new JTextField(ventanaPrincipal.getUsuarioLogueado());
+        txtNombre.setEditable(false);
         String[] servicios = {GestorIdiomas.getTexto("cita.corte"), GestorIdiomas.getTexto("cita.peinado"), GestorIdiomas.getTexto("cita.tinte")};
         JComboBox<String> cbServicios = new JComboBox<>(servicios);
         JButton btnFecha = new JButton(GestorIdiomas.getTexto("cita.fecha"));
@@ -91,8 +92,8 @@ public class PanelClienteDatos extends JPanel {
             String datosCita = fechaSeleccionada + " a las " + horaSeleccionada;
             
             
-            gestor.guardarCita(datosCita, txtNombre.getText());
-            
+            gestor.guardarCita(datosCita, ventanaPrincipal.getUsuarioLogueado());            
+
             String mensaje = GestorIdiomas.getTexto("cita.reservada").replace("{0}", datosCita);
             JOptionPane.showMessageDialog(this, mensaje);
             ventanaPrincipal.cambiarVista(new PanelClienteMenu(ventanaPrincipal));
