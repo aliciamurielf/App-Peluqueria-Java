@@ -1,37 +1,56 @@
-# Laura Estilistas - App de Gestión y Reservas
+# Sistema de Gestión de Peluquería y Estética (Java)
 
-Este proyecto es un prototipo de aplicación de escritorio desarrollada en **Java Swing** para la gestión integral de un salón de belleza/peluquería. Ha sido diseñado siguiendo los principios fundamentales del **Diseño Centrado en el Usuario (DCU)** y el **Diseño Basado en Tareas**.
+![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
+![Swing](https://img.shields.io/badge/UI-Java_Swing-007396?style=flat-square)
+![Object-Oriented](https://img.shields.io/badge/Architecture-POO-blue?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+## Autores
+
+- **Alicia Muriel Fernández**
+- **Lucía Cañero Moslero:** 
+---
+
+## Descripción del Proyecto
+
+Aplicación de escritorio desarrollada en **Java** enfocada en la **gestión integral de reservas, clientes, servicios y citas** para un centro de peluquería y estética, desarrollada para la asignatura de **Sistemas Interactivos** de la Universidad de Córdoba.
+
+El sistema aplica los principios fundamentales de la **Programación Orientada a Objetos (POO)** para ofrecer una interfaz gráfica amigable, control de horarios y persistencia/gestión de datos eficiente.
+
+---
 
 ## Características Principales
 
-La aplicación cuenta con un sistema de inicio de sesión que divide la experiencia en dos roles principales:
+- **Gestión de Clientes:** Alta, modificación y consulta de la información de clientes e historial de visitas.
+- **Gestión de Citas y Reservas:** Calendario/horario interactivo para agendar, cancelar y reprogramar servicios.
+- **Catálogo de Servicios y Tarifas:** Control de servicios disponibles (corte, peinado, tinte, tratamientos) con asignación de tiempos y costes.
+- **Asignación de Personal / Estilistas:** Organización de la agenda según la disponibilidad de los empleados.
+- **Interfaz Gráfica de Usuario (GUI):** Diseñada de forma intuitiva con Java Swing/AWT.
 
-### Rol Administrador (Peluquera)
-* **Dashboard:** Panel de control principal con resumen visual de las próximas citas.
-* **Agenda:** Visualización y gestión de todas las reservas en formato tabla. Permite añadir citas manualmente.
-* **Clientes:** Base de datos de clientes con acceso a una **Ficha Técnica** detallada (fórmulas de tintes, fechas de visitas, alergias).
-* **Inventario:** Control de stock de productos con opciones rápidas para añadir o eliminar artículos, previniendo errores mediante cuadros de confirmación.
+---
 
-### Rol Cliente
-* **Publicidad y Cross-selling:** Visualización de ofertas destacadas (ej. descuentos en productos) en la pantalla principal.
-* **Reserva Intuitiva:** Sistema de petición de cita mediante menús desplegables (`JComboBox`) para evitar errores de escritura al seleccionar fecha, hora y servicio.
+## Tecnologías Utilizadas
 
-## Tecnologías y Conceptos Aplicados
+- **Lenguaje:** Java (JDK 8+)
+- **Interfaz Gráfica:** Java Swing / AWT
+- **Paradigmas:** Programación Orientada a Objetos (POO), Patrón MVC (Modelo-Vista-Controlador)
+- **Herramientas de desarrollo:** VS Code
 
-Este prototipo pone en práctica diversos conceptos avanzados de interfaces gráficas:
-* **Java Swing:** Uso de contenedores (`JFrame`, `JPanel`) y gestores de diseño (`CardLayout`, `BorderLayout`, `GridLayout`).
-* **Manejo de Eventos:** Implementación de `ActionListener` para dar interactividad a botones y formularios.
-* **Arquitectura MVC (Modelo-Vista-Controlador):** Uso de `DefaultTableModel` y `DefaultListModel` compartidos para que las reservas de los clientes actualicen automáticamente la agenda y la base de datos del administrador en tiempo real.
-* **Cuadros de Diálogo:** Uso extensivo de la clase `JOptionPane` para interactuar con el usuario (entradas de datos, mensajes de confirmación y alertas de error).
-* **Look and Feel (LaF):** Personalización estética de la interfaz mediante `NimbusLookAndFeel` y una paleta de colores personalizada (tonos menta y turquesa) para huir del diseño clásico por defecto de Java.
+---
 
-## Estructura del Proyecto
+## Instalación y Ejecución
 
-Para que la aplicación funcione con su diseño gráfico completo, requiere la siguiente estructura de carpetas:
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/aliciamurielf/App-Peluqueria-Java.git
+   cd App-Peluqueria-Java
+   ```
 
-```text
-/src
- ├── AppPeluqueriaFinal.java  # Código fuente principal
- └── /images                  # Carpeta de recursos gráficos
-      ├── logo.png            # Logo del inicio de sesión
-      └── promo.png           # Imagen de la oferta para clientes
+2. **Compilar y Ejecutar:**
+   - Abre el proyecto en tu IDE preferido (NetBeans, Eclipse, IntelliJ).
+   - Compila y ejecuta la clase principal (generalmente `Main.java` o `App.java`).
+   - O bien compila mediante línea de comandos:
+     ```bash
+     javac -d bin src/**/*.java
+     java -cp bin Main
+     ```
